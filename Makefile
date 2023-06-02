@@ -4,20 +4,20 @@
 # @author Willow Ciesialka
 # @date 2023-06-01
 
+# Executable name
+EXEC = golf_engine
+
+# Class names
+CLASSES = main Vector2
+
 # Compiler command
 CC = g++
 
 # Compiler flags
 CFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-# Class names
-CLASSES = main Vector2
-
 # Object paths
 OBJECTS = $(addprefix build/,$(addsuffix .o, $(CLASSES)))
-
-# Executable name
-EXEC = golf_engine
 
 # Build everything - default
 all: $(EXEC).out
