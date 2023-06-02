@@ -26,6 +26,11 @@ namespace GolfEngine {
             Vector2(float x_, float y_) : x(x_), y(y_) {};
 
             /**
+             * @brief The zero vector is a vector with zero length and undefined direction.
+            */
+            static Vector2 zero;
+
+            /**
              * @brief Returns the square of the vector's magnitude (length)
              * 
              * @return The square of the vector's magnitude.
@@ -88,7 +93,9 @@ namespace GolfEngine {
             // Vector-Scalar Arithmetic
             Vector2 operator*(float scalar) const;
             Vector2 operator/(float scalar) const;
-            friend Vector2 operator*(float scalar, const Vector2& vec);
+            inline friend Vector2 operator*(float scalar, const Vector2& vec) {
+                return vec * scalar;
+            };
 
             // Comparison
             inline bool operator==(const Vector2& rhs) const{
@@ -99,7 +106,10 @@ namespace GolfEngine {
             }
 
             // tostring
-            friend std::ostream& operator<<(std::ostream& os, const Vector2& vec);
+            inline friend std::ostream& operator<<(std::ostream& os, const Vector2& vec) {
+                os << "Vector2(" << vec.x << ", " << vec.y << ")";
+                return os;
+            };
     };
 }
 

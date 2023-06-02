@@ -57,13 +57,4 @@ Vector2 Vector2::operator/(float scalar) const{
     );
 }
 
-Vector2 operator*(float scalar, const Vector2& vec){
-    return vec * scalar;
-}
-
-
-// tostring
-std::ostream& operator<<(std::ostream& os, const Vector2& vec){
-    os << "Vector2(" << vec.x << ", " << vec.y << ")";
-    return os;
-}
+Vector2 Vector2::zero = Vector2(0.0, 0.0);
