@@ -29,6 +29,18 @@ float Vector2::operator*(const Vector2& rhs) const{
     return (this->x * rhs.x) + (this->y * rhs.y);
 }
 
+Vector2& Vector2::operator+=(const Vector2& rhs){
+    this->x += rhs.x;
+    this->y += rhs.y;
+    return *this;
+}
+
+Vector2& Vector2::operator-=(const Vector2& rhs){
+    this->x -= rhs.x;
+    this->y -= rhs.y;
+    return *this;
+}
+
 // Vector-Scalar Arithmetic
 
 Vector2 Vector2::operator*(float scalar) const{
@@ -48,6 +60,7 @@ Vector2 Vector2::operator/(float scalar) const{
 Vector2 operator*(float scalar, const Vector2& vec){
     return vec * scalar;
 }
+
 
 // tostring
 std::ostream& operator<<(std::ostream& os, const Vector2& vec){

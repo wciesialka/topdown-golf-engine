@@ -3,7 +3,7 @@
  * @brief This file contains the decleration for the Vector2 class.
  * 
  * @author Willow Ciesialka
- * @date 2023-06-01
+ * @date 2023-06-02
 */
 
 #ifndef VECTOR2_H
@@ -81,12 +81,22 @@ namespace GolfEngine {
 
             Vector2 operator+(const Vector2& rhs) const;
             Vector2 operator-(const Vector2& rhs) const;
+            Vector2& operator+=(const Vector2& rhs);
+            Vector2& operator-=(const Vector2& rhs);
             float operator*(const Vector2& rhs) const; 
 
             // Vector-Scalar Arithmetic
             Vector2 operator*(float scalar) const;
             Vector2 operator/(float scalar) const;
             friend Vector2 operator*(float scalar, const Vector2& vec);
+
+            // Comparison
+            inline bool operator==(const Vector2& rhs) const{
+                return this->x == rhs.x && this->y == rhs.y;
+            }
+            inline bool operator!=(const Vector2& rhs) const{
+                return !(*this == rhs);
+            }
 
             // tostring
             friend std::ostream& operator<<(std::ostream& os, const Vector2& vec);
