@@ -6,10 +6,10 @@ all: golf_engine.out
 run: golf_engine.out
 	./golf_engine.out
 
-golf_engine.out: build/main.o
+golf_engine.out: build/main.o build/Vector2.o
 	$(CC) $^ -o $@ $(CFLAGS)
 
-build/main.o: src/main.cpp
+build/%.o: src/%.cpp
 	$(CC) -c $^ -o $@ 
 
 clean:
