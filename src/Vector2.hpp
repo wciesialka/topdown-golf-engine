@@ -30,7 +30,7 @@ class Vector2 {
          * @return The square of the vector's magnitude.
          * @note Magnitude is returned by \ref magnitude "magnitude()" function.
         */
-        inline float magnitudeSqr() const { return SQR(this->x) + SQR(this->y) }
+        inline float magnitudeSqr() const { return SQR(this->x) + SQR(this->y); }
         
         /**
          * @brief Returns the vector's magnitude (length).
