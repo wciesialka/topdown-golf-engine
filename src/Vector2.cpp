@@ -7,6 +7,7 @@
 */
 
 #include "Vector2.hpp"
+using GolfEngine::Vector2;
 
 // Vector-Vector Arithmetic
 
