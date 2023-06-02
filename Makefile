@@ -1,19 +1,40 @@
+# @file Makefile
+# @brief This file is responsible for controlling the GNU Make command for easier building.
+#
+# @author Willow Ciesialka
+# @date 2023-06-01
+
+# Compiler command
 CC = g++
+
+# Compiler flags
 CFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+
+# Class names
 CLASSES = main Vector2
+
+# Object paths
 OBJECTS = $(addprefix build/,$(addsuffix .o, $(CLASSES)))
 
-all: golf_engine.out
+# Executable name
+EXEC = golf_engine
 
-run: golf_engine.out
-	./golf_engine.out
+# Build everything - default
+all: $(EXEC).out
 
-golf_engine.out: $(OBJECTS)
-	$(CC) $^ -o $@ $(CFLAGS)
+# Build and run
+run: $(EXEC).out
+	./$<
 
-build/%.o: src/%.cpp
-	$(CC) -c $^ -o $@ 
-
+# Clean - Delete build files and executables
 clean:
 	rm -f ./build/*
-	rm -f ./golf_engine.out
+	rm -f ./$(EXEC).out
+
+# Executable
+$(EXEC).out: $(OBJECTS)
+	$(CC) $^ -o $@ $(CFLAGS)
+
+# Build files
+build/%.o: src/%.cpp
+	$(CC) -c $^ -o $@ 
