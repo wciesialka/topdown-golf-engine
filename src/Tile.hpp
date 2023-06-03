@@ -10,17 +10,25 @@
 #define TILE_H
 
 #include "Vector2.hpp"
+#include <vector>
 
 namespace GolfEngine
 {
     class Tile
     {
     public:
-        Tile() : position(Vector2::zero){};
-        Tile(Vector2 pos) : position(pos){};
+        Tile() : entities(std::vector<Entity*>()) {};
+        /**
+         * @brief This function adds an entity to the tile.
+         *
+         * @param ent The entity to add to the tile.
+         * @returns True if the addition was a success, false otherwise.
+         */
+        bool addEntity(Entity *ent);
 
     private:
         Vector2 position;
+        std::vector<Entity*> entities;
     };
 }
 

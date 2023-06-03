@@ -11,6 +11,7 @@
 
 #include "Entity.hpp"
 #include "Tile.hpp"
+#include <vector>
 
 namespace GolfEngine
 {
@@ -59,8 +60,8 @@ namespace GolfEngine
         virtual void processEntities() = 0;
 
     private:
-        Tile **tilemap;
-        Entity **entities;
+        std::vector<Tile*> tilemap;
+        std::vector<int> tilesToUpdate;
     };
 }
 
