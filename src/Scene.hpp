@@ -12,13 +12,22 @@
 #include "Entity.hpp"
 #include "Tile.hpp"
 #include <vector>
+#include <unordered_map>
 
 namespace GolfEngine
 {
     class Scene
     {
     public:
-        Scene();
+        const unsigned int DEFAULT_MAX_SIDE_LENGTH = 64;
+        Scene() : tilemap(std::unordered_map<unsigned int, Tile*>()),
+                  tiles_to_update(std::vector<unsigned int>()),
+                  max_side_length(Scene::DEFAULT_MAX_SIDE_LENGTH)
+                  {};
+        Scene(unsigned int side_length) : tilemap(std::unordered_map<unsigned int, Tile*>()),
+                  tiles_to_update(std::vector<unsigned int>()),
+                  max_side_length(side_length)
+                  {};
 
         /**
          * @brief This function adds an entity to the scene.
@@ -43,16 +52,16 @@ namespace GolfEngine
          * @param y y position of tile
          * @returns Array of entities in the tile.
          */
-        Entity **findEntitiesInTile(int x, int y);
+        Entity **findEntitiesInTile(unsigned int x, unsigned int y);
 
         /**
          * @brief This function finds and returns a tile designated by a position.
          * 
          * @param x x position of tile
          * @param y y position of tile
-         * @returns Tile found at given position.
+         * @returns Tile found at given position. Returns nullptr if no such tile exists.
         */
-        Tile *findTile(int x, int y);
+        Tile *findTile(unsigned int x, unsigned int y);
 
         /**
          * @brief This function processes all entities that need processing.
@@ -60,8 +69,9 @@ namespace GolfEngine
         virtual void processEntities() = 0;
 
     private:
-        std::vector<Tile*> tilemap;
-        std::vector<int> tilesToUpdate;
+        std::unordered_map<unsigned int, Tile*> tilemap;
+        std::vector<unsigned int> tiles_to_update;
+        unsigned int max_side_length;
     };
 }
 

@@ -25,7 +25,12 @@ namespace GolfEngine
          * @returns True if the addition was a success, false otherwise.
          */
         bool addEntity(Entity *ent);
-
+        
+        /**
+         * @brief Get the tile's position.
+         * @returns The tile's position.
+        */
+        inline Vector2 getPosition() { return this->position; };
     private:
         Vector2 position;
         std::vector<Entity*> entities;
