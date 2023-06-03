@@ -1,15 +1,11 @@
 /**
  * @file main.cpp
- * @brief This file is responsible for rendering the game scene.
+ * @brief This file is responsible for putting it all together.
  * 
  * @author Willow Ciesialka
- * @date 2023-05-30
+ * @date 2023-06-03
 */
 
-#include <iostream>
-
 int main(){
-    std::cout << "Hello, world!" << std::endl;
-
     return 0;
 }
