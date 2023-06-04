@@ -12,7 +12,7 @@
 #include <iostream>
 #include <math.h>
 
-#define SQR(a) ((a)*(a))
+#define SQR(a) (a*a)
 
 namespace GolfEngine {
     class Vector2 {
@@ -68,7 +68,7 @@ namespace GolfEngine {
              * @note The distance between two vectors is returned by \ref distance "distance(Vector2)"
             */
             inline float distanceSqr(const Vector2& other) const { 
-                return SQR(this->x - other.x) - SQR(this->y - other.y);
+                return SQR((this->x - other.x)) + SQR((this->y - other.y));
             }
 
             /**
