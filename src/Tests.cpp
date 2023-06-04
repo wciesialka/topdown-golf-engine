@@ -18,6 +18,8 @@ void vectorTests(){
     GolfEngine::Vector2 d(1, 1);
     GolfEngine::Vector2 e(3, 4);
     GolfEngine::Vector2 f(4, 5);
+    GolfEngine::Vector2 g(2, 0);
+    GolfEngine::Vector2 h(1, 0);
     // Comparison
     assert(a != b); 
     assert(a == c);
@@ -32,6 +34,8 @@ void vectorTests(){
     assert((b.magnitudeSqr()) == 8.0);
     assert((d+e) == f);
     assert((b-b) == a);
+    assert(g.normalized() == h);
+    assert((b/2) == d);
 }
 
 void runTest(const char* test_name, Test test){
