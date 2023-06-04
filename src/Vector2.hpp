@@ -28,7 +28,7 @@ namespace GolfEngine {
             /**
              * @brief The zero vector is a vector with zero length and undefined direction.
             */
-            static Vector2 zero;
+            static const Vector2 zero;
 
             /**
              * @brief Returns the square of the vector's magnitude (length)

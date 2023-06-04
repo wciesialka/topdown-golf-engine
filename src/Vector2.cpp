@@ -57,4 +57,4 @@ Vector2 Vector2::operator/(float scalar) const{
     );
 }
 
-Vector2 Vector2::zero = Vector2(0.0, 0.0);
+const Vector2 Vector2::zero = Vector2(0.0, 0.0);
