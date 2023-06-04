@@ -8,7 +8,7 @@
 EXEC = golf_engine
 
 # Class names
-CLASSES = main Vector2 Entity
+CLASSES = main Vector2 Entity Tests
 
 # Compiler command
 CC = g++

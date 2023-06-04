@@ -6,6 +6,13 @@
  * @date 2023-06-03
 */
 
+#include "Tests.hpp"
+#define RUN_TESTS
+
 int main(){
+    #ifdef RUN_TESTS
+    runTests();
+    #endif
+
     return 0;
 }
