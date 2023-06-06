@@ -17,8 +17,9 @@ GolfEngine::Tile* Scene::findTile(unsigned int x, unsigned int y){
     }
     unsigned int i = (y * this->max_side_length) + x;
 
+    auto result = this->tilemap.find(i);
     // If the tile doesn't exist, return nullptr. 
-    if( auto result = this->tilemap.find(i); result == this->tilemap.end()){
+    if( result == this->tilemap.end()){
         return nullptr;
     } else {
         return (Tile*)(result->first);

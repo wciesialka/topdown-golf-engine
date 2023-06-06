@@ -13,13 +13,14 @@
 
 #include "Vector2.hpp"
 #include "Entity.hpp"
+#include "Renderable.hpp"
 #include <vector>
 
 namespace GolfEngine
 {
     typedef std::vector<GolfEngine::Entity *> EntityList;
     typedef void (*EntityFunction)(GolfEngine::Entity*);
-    class Tile
+    class Tile : public Renderable
     {
     public:
         Tile() : entities(EntityList()){};
@@ -48,12 +49,6 @@ namespace GolfEngine
         inline bool containsEntity(GolfEngine::Entity *ent) { return this->findEntity(ent) != this->entities.end(); };
 
         /**
-         * @brief Get the tile's position.
-         * @returns The tile's position.
-         */
-        inline Vector2 getPosition() { return this->position; };
-
-        /**
          * @brief Apply a function to all entities belonging to the tile.
          *
          * @param func Function to apply on entities.
@@ -65,7 +60,6 @@ namespace GolfEngine
         }
 
     private:
-        Vector2 position;
         EntityList entities;
 
         /**

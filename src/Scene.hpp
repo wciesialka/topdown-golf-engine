@@ -20,6 +20,7 @@ namespace GolfEngine
     {
     public:
         const unsigned int DEFAULT_MAX_SIDE_LENGTH = 64;
+
         Scene() : tilemap(std::unordered_map<unsigned int, Tile*>()),
                   tiles_to_update(std::vector<unsigned int>()),
                   max_side_length(Scene::DEFAULT_MAX_SIDE_LENGTH)
@@ -44,15 +45,6 @@ namespace GolfEngine
          * @returns True if the addition was a success, false otherwise.
          */
         bool addTile(Tile *tile);
-
-        /**
-         * @brief This function finds all entities inside a tile.
-         * 
-         * @param x x position of tile
-         * @param y y position of tile
-         * @returns Array of entities in the tile.
-         */
-        Entity **findEntitiesInTile(unsigned int x, unsigned int y);
 
         /**
          * @brief This function finds and returns a tile designated by a position.
