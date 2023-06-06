@@ -64,7 +64,7 @@ namespace GolfEngine
          *
          * @return object's position.
          */
-        inline GolfEngine::Vector2 getPosition()
+        inline GolfEngine::Vector2 getPosition() const
         {
             return this->position;
         }
@@ -74,7 +74,7 @@ namespace GolfEngine
          *
          * @return object's rotation, clockwise, in radians.
          */
-        inline float getRotation()
+        inline float getRotation() const
         {
             return this->rotation;
         }

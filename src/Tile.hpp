@@ -46,7 +46,7 @@ namespace GolfEngine
          * @param[in] ent The entity to find.
          * @returns True if the entity is in the tile, false otherwise.
          */
-        inline bool containsEntity(GolfEngine::Entity *ent) { return this->findEntity(ent) != this->entities.end(); };
+        inline bool containsEntity(GolfEngine::Entity *ent) const { return this->findEntity(ent) != this->entities.end(); };
 
         /**
          * @brief Apply a function to all entities belonging to the tile.
@@ -68,7 +68,7 @@ namespace GolfEngine
          * @param[in] entity Entity to find
          * @returns The entity, if it was found.
          */
-        EntityList::iterator findEntity(GolfEngine::Entity *entity);
+        EntityList::iterator findEntity(GolfEngine::Entity *entity) const;
     };
 }
 

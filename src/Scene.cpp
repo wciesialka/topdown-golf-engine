@@ -11,7 +11,7 @@
 
 using GolfEngine::Scene;
 
-GolfEngine::Tile* Scene::findTile(unsigned int x, unsigned int y){
+GolfEngine::Tile* Scene::findTile(unsigned int x, unsigned int y) const{
     if (x > this->max_side_length || y > this->max_side_length){
         return nullptr;
     }

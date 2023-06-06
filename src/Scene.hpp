@@ -53,7 +53,7 @@ namespace GolfEngine
          * @param y y position of tile
          * @returns Tile found at given position. Returns nullptr if no such tile exists.
         */
-        Tile *findTile(unsigned int x, unsigned int y);
+        Tile *findTile(unsigned int x, unsigned int y) const;
 
         /**
          * @brief This function processes all entities that need processing.

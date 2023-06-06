@@ -44,7 +44,7 @@ namespace GolfEngine
          *
          * @returns The entity's velocity.
          */
-        inline GolfEngine::Vector2 getVelocity()
+        inline GolfEngine::Vector2 getVelocity() const
         {
             return this->velocity;
         }
@@ -54,7 +54,7 @@ namespace GolfEngine
          *
          * @returns The entity's acceleration.
          */
-        inline GolfEngine::Vector2 getAcceleration()
+        inline GolfEngine::Vector2 getAcceleration() const
         {
             return this->acceleration;
         }
