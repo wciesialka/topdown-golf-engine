@@ -3,7 +3,7 @@
  * @brief This file contains the decleration for the Tile class
  *
  * @author Willow Ciesialka
- * @date 2023-06-02
+ * @date 2023-06-06
  */
 
 #ifndef TILE_H
@@ -12,11 +12,13 @@
 #define TILE_SIZE 64
 
 #include "Vector2.hpp"
+#include "Entity.hpp"
 #include <vector>
 
 namespace GolfEngine
 {
     typedef std::vector<GolfEngine::Entity *> EntityList;
+    typedef void (*EntityFunction)(GolfEngine::Entity*);
     class Tile
     {
     public:
@@ -50,6 +52,17 @@ namespace GolfEngine
          * @returns The tile's position.
          */
         inline Vector2 getPosition() { return this->position; };
+
+        /**
+         * @brief Apply a function to all entities belonging to the tile.
+         *
+         * @param func Function to apply on entities.
+         */
+        inline void applyToEntities( EntityFunction func ) {
+            for(GolfEngine::Entity* entity : this->entities){
+                func(entity);
+            }
+        }
 
     private:
         Vector2 position;
