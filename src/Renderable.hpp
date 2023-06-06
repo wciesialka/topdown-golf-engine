@@ -14,6 +14,7 @@
 
 #include "Vector2.hpp"
 #include <cmath>
+#include "Window.hpp"
 
 namespace GolfEngine
 {
@@ -97,6 +98,13 @@ namespace GolfEngine
         {
             this->setRotation(this->rotation + radians);
         }
+
+        /**
+         * @brief Render the object on the screen.
+         * 
+         * @param window Window to render the object onto.
+        */
+        virtual void render(GolfEngine::Window* window) = 0;
 
     private:
         // Object properties

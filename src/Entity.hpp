@@ -19,6 +19,10 @@ namespace GolfEngine
     class Entity : public Renderable
     {
     public:
+        typedef std::vector<GolfEngine::Entity *> EntityList;
+
+        typedef void (*EntityFunction)(GolfEngine::Entity*);
+
         /**
          * @brief Apply acceleration to the entity.
          *

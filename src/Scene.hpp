@@ -11,6 +11,7 @@
 
 #include "Entity.hpp"
 #include "Tile.hpp"
+#include "Vector2.hpp"
 #include <vector>
 #include <unordered_map>
 
@@ -54,6 +55,18 @@ namespace GolfEngine
          * @returns Tile found at given position. Returns nullptr if no such tile exists.
         */
         Tile *findTile(unsigned int x, unsigned int y) const;
+
+        /**
+         * @brief Apply a function to all entities handled by the scene.
+         * 
+         * @param func Function to apply.
+        */
+        inline void applyToAllEntities(GolfEngine::Entity::EntityFunction func){
+            for(auto& it : this->tilemap){
+                GolfEngine::Tile* tile = it.second;
+                tile->applyToEntities(func);
+            }
+        }
 
         /**
          * @brief This function processes all entities that need processing.

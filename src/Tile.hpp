@@ -18,12 +18,10 @@
 
 namespace GolfEngine
 {
-    typedef std::vector<GolfEngine::Entity *> EntityList;
-    typedef void (*EntityFunction)(GolfEngine::Entity*);
     class Tile : public Renderable
     {
     public:
-        Tile() : entities(EntityList()){};
+        Tile() : entities(GolfEngine::Entity::EntityList()){};
         /**
          * @brief This function adds an entity to the tile.
          *
@@ -53,14 +51,14 @@ namespace GolfEngine
          *
          * @param func Function to apply on entities.
          */
-        inline void applyToEntities( EntityFunction func ) {
+        inline void applyToEntities( GolfEngine::Entity::EntityFunction func ) {
             for(GolfEngine::Entity* entity : this->entities){
                 func(entity);
             }
         }
 
     private:
-        EntityList entities;
+        GolfEngine::Entity::EntityList entities;
 
         /**
          * @brief Find the entity in the Tile, if it exists.
@@ -68,7 +66,7 @@ namespace GolfEngine
          * @param[in] entity Entity to find
          * @returns The entity, if it was found.
          */
-        EntityList::iterator findEntity(GolfEngine::Entity *entity) const;
+        GolfEngine::Entity::EntityList::iterator findEntity(GolfEngine::Entity *entity) const;
     };
 }
 
