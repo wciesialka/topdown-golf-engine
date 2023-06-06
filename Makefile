@@ -14,7 +14,10 @@ CLASSES = main Vector2 Entity Tests
 CC = g++
 
 # Compiler flags
-CFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+CFLAGS = -std=c++11
+
+# Linker flags
+LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Object paths
 OBJECTS = $(addprefix build/,$(addsuffix .o, $(CLASSES)))
@@ -33,8 +36,8 @@ clean:
 
 # Executable
 $(EXEC).out: $(OBJECTS)
-	$(CC) $^ -o $@ $(CFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 
 # Build files
 build/%.o: src/%.cpp
-	$(CC) -c $^ -o $@ 
+	$(CC) -c $^ -o $@ $(CFLAGS) 
