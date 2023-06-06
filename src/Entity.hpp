@@ -39,6 +39,66 @@ namespace GolfEngine
             this->velocity = Vector2::zero;
         }
 
+        /**
+         * @brief Get the entity's velocity.
+         *
+         * @returns The entity's velocity.
+         */
+        inline GolfEngine::Vector2 getVelocity()
+        {
+            return this->velocity;
+        }
+
+        /**
+         * @brief Get the entity's acceleration.
+         *
+         * @returns The entity's acceleration.
+         */
+        inline GolfEngine::Vector2 getAcceleration()
+        {
+            return this->acceleration;
+        }
+
+        /**
+         * @brief Set the entity's velocity.
+         *
+         * @param vel The entity's new velocity.
+         */
+        inline void setVelocity(GolfEngine::Vector2 vel)
+        {
+            this->velocity = vel;
+        }
+
+        /**
+         * @brief Set the entity's acceleration.
+         *
+         * @param accel The entity's new acceleration.
+         */
+        inline void setAcceleration(GolfEngine::Vector2 accel)
+        {
+            this->acceleration = accel;
+        }
+
+        /**
+         * @brief Add to the entity's velocity.
+         *
+         * @param vel Velocity to add.
+         */
+        inline void addVelocity(GolfEngine::Vector2 vel)
+        {
+            this->setVelocity(this->getVelocity() + vel);
+        }
+
+        /**
+         * @brief Add to the entity's acceleration.
+         *
+         * @param accel Acceleration to add.
+         */
+        inline void addAcceleration(GolfEngine::Vector2 accel)
+        {
+            this->setAcceleration(this->getAcceleration() + accel);
+        }
+
     private:
         // Entity properties.
         GolfEngine::Vector2 velocity;
