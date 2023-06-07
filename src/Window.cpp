@@ -7,6 +7,7 @@
 */
 
 #include "Window.hpp"
+#include "Vector2.hpp"
 
 using GolfEngine::Window;
 
@@ -27,7 +28,9 @@ void Window::beginDisplay(){
 
             this->render_window->clear(this->bgcolor);
 
-            GolfEngine::RenderableVisitor visitor(this->render_window);
+            GolfEngine::RenderableVisitor visitor(this->render_window, 
+                                                  this->getFocusPoint(), 
+                                                  this->getFocusPoint() + GolfEngine::Vector2(SCREEN_W, SCREEN_H));
             this->scene->render(visitor);
 
             this->render_window->display();
