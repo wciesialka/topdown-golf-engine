@@ -1,6 +1,6 @@
 /**
  * @file Scene.hpp
- * @brief This file contains declerations for the Scene abstract class.
+ * @brief This file contains declerations for the Scene class.
  *
  * @author Willow Ciesialka
  * @date 2023-06-02
@@ -59,11 +59,6 @@ namespace GolfEngine
          * @param visitor A RenderableVisitor responsible for rendering all objects.
          */
         void render(GolfEngine::RenderableVisitor visitor);
-
-        /**
-         * @brief This function processes all entities that need processing.
-         */
-        virtual void processEntities() = 0;
 
     private:
         std::unordered_map<unsigned int, Tile *> tilemap;

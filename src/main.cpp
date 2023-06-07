@@ -7,12 +7,18 @@
 */
 
 #include "Tests.hpp"
-#define RUN_TESTS
+// #define RUN_TESTS
+#include "Scene.hpp"
+#include "Window.hpp"
 
 int main(){
     #ifdef RUN_TESTS
     runTests();
     #endif
+
+    GolfEngine::Scene scene;
+    GolfEngine::Window window(&scene, 0x8b8589ff);
+    window.beginDisplay();
 
     return 0;
 }
