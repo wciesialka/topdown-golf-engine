@@ -7,8 +7,8 @@
 */
 
 #include "Tile.hpp"
-#include "Entity.hpp"
-#include "Vector2.hpp"
+#include "../Renderables/Entity.hpp"
+#include "../Vector2.hpp"
 #include <algorithm>
 #include <vector>
 #include <SFML/Graphics.hpp>

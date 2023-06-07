@@ -8,7 +8,7 @@
 EXEC = golf_engine
 
 # Class names
-CLASSES = main Tests Vector2 Renderable RenderableVisitor Tile Entity Scene Window
+CLASSES = main Tests Vector2 Renderables/Renderable Rendering/RenderableVisitor GameManagement/Tile Renderables/Entity GameManagement/Scene Rendering/Window Renderables/Sprite
 
 # Compiler command
 CC = g++
@@ -19,7 +19,7 @@ CFLAGS = -std=c++11
 # Linker flags
 LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-# Object paths
+# Build Object paths
 OBJECTS = $(addprefix build/,$(addsuffix .o, $(CLASSES)))
 
 # Build everything - default
@@ -31,7 +31,7 @@ run: $(EXEC).out
 
 # Clean - Delete build files and executables
 clean:
-	rm -f ./build/*
+	rm -rf ./build/*
 	rm -f ./$(EXEC).out
 
 # Executable
@@ -40,4 +40,6 @@ $(EXEC).out: $(OBJECTS)
 
 # Build files
 build/%.o: src/%.cpp
+	# Make the build directory if it doesn't exist
+	if ! [ -d $(@D) ]; then mkdir $(@D); fi
 	$(CC) -c $^ -o $@ $(CFLAGS) 

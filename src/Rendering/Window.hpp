@@ -16,9 +16,9 @@
 #define WINDOW_TITLE "Golf Game"
 
 #include <SFML/Graphics.hpp>
-#include "Scene.hpp"
-#include "Vector2.hpp"
-#include "RenderableVisitor.hpp"
+#include "../GameManagement/Scene.hpp"
+#include "../Vector2.hpp"
+#include "../Rendering/RenderableVisitor.hpp"
 
 namespace GolfEngine
 {

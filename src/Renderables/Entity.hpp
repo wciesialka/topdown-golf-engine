@@ -10,7 +10,7 @@
 #define ENTITY_H
 
 #include "Renderable.hpp"
-#include "Vector2.hpp"
+#include "../Vector2.hpp"
 #include <cmath>
 
 namespace GolfEngine
@@ -22,6 +22,10 @@ namespace GolfEngine
         typedef std::vector<GolfEngine::Entity *> EntityList;
 
         typedef void (*EntityFunction)(GolfEngine::Entity*);
+
+        Entity() : GolfEngine::Renderable() {};
+        Entity(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos) {};
+        Entity(GolfEngine::Vector2 pos, float rotation) : GolfEngine::Renderable(pos, rotation) {};
 
         /**
          * @brief Apply acceleration to the entity.

@@ -8,7 +8,7 @@
 
 #include "Scene.hpp"
 #include "Tile.hpp"
-#include "RenderableVisitor.hpp"
+#include "../Rendering/RenderableVisitor.hpp"
 
 using GolfEngine::Scene;
 

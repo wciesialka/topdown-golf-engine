@@ -8,8 +8,8 @@
 
 #include "Tests.hpp"
 // #define RUN_TESTS
-#include "Scene.hpp"
-#include "Window.hpp"
+#include "GameManagement/Scene.hpp"
+#include "Rendering/Window.hpp"
 
 int main(){
     #ifdef RUN_TESTS

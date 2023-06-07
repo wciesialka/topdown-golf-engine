@@ -11,9 +11,9 @@
 
 #define TILE_SIZE 64
 
-#include "Vector2.hpp"
-#include "Entity.hpp"
-#include "Renderable.hpp"
+#include "../Vector2.hpp"
+#include "../Renderables/Entity.hpp"
+#include "../Renderables/Renderable.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 

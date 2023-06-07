@@ -7,7 +7,7 @@
 */
 
 #include "Window.hpp"
-#include "Vector2.hpp"
+#include "../Vector2.hpp"
 
 using GolfEngine::Window;
 

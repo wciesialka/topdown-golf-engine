@@ -9,12 +9,12 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "Entity.hpp"
+#include "../Renderables/Entity.hpp"
 #include "Tile.hpp"
-#include "Vector2.hpp"
+#include "../Vector2.hpp"
 #include <vector>
 #include <unordered_map>
-#include "RenderableVisitor.hpp"
+#include "../Rendering/RenderableVisitor.hpp"
 
 namespace GolfEngine
 {
