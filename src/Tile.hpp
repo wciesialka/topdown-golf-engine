@@ -14,6 +14,7 @@
 #include "Vector2.hpp"
 #include "Entity.hpp"
 #include "Renderable.hpp"
+#include <SFML/Graphics.hpp>
 #include <vector>
 
 namespace GolfEngine
@@ -44,18 +45,14 @@ namespace GolfEngine
          * @param[in] ent The entity to find.
          * @returns True if the entity is in the tile, false otherwise.
          */
-        inline bool containsEntity(GolfEngine::Entity *ent) const { return this->findEntity(ent) != this->entities.end(); };
+        inline bool containsEntity(GolfEngine::Entity *ent) { return this->findEntity(ent) != this->entities.end(); };
 
         /**
-         * @brief Apply a function to all entities belonging to the tile.
-         *
-         * @param func Function to apply on entities.
-         */
-        inline void applyToEntities( GolfEngine::Entity::EntityFunction func ) {
-            for(GolfEngine::Entity* entity : this->entities){
-                func(entity);
-            }
-        }
+         * @brief Render the tile
+         * 
+         * @param window Window to render onto.
+        */
+       virtual void render(sf::RenderWindow* window);
 
     private:
         GolfEngine::Entity::EntityList entities;
@@ -66,7 +63,7 @@ namespace GolfEngine
          * @param[in] entity Entity to find
          * @returns The entity, if it was found.
          */
-        GolfEngine::Entity::EntityList::iterator findEntity(GolfEngine::Entity *entity) const;
+        GolfEngine::Entity::EntityList::iterator findEntity(GolfEngine::Entity *entity);
     };
 }
 

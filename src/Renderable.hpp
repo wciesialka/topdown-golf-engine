@@ -14,7 +14,7 @@
 
 #include "Vector2.hpp"
 #include <cmath>
-#include "Window.hpp"
+#include <SFML/Graphics.hpp>
 
 namespace GolfEngine
 {
@@ -102,9 +102,9 @@ namespace GolfEngine
         /**
          * @brief Render the object on the screen.
          * 
-         * @param window Window to render the object onto.
+         * @param window SFML Window to render the object onto.
         */
-        virtual void render(GolfEngine::Window* window) = 0;
+        virtual void render(sf::RenderWindow* window) = 0;
 
     private:
         // Object properties

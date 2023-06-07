@@ -14,6 +14,7 @@
 #include "Vector2.hpp"
 #include <vector>
 #include <unordered_map>
+#include "RenderableVisitor.hpp"
 
 namespace GolfEngine
 {
@@ -22,14 +23,10 @@ namespace GolfEngine
     public:
         const unsigned int DEFAULT_MAX_SIDE_LENGTH = 64;
 
-        Scene() : tilemap(std::unordered_map<unsigned int, Tile*>()),
-                  tiles_to_update(std::vector<unsigned int>()),
-                  max_side_length(Scene::DEFAULT_MAX_SIDE_LENGTH)
-                  {};
-        Scene(unsigned int side_length) : tilemap(std::unordered_map<unsigned int, Tile*>()),
-                  tiles_to_update(std::vector<unsigned int>()),
-                  max_side_length(side_length)
-                  {};
+        Scene() : tilemap(std::unordered_map<unsigned int, Tile *>()),
+                  max_side_length(Scene::DEFAULT_MAX_SIDE_LENGTH){};
+        Scene(unsigned int side_length) : tilemap(std::unordered_map<unsigned int, Tile *>()),
+                                          max_side_length(side_length){};
 
         /**
          * @brief This function adds an entity to the scene.
@@ -49,24 +46,19 @@ namespace GolfEngine
 
         /**
          * @brief This function finds and returns a tile designated by a position.
-         * 
+         *
          * @param x x position of tile
          * @param y y position of tile
          * @returns Tile found at given position. Returns nullptr if no such tile exists.
-        */
+         */
         Tile *findTile(unsigned int x, unsigned int y) const;
 
         /**
-         * @brief Apply a function to all entities handled by the scene.
-         * 
-         * @param func Function to apply.
-        */
-        inline void applyToAllEntities(GolfEngine::Entity::EntityFunction func){
-            for(auto& it : this->tilemap){
-                GolfEngine::Tile* tile = it.second;
-                tile->applyToEntities(func);
-            }
-        }
+         * @brief Render the scene by visiting all renderables and rendering them.
+         *
+         * @param visitor A RenderableVisitor responsible for rendering all objects.
+         */
+        void render(GolfEngine::RenderableVisitor visitor);
 
         /**
          * @brief This function processes all entities that need processing.
@@ -74,8 +66,7 @@ namespace GolfEngine
         virtual void processEntities() = 0;
 
     private:
-        std::unordered_map<unsigned int, Tile*> tilemap;
-        std::vector<unsigned int> tiles_to_update;
+        std::unordered_map<unsigned int, Tile *> tilemap;
         unsigned int max_side_length;
     };
 }

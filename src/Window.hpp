@@ -15,9 +15,10 @@
 #define SCREEN_H 600
 #define WINDOW_TITLE "Golf Game"
 
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include "Scene.hpp"
 #include "Vector2.hpp"
+#include "RenderableVisitor.hpp"
 
 namespace GolfEngine
 {
@@ -25,39 +26,28 @@ namespace GolfEngine
     {
     public:
         Window(GolfEngine::Scene *scene) : scene(scene),
-                                           focus(GolfEngine::Vector2::zero)
+                                           focus(GolfEngine::Vector2::zero),
+                                           bgcolor(sf::Color::Black)
         {
-            this->window = new sf::Window(sf::VideoMode(SCREEN_W, SCREEN_H), WINDOW_TITLE);
+            this->render_window = new sf::RenderWindow(sf::VideoMode(SCREEN_W, SCREEN_H), WINDOW_TITLE);
+        }
+
+        Window(GolfEngine::Scene *scene, int background_color) : scene(scene),
+                                           focus(GolfEngine::Vector2::zero),
+                                           bgcolor(sf::Color(background_color))
+        {
+            this->render_window = new sf::RenderWindow(sf::VideoMode(SCREEN_W, SCREEN_H), WINDOW_TITLE);
         }
 
         ~Window()
         {
-            delete this->window;
+            delete this->render_window;
         }
 
         /**
          * @brief Open the window and display the game.
          */
-        void beginDisplay()
-        {
-            while (this->window->isOpen())
-            {
-                sf::Event event;
-                while (window->pollEvent(event))
-                {
-                    if (event.type == sf::Event::Closed)
-                    {
-                        window->close();
-                    }
-                    else
-                    {
-                        this->handleEvent(event);
-                    }
-
-                    this->renderRenderables();
-                }
-            }
-        }
+        void beginDisplay();
 
         /**
          * @brief Handle a window event.
@@ -66,11 +56,39 @@ namespace GolfEngine
          */
         void handleEvent(sf::Event event);
 
+        /**
+         * @brief Set the focus point.
+         *
+         * The focus point is defined as the top-left-most point that is
+         * visible on the screen.
+         *
+         * @param vec The new focus point.
+         */
+        inline void setFocusPoint(GolfEngine::Vector2 vec)
+        {
+            this->focus = vec;
+        }
+
+        /**
+         * @brief Get the focus point.
+         *
+         * The focus point is defined as the top-left-most point that is
+         * visible on the screen.
+         *
+         * @returns The focus point.
+         */
+        inline GolfEngine::Vector2 getFocusPoint() const
+        {
+            return this->focus;
+        }
+
     private:
-        sf::Window *window;
+        sf::RenderWindow *render_window;
         GolfEngine::Scene *scene;
         GolfEngine::Vector2 focus;
-    }
+
+        sf::Color bgcolor;
+    };
 }
 
 #endif

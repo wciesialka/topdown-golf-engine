@@ -8,6 +8,7 @@
 
 #include "Scene.hpp"
 #include "Tile.hpp"
+#include "RenderableVisitor.hpp"
 
 using GolfEngine::Scene;
 
@@ -22,7 +23,7 @@ GolfEngine::Tile* Scene::findTile(unsigned int x, unsigned int y) const{
     if( result == this->tilemap.end()){
         return nullptr;
     } else {
-        return (Tile*)(result->first);
+        return result->second;
     }
 }
 
@@ -35,4 +36,10 @@ bool Scene::addTile(GolfEngine::Tile* tile){
     unsigned int i = (y * this->max_side_length) + x;
     this->tilemap[i] = tile;
     return true;
+}
+
+void Scene::render(GolfEngine::RenderableVisitor visitor){
+    for(auto it : this->tilemap){
+        visitor.visit(it.second);
+    }
 }

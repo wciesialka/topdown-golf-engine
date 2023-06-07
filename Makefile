@@ -8,7 +8,7 @@
 EXEC = golf_engine
 
 # Class names
-CLASSES = main Tests Vector2 Renderable Tile Entity
+CLASSES = main Tests Vector2 Renderable RenderableVisitor Tile Entity Scene Window
 
 # Compiler command
 CC = g++
