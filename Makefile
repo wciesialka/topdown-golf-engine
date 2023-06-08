@@ -7,10 +7,6 @@
 # Executable name
 EXEC = golf_engine
 
-# Directories
-SDIR = ./src
-BDIR = ./build
-
 # Compiler command
 CC = g++
 
@@ -19,6 +15,10 @@ CFLAGS = -std=c++11
 
 # Linker flags
 LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+
+# Source/Build Directories
+SDIR = ./src
+BDIR = ./build
 
 # Source Files
 SOURCE_PATHS = $(shell find $(SDIR) -iname "*.cpp")
@@ -39,14 +39,14 @@ run: $(EXEC).out
 # Clean - Delete build files and executables
 clean:
 	rm -rf $(BDIR)/*
-	rm -f  $(EXEC).out
+	rm -f $(EXEC).out
 
 # Executable
-$(EXEC).out: $(OBJECTS)
+$(EXEC).out: $(sort $(OBJECTS))
 	$(CC) $^ -o $@ $(LFLAGS)
 
 # Build files
 $(BDIR)/%.o: $(SDIR)/%.cpp
 	@# Make the build directory if it doesn't exist
-	@if ! [ -d $(@D) ]; then mkdir $(@D); fi
+	@if ! [ -d $(@D) ]; then mkdir -p $(@D); fi
 	$(CC) -c $^ -o $@ $(CFLAGS) 
