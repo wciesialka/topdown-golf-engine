@@ -7,7 +7,7 @@
 */
 
 #include "Tests.hpp"
-// #define RUN_TESTS
+#define RUN_TESTS
 #include "GolfEngine/GameManagement/Scene.hpp"
 #include "GolfEngine/Rendering/Window.hpp"
 

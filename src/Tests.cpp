@@ -8,8 +8,13 @@
 
 #include "Tests.hpp"
 #include "GolfEngine/Geometry/Vector2.hpp"
+#include "GolfEngine/Geometry/Shapes/Quadrilateral.hpp"
 #include <iostream>
 #include <cassert>
+
+#define ABS(n) ((n < 0) ? (-n) : n )
+#define MAX_CLOSENESS 0.1
+#define IS_APPROXIMATELY(n, m) (ABS((n-m)) < MAX_CLOSENESS)
 
 void vectorTests(){
     GolfEngine::Vector2 a = GolfEngine::Vector2::zero;
@@ -38,6 +43,11 @@ void vectorTests(){
     assert((b/2) == d);
 }
 
+void quadTests(){
+    GolfEngine::Quadrilateral quad(GolfEngine::Vector2(0, 0), GolfEngine::Vector2(1, 0), GolfEngine::Vector2(1, 1), GolfEngine::Vector2(1, 0));
+    assert(IS_APPROXIMATELY(quad.getPerimeter(), 4.0));
+}
+
 void runTest(const char* test_name, Test test){
     std::cout << "▶️  Running " << test_name << "..." << std::endl;
     test();
@@ -46,4 +56,5 @@ void runTest(const char* test_name, Test test){
 
 void runTests(){
     runTest("Vector2 Tests", vectorTests);
+    runTest("Quad Tests", quadTests);
 }
