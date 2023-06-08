@@ -7,7 +7,7 @@
 */
 
 #include "Tests.hpp"
-#include "Vector2.hpp"
+#include "GolfEngine/Geometry/Vector2.hpp"
 #include <iostream>
 #include <cassert>
 

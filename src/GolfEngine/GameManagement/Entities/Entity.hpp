@@ -9,8 +9,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "Renderable.hpp"
-#include "../Vector2.hpp"
+#include "../../Rendering/Renderable.hpp"
+#include "../../Geometry/Vector2.hpp"
 #include <cmath>
 
 namespace GolfEngine

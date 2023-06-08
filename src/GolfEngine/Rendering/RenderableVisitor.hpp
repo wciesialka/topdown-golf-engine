@@ -9,8 +9,8 @@
 #ifndef RENDERABLE_VISITOR_H
 #define RENDERABLE_VISITOR_H
 
-#include "../Renderables/Renderable.hpp"
-#include "../Vector2.hpp"
+#include "Renderable.hpp"
+#include "../Geometry/Vector2.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace GolfEngine

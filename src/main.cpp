@@ -8,8 +8,8 @@
 
 #include "Tests.hpp"
 // #define RUN_TESTS
-#include "GameManagement/Scene.hpp"
-#include "Rendering/Window.hpp"
+#include "GolfEngine/GameManagement/Scene.hpp"
+#include "GolfEngine/Rendering/Window.hpp"
 
 int main(){
     #ifdef RUN_TESTS

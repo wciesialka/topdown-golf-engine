@@ -17,8 +17,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "../GameManagement/Scene.hpp"
-#include "../Vector2.hpp"
-#include "../Rendering/RenderableVisitor.hpp"
+#include "../Geometry/Vector2.hpp"
+#include "RenderableVisitor.hpp"
 
 namespace GolfEngine
 {

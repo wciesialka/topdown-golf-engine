@@ -10,7 +10,7 @@
 #define SPRITE_H
 
 #include "Entity.hpp"
-#include "../Vector2.hpp"
+#include "../../Geometry/Vector2.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace GolfEngine

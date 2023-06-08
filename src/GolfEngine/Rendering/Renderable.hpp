@@ -12,7 +12,7 @@
 #ifndef RENDERABLE_H
 #define RENDERABLE_H
 
-#include "../Vector2.hpp"
+#include "../Geometry/Vector2.hpp"
 #include <cmath>
 #include <SFML/Graphics.hpp>
 

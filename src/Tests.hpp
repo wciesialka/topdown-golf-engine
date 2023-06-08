@@ -24,9 +24,4 @@ void runTests();
 */
 void runTest(const char* test_name, Test test);
 
-/**
- * @brief Tests for proving vector correctness.
-*/
-void vectorTests();
-
 #endif

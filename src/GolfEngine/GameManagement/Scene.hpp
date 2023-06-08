@@ -9,9 +9,9 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "../Renderables/Entity.hpp"
+#include "Entities/Entity.hpp"
 #include "Tile.hpp"
-#include "../Vector2.hpp"
+#include "../Geometry/Vector2.hpp"
 #include <vector>
 #include <unordered_map>
 #include "../Rendering/RenderableVisitor.hpp"
