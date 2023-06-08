@@ -16,9 +16,9 @@
 using GolfEngine::Tile;
 
 bool Tile::addEntity(GolfEngine::Entity* entity){
-    GolfEngine::Vector2 pos = entity->getPosition();
-    if(pos.x < this->getPosition().x && pos.x > (this->getPosition().x + TILE_SIZE) &&
-       pos.y < this->getPosition().y && pos.y > (this->getPosition().y + TILE_SIZE)){
+    GolfEngine::Vector2 pos = entity->getOrigin();
+    if(pos.x < this->getOrigin().x && pos.x > (this->getOrigin().x + TILE_SIZE) &&
+       pos.y < this->getOrigin().y && pos.y > (this->getOrigin().y + TILE_SIZE)){
         return false;
     }
     this->entities.push_back(entity);

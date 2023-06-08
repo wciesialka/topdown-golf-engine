@@ -28,8 +28,8 @@ GolfEngine::Tile* Scene::findTile(unsigned int x, unsigned int y) const{
 }
 
 bool Scene::addTile(GolfEngine::Tile* tile){
-    int x = (int)(tile->getPosition().x);
-    int y = (int)(tile->getPosition().y);
+    int x = (int)(tile->getOrigin().x);
+    int y = (int)(tile->getOrigin().y);
     if(this->findTile(x, y)){
         return false;
     }

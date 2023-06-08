@@ -33,7 +33,7 @@ namespace GolfEngine
          */
         inline void visit(GolfEngine::Renderable *object)
         {
-            GolfEngine::Vector2 pos = object->getPosition();
+            GolfEngine::Vector2 pos = object->getOrigin();
             if(pos.x >= top_left.x && pos.x <= bottom_right.x && pos.y >= top_left.y && pos.y <= bottom_right.y ){
                 object->render(this->window);
             }
