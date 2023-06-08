@@ -6,5 +6,5 @@
  * @date 2023-06-07
 */
 
-#include "Sprite.hpp"
-using GolfEngine::Sprite;
+#include "SpriteEntity.hpp"
+using GolfEngine::SpriteEntity;

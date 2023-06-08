@@ -1,13 +1,13 @@
 /**
- * @file Sprite.hpp
+ * @file SpriteEntity.hpp
  * @brief This file contains declerations for the Sprite class
  *
  * @author Willow Ciesialka
  * @date 2023-06-07
  */
 
-#ifndef SPRITE_H
-#define SPRITE_H
+#ifndef SPRITEENTITY_H
+#define SPRITEENTITY_H
 
 #include "Entity.hpp"
 #include "../../Geometry/Vector2.hpp"
@@ -15,22 +15,22 @@
 
 namespace GolfEngine
 {
-    class Sprite : public GolfEngine::Entity
+    class SpriteEntity : public GolfEngine::Entity
     {
     public:
-        Sprite(sf::Texture tex) : GolfEngine::Entity()
+        SpriteEntity(sf::Texture tex) : GolfEngine::Entity()
         {
             this->sprite = new sf::Sprite;
             this->sprite->setTexture(tex);
         }
 
-        Sprite(sf::Texture tex, GolfEngine::Vector2 pos) : GolfEngine::Entity(pos)
+        SpriteEntity(sf::Texture tex, GolfEngine::Vector2 pos) : GolfEngine::Entity(pos)
         {
             this->sprite = new sf::Sprite;
             this->sprite->setTexture(tex);
         }
 
-        Sprite(sf::Texture tex, Vector2 pos, float rotation) : GolfEngine::Entity(pos, rotation)
+        SpriteEntity(sf::Texture tex, Vector2 pos, float rotation) : GolfEngine::Entity(pos, rotation)
         {
             this->sprite = new sf::Sprite;
             this->sprite->setTexture(tex);
