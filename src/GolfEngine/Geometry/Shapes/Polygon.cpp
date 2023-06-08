@@ -7,6 +7,7 @@
 */
 
 #include "Polygon.hpp"
+#include "Shape.hpp"
 #include "../Vector2.hpp"
 #include <cstring>
 #include <stdexcept>
@@ -26,7 +27,7 @@ void Polygon::addPoint(GolfEngine::Vector2 point){
     this->setVertexCount(this->getVertexCount() + 1);
 }
 
-float Polygon::getPerimeter(){
+float Polygon::getPerimeter() const{
     if(this->getVertexCount() < 3){
         throw std::logic_error("Cannot get the perimeter of an open polygon.");
     }
@@ -40,7 +41,7 @@ float Polygon::getPerimeter(){
     return perimeter;
 }
 
-float Polygon::getArea(){
+float Polygon::getArea() const{
     if(this->getVertexCount() < 3){
         throw std::logic_error("Cannot get the area of an open polygon.");
     }
@@ -57,7 +58,7 @@ float Polygon::getArea(){
     return (summation / 2);
 }
 
-GolfEngine::Vector2 Polygon::getCentroid(){
+GolfEngine::Vector2 Polygon::getCentroid() const{
     // See Paul Bourke's Centroid paper for more info.
     // http://paulbourke.net/geometry/polygonmesh/centroid.pdf
 
@@ -93,4 +94,25 @@ void Polygon::render(sf::RenderWindow* window, GolfEngine::Vector2 offset){
     convex.setFillColor(sf::Color(this->getColor()));
 
     window->draw(convex);
+}
+
+bool Polygon::contains(GolfEngine::Vector2 point) const{
+    bool collision = false;
+
+    for(uint i = 0; i < this->getVertexCount(); i++){
+        uint j = (i + 1) % this->getVertexCount();
+        GolfEngine::Vector2 a = this->getPoint(i);
+        GolfEngine::Vector2 b = this->getPoint(j);
+
+        // Check if the point is between the two points in the y axis.
+        if( (a.y > point.y) != (b.y > point.y) ){
+            // Use the Jordan Curve Theorem
+            float winding_number = (b.x - a.x) * (point.y - a.y) / (b.y - a.y) + a.x;
+            if( point.x < winding_number ){
+                collision = !collision;
+            }
+        }
+    }
+
+    return collision;
 }

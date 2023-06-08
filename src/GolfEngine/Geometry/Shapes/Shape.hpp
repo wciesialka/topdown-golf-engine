@@ -19,12 +19,15 @@ namespace GolfEngine
     {
     public:
         /**
-         * @brief Returns whether the shape is interesecting another shape.
+         * @brief Returns whether the shape contains a point.
          *
-         * @param other The other shape to check.
-         * @returns True if the shapes are intersecting, false otherwise.
+         * @param point The point to check.
+         * @returns True if the point is encompassed by the shape, false otherwise.
+         * @note This assumes the point is in LOCAL space. To check if a world point is inside
+         * the shape, make use of the inherited \ref GolfEngine::Renderable::worldToLocal(GolfEngine::Vector2)
+         * function.
          */
-        virtual bool intersects(Shape *other) = 0;
+        virtual bool contains(Vector2 point) = 0;
 
         /**
          * @brief Returns the perimeter of the shape.
@@ -45,7 +48,7 @@ namespace GolfEngine
          *
          * @returns The centroid of the shape.
          */
-        virtual GolfEngine::Vector2 getCentroid();
+        virtual GolfEngine::Vector2 getCentroid() const = 0;
 
         /**
          * @brief Set the color of the shape.
