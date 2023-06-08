@@ -104,7 +104,7 @@ namespace GolfEngine
          * 
          * @param window SFML Window to render the object onto.
         */
-        virtual void render(sf::RenderWindow* window) = 0;
+        virtual void render(sf::RenderWindow* window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero) = 0;
 
     private:
         // Object properties

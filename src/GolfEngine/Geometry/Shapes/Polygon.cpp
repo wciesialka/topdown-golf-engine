@@ -7,7 +7,9 @@
 */
 
 #include "Polygon.hpp"
+#include "../Vector2.hpp"
 #include <cstring>
+#include <stdexcept>
 
 using GolfEngine::Polygon;
 
@@ -20,6 +22,75 @@ void Polygon::addPoint(GolfEngine::Vector2 point){
         delete[] this->vertices;
         this->vertices = new_vertices;
     }
-    this->vertices[this->getVertexCount()] = point;
+    this->setPoint(this->getVertexCount(), point);
     this->setVertexCount(this->getVertexCount() + 1);
+}
+
+float Polygon::getPerimeter(){
+    if(this->getVertexCount() < 3){
+        throw std::logic_error("Cannot get the perimeter of an open polygon.");
+    }
+    Vector2 a, b;
+    float perimeter = 0;
+    for(uint i = 0; i < this->getVertexCount(); i++){
+        a = this->getPoint(i);
+        b = this->getPoint((i+1) % this->getVertexCount());
+        perimeter += a.distance(b);
+    }
+    return perimeter;
+}
+
+float Polygon::getArea(){
+    if(this->getVertexCount() < 3){
+        throw std::logic_error("Cannot get the area of an open polygon.");
+    }
+    // A polygon encompasses the area 1/2 * summation(x_i * y_i+1 - x_i+1 * y_i) for each point in the Polygon.
+    Vector2 a, b;
+    float area = 0;
+    float summation;
+    for(uint i = 0; i < this->getVertexCount(); i++){
+        uint j = (i + 1) % this->getVertexCount();
+        a = this->getPoint(i);
+        b = this->getPoint(j);
+        summation += (a.x * b.y) - (b.x * a.y);
+    }
+    return (summation / 2);
+}
+
+GolfEngine::Vector2 Polygon::getCentroid(){
+    // See Paul Bourke's Centroid paper for more info.
+    // http://paulbourke.net/geometry/polygonmesh/centroid.pdf
+
+    float area = this->getArea();
+    float x_summation = 0, y_summation = 0;
+    float scalar = 1/(6*area);
+
+    for(uint i = 0; i < this->getVertexCount(); i++){
+        uint j = (i + 1) % this->getVertexCount();
+        GolfEngine::Vector2 a = this->getPoint(i);
+        GolfEngine::Vector2 b = this->getPoint(j);
+        float factor = (a.x * b.y) - (b.x * a.y);
+        x_summation += (a.x + b.x) * factor;
+        y_summation += (a.y + b.y) * factor;
+    }
+
+    return scalar * GolfEngine::Vector2(x_summation, y_summation);
+}
+
+void Polygon::render(sf::RenderWindow* window, GolfEngine::Vector2 offset){
+    if(this->getVertexCount() < 3){
+        throw std::logic_error("Cannot render an open polygon.");
+    }
+
+    sf::ConvexShape convex;
+    convex.setPointCount(this->getVertexCount());
+
+    for(uint i = 0; i < this->getVertexCount(); i++){
+        Vector2 render_pos = offset + this->getPoint(i);
+        convex.setPoint(i, sf::Vector2f(render_pos.x, render_pos.y));
+    }
+
+    convex.setFillColor(sf::Color(this->getColor()));
+
+    window->draw(convex);
 }

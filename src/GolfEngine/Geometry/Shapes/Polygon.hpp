@@ -9,14 +9,15 @@
 #ifndef POLYGON_H
 #define POLYGON_H
 
-#include "../../Rendering/Renderable.hpp"
+#include "Shape.hpp"
 #include "../Vector2.hpp"
 #include <stdexcept>
+#include <SFML/Graphics.hpp>
 
 namespace GolfEngine
 {
 
-    class Polygon : public Renderable
+    class Polygon : public Shape
     {
     public:
         Polygon() : max_vertices(3),
@@ -53,35 +54,59 @@ namespace GolfEngine
 
         /**
          * @brief Add a point to the polygon.
-         * 
+         *
          * @param point The point to add to the polygon.
-        */
+         */
         void addPoint(GolfEngine::Vector2 point);
 
         /**
-         * @brief Get a pointer to a vertex on the polygon.
-         * 
-         * @param i The index of the polygon to get.
-         * @throws std::out_of_range If the index is greater than or equal to the amount of vertices on the polygon, an exception will be thrown.
-         * @note This function, like all good things, is zero-indexed.
-         * @note This function returns a POINTER to the vertex, which allows for easier manipulating of points on the polygon.
-        */
-        inline GolfEngine::Vector2* getVertex(uint i) const{
-            if(i >= this->getVertexCount()){
-                throw std::out_of_range("Attempted to access vertex with index outside of bounds.");
+         * @brief Sets the vertex on the polygon to the specified vector.
+         *
+         * @param i Index of the vertex.
+         * @param point New point.
+         * @throws std::length_error If trying to set a point beyond the current amount of vertices.
+         */
+        inline void setPoint(uint i, GolfEngine::Vector2 point)
+        {
+            if (i > this->getVertexCount())
+            {
+                throw std::length_error("Cannot set a point outside of current polygon vertex count.");
             }
-            return &(this->vertices[i]);
+            this->vertices[i] = point;
         }
 
-        inline GolfEngine::Vector2* operator [](uint i) const{
-            return this->getVertex(i);
+        /**
+         * @brief Gets the vertex on the polygon.
+         *
+         * @param i Index of the vertex.
+         * @returns Vertex on polygon.
+         */
+        inline GolfEngine::Vector2 getPoint(uint i){
+            if(i > this->getVertexCount()){
+                throw std::out_of_range("Cannot get a point outside of current polygon vertex count.");
+            }
+            return this->vertices[i];
         }
+
+        virtual float getPerimeter();
+        virtual float getArea();
+        virtual GolfEngine::Vector2 getCentroid();
+        virtual bool intersects(Shape *other);
+        virtual void render(sf::RenderWindow* window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero);
 
     private:
         uint max_vertices;
         uint vertex_count;
 
         GolfEngine::Vector2 *vertices;
+
+        /**
+         * @brief This function calculates if there has been an intersection between two Polygons.
+         *
+         * @param other Polygon to compare.
+         * @returns True if there is an intersection, false otherwise.
+         */
+        bool polygonPolygonIntersection(Polygon *other);
 
         /**
          * @brief Set the max vertices of the polygon.
@@ -100,12 +125,14 @@ namespace GolfEngine
 
         /**
          * @brief Set the current number of vertices on the polygon.
-         * 
+         *
          * @param new_count New amount of vertices.
          * @throws std::length_error If the new count exceeds the maximum vertices, an error is thrown.
-        */
-        inline void setVertexCount(uint new_count){
-            if (new_count > this->getMaxVertices()){
+         */
+        inline void setVertexCount(uint new_count)
+        {
+            if (new_count > this->getMaxVertices())
+            {
                 throw std::length_error("Vertex count cannot exceed max vertices.");
             }
             this->vertex_count = new_count;
