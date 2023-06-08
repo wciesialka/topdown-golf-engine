@@ -111,6 +111,28 @@ namespace GolfEngine
          */
         virtual void render(sf::RenderWindow *window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero) = 0;
 
+        /**
+         * @brief Convert a local-space coordinate to a world-space coordinate.
+         *
+         * @param local Local-space coordinate.
+         * @returns World-space coordinate.
+         */
+        inline GolfEngine::Vector2 localToWorld(GolfEngine::Vector2 local) const
+        {
+            return this->origin + local;
+        }
+
+        /**
+         * @brief Convert a world-space coordinate to a local-space coordinate.
+         *
+         * @param world World-space coordinate.
+         * @returns Local-space coordinate.
+         */
+        inline GolfEngine::Vector2 worldToLocal(GolfEngine::Vector2 world) const
+        {
+            return world - this->origin;
+        }
+
     private:
         // Object properties
         GolfEngine::Vector2 origin;
