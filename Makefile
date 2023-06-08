@@ -7,8 +7,9 @@
 # Executable name
 EXEC = golf_engine
 
-# Class names
-CLASSES = main Tests Vector2 Renderables/Renderable Rendering/RenderableVisitor GameManagement/Tile Renderables/Entity GameManagement/Scene Rendering/Window Renderables/Sprite
+# Directories
+SDIR = ./src
+BDIR = ./build
 
 # Compiler command
 CC = g++
@@ -19,8 +20,14 @@ CFLAGS = -std=c++11
 # Linker flags
 LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-# Build Object paths
-OBJECTS = $(addprefix build/,$(addsuffix .o, $(CLASSES)))
+# Source Files
+SOURCE_PATHS = $(shell find $(SDIR) -iname "*.cpp")
+
+# Sources/Build Object paths
+SOURCES = $(SOURCE_PATHS:$(SDIR)/%=%)
+OBJECTS = $(addprefix $(BDIR)/,$(addsuffix .o, $(basename $(SOURCES))))
+
+.PHONY: all run clean
 
 # Build everything - default
 all: $(EXEC).out
@@ -31,15 +38,15 @@ run: $(EXEC).out
 
 # Clean - Delete build files and executables
 clean:
-	rm -rf ./build/*
-	rm -f ./$(EXEC).out
+	rm -rf $(BDIR)/*
+	rm -f  $(EXEC).out
 
 # Executable
 $(EXEC).out: $(OBJECTS)
 	$(CC) $^ -o $@ $(LFLAGS)
 
 # Build files
-build/%.o: src/%.cpp
-	# Make the build directory if it doesn't exist
-	if ! [ -d $(@D) ]; then mkdir $(@D); fi
+$(BDIR)/%.o: $(SDIR)/%.cpp
+	@# Make the build directory if it doesn't exist
+	@if ! [ -d $(@D) ]; then mkdir $(@D); fi
 	$(CC) -c $^ -o $@ $(CFLAGS) 
