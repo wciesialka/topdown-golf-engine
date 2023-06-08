@@ -27,7 +27,7 @@ namespace GolfEngine
          * the shape, make use of the inherited \ref GolfEngine::Renderable::worldToLocal(GolfEngine::Vector2)
          * function.
          */
-        virtual bool contains(Vector2 point) = 0;
+        virtual bool contains(Vector2 point) const = 0;
 
         /**
          * @brief Returns the perimeter of the shape.
