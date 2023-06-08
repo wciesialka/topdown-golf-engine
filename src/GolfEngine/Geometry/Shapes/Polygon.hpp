@@ -58,6 +58,25 @@ namespace GolfEngine
         */
         void addPoint(GolfEngine::Vector2 point);
 
+        /**
+         * @brief Get a pointer to a vertex on the polygon.
+         * 
+         * @param i The index of the polygon to get.
+         * @throws std::out_of_range If the index is greater than or equal to the amount of vertices on the polygon, an exception will be thrown.
+         * @note This function, like all good things, is zero-indexed.
+         * @note This function returns a POINTER to the vertex, which allows for easier manipulating of points on the polygon.
+        */
+        inline GolfEngine::Vector2* getVertex(uint i) const{
+            if(i >= this->getVertexCount()){
+                throw std::out_of_range("Attempted to access vertex with index outside of bounds.");
+            }
+            return &(this->vertices[i]);
+        }
+
+        inline GolfEngine::Vector2* operator [](uint i) const{
+            return this->getVertex(i);
+        }
+
     private:
         uint max_vertices;
         uint vertex_count;
