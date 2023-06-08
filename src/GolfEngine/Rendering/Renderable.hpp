@@ -24,26 +24,30 @@ namespace GolfEngine
     class Renderable
     {
     public:
-        Renderable() : position(GolfEngine::Vector2::zero),
+        Renderable() : origin(GolfEngine::Vector2::zero),
                        rotation(0)
-                       {}
+        {
+        }
 
-        Renderable(Vector2 pos) : position(pos),
+        Renderable(Vector2 pos) : origin(pos),
                                   rotation(0)
-                                  {}
+        {
+        }
 
-        Renderable(Vector2 pos, float rotation) : position(pos),
+        Renderable(Vector2 pos, float rotation) : origin(pos),
                                                   rotation(0)
-                                                  { this->setRotation(rotation); }
+        {
+            this->setRotation(rotation);
+        }
 
         /**
-         * @brief Set the object's position
+         * @brief Set the object's origin
          *
-         * @param position New position of object.
+         * @param origin New origin of object.
          */
-        inline void setPosition(const GolfEngine::Vector2 position)
+        inline void setOrigin(const GolfEngine::Vector2 origin)
         {
-            this->position = position;
+            this->origin = origin;
         }
 
         /**
@@ -61,13 +65,13 @@ namespace GolfEngine
         }
 
         /**
-         * @brief Get the position of the object.
+         * @brief Get the origin of the object.
          *
-         * @return object's position.
+         * @return object's origin.
          */
-        inline GolfEngine::Vector2 getPosition() const
+        inline GolfEngine::Vector2 getOrigin() const
         {
-            return this->position;
+            return this->origin;
         }
 
         /**
@@ -81,12 +85,13 @@ namespace GolfEngine
         }
 
         /**
-         * @brief Move the object's position.
-         * 
-         * @param by Vector to move the position by.
-        */
-        inline void move(const GolfEngine::Vector2 by){
-            this->setPosition(this->getPosition() + by);
+         * @brief Move the object's origin.
+         *
+         * @param by Vector to move the origin by.
+         */
+        inline void move(const GolfEngine::Vector2 by)
+        {
+            this->setOrigin(this->getOrigin() + by);
         }
 
         /**
@@ -101,14 +106,14 @@ namespace GolfEngine
 
         /**
          * @brief Render the object on the screen.
-         * 
+         *
          * @param window SFML Window to render the object onto.
-        */
-        virtual void render(sf::RenderWindow* window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero) = 0;
+         */
+        virtual void render(sf::RenderWindow *window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero) = 0;
 
     private:
         // Object properties
-        GolfEngine::Vector2 position;
+        GolfEngine::Vector2 origin;
 
         /**
          * @brief The rotation of the object in radians.
