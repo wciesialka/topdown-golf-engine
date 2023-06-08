@@ -38,7 +38,7 @@ run: $(EXEC).out
 
 # Clean - Delete build files and executables
 clean:
-	rm -rf $(BDIR)/*
+	rm -rf $(BDIR)
 	rm -f $(EXEC).out
 
 # Executable
