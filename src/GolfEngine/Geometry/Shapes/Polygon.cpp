@@ -56,7 +56,6 @@ float Polygon::getArea() const{
         b = this->getPoint(j);
         float iteration = (a.x + b.x) * (a.y - b.y);
         summation += iteration;
-        std::cout << a << ", " << b << ": " << iteration << ", " << summation << std::endl;
         j = i;
     }
     return summation / 2.0;
