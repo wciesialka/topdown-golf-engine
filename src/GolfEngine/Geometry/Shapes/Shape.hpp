@@ -19,6 +19,10 @@ namespace GolfEngine
     class Shape : public Renderable
     {
     public:
+        Shape() : GolfEngine::Renderable() {};
+        Shape(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos) {};
+        Shape(GolfEngine::Vector2 pos, float rotation) : GolfEngine::Renderable(pos, rotation) {};
+
         /**
          * @brief Returns whether the shape contains a point.
          *

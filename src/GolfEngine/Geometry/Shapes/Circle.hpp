@@ -11,13 +11,20 @@
 
 #include "Shape.hpp"
 #include <stdexcept>
+#include "../Constants.hpp"
+
+#define SQR(n) (n*n)
 
 namespace GolfEngine
 {
     class Circle : public GolfEngine::Shape
     {
     public:
-        Circle(float radius)
+        Circle() : GolfEngine::Shape()
+        {
+            this->setRadius(1.0);
+        }
+        Circle(GolfEngine::Vector2 pos, float radius) : GolfEngine::Shape(pos)
         {
             this->setRadius(radius);
         }
@@ -41,14 +48,51 @@ namespace GolfEngine
          *
          * @returns The radius of the circle.
          */
-        inline float getRadius()
+        inline float getRadius() const
         {
             return this->radius;
+        }
+
+        inline GolfEngine::Vector2 getPosition() const
+        {
+            return this->getOrigin();
+        }
+
+        inline virtual bool contains(GolfEngine::Vector2 point) const
+        {
+            return (point.distance(this->getCentroid()) <= this->getRadius());
+        }
+
+        virtual bool intersects(const GolfEngine::Line *line) const;
+
+        /**
+         * @brief Compare if the circle is intersecting another circle.
+         * 
+         * @param other Circle to compare against.
+         * @returns True if there is an intersection, false otherwise.
+        */
+        inline bool intersects(const GolfEngine::Circle* other) const {
+            return this->getPosition().distance(other->getPosition()) <= (this->getRadius() + other->getRadius());
+        }
+
+        inline virtual float getPerimeter() const {
+            return 2.0 * GolfEngine::pi * this->getRadius();
+        }
+
+        virtual float getArea() const {
+            return GolfEngine::pi * SQR(this->getRadius());
+        }
+
+        virtual GolfEngine::Vector2 getCentroid() const
+        {
+            return this->getPosition();
         }
 
     private:
         float radius;
     };
 }
+
+#undef SQR
 
 #endif

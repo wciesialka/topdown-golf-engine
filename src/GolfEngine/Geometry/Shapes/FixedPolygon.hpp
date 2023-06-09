@@ -23,7 +23,9 @@ namespace GolfEngine
         const static uint DEFAULT_MAX_VERTICES = 3;
 
         FixedPolygon() : GolfEngine::Polygon(DEFAULT_MAX_VERTICES) {};
+        FixedPolygon(GolfEngine::Vector2 pos) : GolfEngine::Polygon(pos, DEFAULT_MAX_VERTICES) {};
         FixedPolygon(uint max_vertices) : GolfEngine::Polygon(max_vertices) {};
+        FixedPolygon(GolfEngine::Vector2 pos, uint max_vertices) : GolfEngine::Polygon(pos, max_vertices) {};
 
         /**
          * @brief Adds a point to the polygon.

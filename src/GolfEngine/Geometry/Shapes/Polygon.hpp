@@ -10,6 +10,7 @@
 #define POLYGON_H
 
 #include "Shape.hpp"
+#include "Circle.hpp"
 #include "../Vector2.hpp"
 #include "../Line.hpp"
 #include <stdexcept>
@@ -22,12 +23,28 @@ namespace GolfEngine
     {
     public:
         Polygon() : max_vertices(3),
-                    vertex_count(0)
+                    vertex_count(0),
+                    GolfEngine::Shape()
         {
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
         }
 
-        Polygon(uint max_vertices) : vertex_count(0)
+        Polygon(uint max_vertices) : vertex_count(0),
+                                     GolfEngine::Shape()
+        {
+            this->setMaxVertices(max_vertices);
+            this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+        }
+
+        Polygon(GolfEngine::Vector2 pos) : max_vertices(3),
+                                           vertex_count(0),
+                                           GolfEngine::Shape(pos)
+        {
+            this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+        }
+
+        Polygon(GolfEngine::Vector2 pos, uint max_vertices) : vertex_count(0),
+                                                              GolfEngine::Shape(pos)
         {
             this->setMaxVertices(max_vertices);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
@@ -108,14 +125,33 @@ namespace GolfEngine
          */
         bool intersects(const GolfEngine::Polygon *other) const;
 
+        /**
+         * @brief Check if the polygon is intersecting a circle.
+         *
+         * @param circle Circle to compare against.
+         * @returns True if there is an intersection, false otherwise.
+         */
+        bool intersects(const GolfEngine::Circle *circle) const;
+
+        /**
+         * @brief Compare if the circle is intersecting a polygon.
+         *
+         * @param polygon Polygon to compare against.
+         * @returns True if there is an intersection, false otherwise.
+         */
+        inline friend bool intersects(const GolfEngine::Circle *circle, const GolfEngine::Polygon *polygon)
+        {
+            return polygon->intersects(circle);
+        }
+
         virtual float getPerimeter() const;
         virtual float getArea() const;
         virtual GolfEngine::Vector2 getCentroid() const;
         virtual bool contains(Vector2 point) const;
         virtual void render(sf::RenderWindow *window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero);
 
-        bool operator ==(const Polygon& other) const;
-        inline bool operator !=(const Polygon& other) const { return !(*this == other); } 
+        bool operator==(const Polygon &other) const;
+        inline bool operator!=(const Polygon &other) const { return !(*this == other); }
 
     private:
         uint max_vertices;

@@ -13,13 +13,11 @@
 #define RENDERABLE_H
 
 #include "../Geometry/Vector2.hpp"
-#include <cmath>
 #include <SFML/Graphics.hpp>
+#include "../Geometry/Constants.hpp"
 
 namespace GolfEngine
 {
-    const float pi = (float)(std::acos(-1.0));
-    const float tau = pi * 2.0; /* My best friend ❤️ */
 
     class Renderable
     {

@@ -169,12 +169,14 @@ bool Polygon::intersects(const Polygon *other) const
     // any of the lines formed by each consecutive vertex
     // on the polygon.
     uint j = this->getVertexCount() - 1;
-    for(uint i = 0; i < this->getVertexCount(); i++){
+    for (uint i = 0; i < this->getVertexCount(); i++)
+    {
         GolfEngine::Vector2 a = this->getPoint(i);
         GolfEngine::Vector2 b = this->getPoint(j);
 
         GolfEngine::Line edge(a, b);
-        if(other->intersects(&edge)){
+        if (other->intersects(&edge))
+        {
             return true;
         }
 
@@ -199,4 +201,24 @@ bool Polygon::operator==(const Polygon &other) const
         }
     }
     return true;
+}
+
+bool Polygon::intersects(const GolfEngine::Circle *circle) const
+{
+    // Check if any of the lines formed by consecutive vertices intersect the circle.
+    uint j = this->getVertexCount() - 1;
+    for (uint i = 0; i < this->getVertexCount(); i++)
+    {
+        GolfEngine::Vector2 a = this->getPoint(i);
+        GolfEngine::Vector2 b = this->getPoint(j);
+
+        GolfEngine::Line edge(a, b);
+        if (circle->intersects(&edge))
+        {
+            return true;
+        }
+
+        j = i;
+    }
+    return false;
 }
