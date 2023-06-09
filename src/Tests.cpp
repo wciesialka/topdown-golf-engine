@@ -13,7 +13,7 @@
 #include <cassert>
 
 #define ABS(n) ((n < 0) ? (-n) : n )
-#define MAX_CLOSENESS 0.1
+#define MAX_CLOSENESS 0.01
 #define IS_APPROXIMATELY(n, m) (ABS((n-m)) < MAX_CLOSENESS)
 
 void vectorTests(){
@@ -44,8 +44,9 @@ void vectorTests(){
 }
 
 void quadTests(){
-    GolfEngine::Quadrilateral quad(GolfEngine::Vector2(0, 0), GolfEngine::Vector2(1, 0), GolfEngine::Vector2(1, 1), GolfEngine::Vector2(1, 0));
+    GolfEngine::Quadrilateral quad(GolfEngine::Vector2(0, 0), GolfEngine::Vector2(1, 0), GolfEngine::Vector2(1, 1), GolfEngine::Vector2(0, 1));
     assert(IS_APPROXIMATELY(quad.getPerimeter(), 4.0));
+    assert(IS_APPROXIMATELY(quad.getArea(), 1.0));
 }
 
 void runTest(const char* test_name, Test test){

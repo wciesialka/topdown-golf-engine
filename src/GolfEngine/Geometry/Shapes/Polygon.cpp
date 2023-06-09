@@ -12,6 +12,8 @@
 #include <cstring>
 #include <stdexcept>
 
+#include <iostream>
+
 using GolfEngine::Polygon;
 
 void Polygon::addPoint(GolfEngine::Vector2 point){
@@ -47,15 +49,17 @@ float Polygon::getArea() const{
     }
     // A polygon encompasses the area 1/2 * summation(x_i * y_i+1 - x_i+1 * y_i) for each point in the Polygon.
     Vector2 a, b;
-    float area = 0;
-    float summation;
+    float summation = 0;
+    uint j = this->getVertexCount() - 1;
     for(uint i = 0; i < this->getVertexCount(); i++){
-        uint j = (i + 1) % this->getVertexCount();
         a = this->getPoint(i);
         b = this->getPoint(j);
-        summation += (a.x * b.y) - (b.x * a.y);
+        float iteration = (a.x + b.x) * (a.y - b.y);
+        summation += iteration;
+        std::cout << a << ", " << b << ": " << iteration << ", " << summation << std::endl;
+        j = i;
     }
-    return (summation / 2);
+    return summation / 2.0;
 }
 
 GolfEngine::Vector2 Polygon::getCentroid() const{
