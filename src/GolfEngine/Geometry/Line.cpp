@@ -26,10 +26,10 @@ bool Line::intersects(GolfEngine::Vector2 point) const {
     return false;
 }
 
-bool Line::intersects(const Line& other) const {
-    float denominator = ((this->b.x - this->a.x) * (other.b.y - other.a.y)) - ((this->b.y - this->a.y) * (other.b.x - other.a.x));
-    float numerator1 = ((this->a.y - other.a.y) * (other.b.x - other.a.x)) - ((this->a.x - other.a.x) * (other.b.y - other.a.y));
-    float numerator2 = ((this->a.y - other.a.y) * (this->b.x - this->a.x)) - ((this->a.x - other.a.x) * (this->b.y - this->a.y));
+bool Line::intersects(const Line* other) const {
+    float denominator = ((this->b.x - this->a.x) * (other->b.y - other->a.y)) - ((this->b.y - this->a.y) * (other->b.x - other->a.x));
+    float numerator1 = ((this->a.y - other->a.y) * (other->b.x - other->a.x)) - ((this->a.x - other->a.x) * (other->b.y - other->a.y));
+    float numerator2 = ((this->a.y - other->a.y) * (this->b.x - this->a.x)) - ((this->a.x - other->a.x) * (this->b.y - this->a.y));
 
     if(denominator == 0) {
         return (numerator1 == 0) && (numerator2 == 0);

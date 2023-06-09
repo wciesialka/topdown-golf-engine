@@ -11,6 +11,7 @@
 
 #include "Shape.hpp"
 #include "../Vector2.hpp"
+#include "../Line.hpp"
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
 
@@ -56,6 +57,7 @@ namespace GolfEngine
          * @brief Add a point to the polygon.
          *
          * @param point The point to add to the polygon.
+         * @note Points must be added either CLOCKWISE or COUNTER-CLOCKWISE.
          */
         void addPoint(GolfEngine::Vector2 point);
 
@@ -91,12 +93,20 @@ namespace GolfEngine
         }
 
         /**
-         * @brief Check whether the polygon is interesecting a different polygon.
+         * @brief Check whether the polygon is interesecting a line.
          *
-         * @param other Polygon to compare.
-         * @returns True if there is an intersection, fFalse otherwise.
+         * @param line Line to compare against.
+         * @returns True if there is an intersection, false otherwise.
          */
-        bool intersects(Polygon* other) const;
+        bool intersects(const GolfEngine::Line *line) const;
+
+        /**
+         * @brief Check if the polygon is intersecting another polygon.
+         *
+         * @param other Polygon to compare against.
+         * @returns True if there is an intersection, false otherwise.
+         */
+        bool intersects(const GolfEngine::Polygon *other) const;
 
         virtual float getPerimeter() const;
         virtual float getArea() const;
@@ -104,19 +114,14 @@ namespace GolfEngine
         virtual bool contains(Vector2 point) const;
         virtual void render(sf::RenderWindow *window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero);
 
+        bool operator ==(const Polygon& other) const;
+        inline bool operator !=(const Polygon& other) const { return !(*this == other); } 
+
     private:
         uint max_vertices;
         uint vertex_count;
 
         GolfEngine::Vector2 *vertices;
-
-        /**
-         * @brief This function calculates if there has been an intersection between two Polygons.
-         *
-         * @param other Polygon to compare.
-         * @returns True if there is an intersection, false otherwise.
-         */
-        bool polygonPolygonIntersection(Polygon *other);
 
         /**
          * @brief Set the max vertices of the polygon.

@@ -39,7 +39,7 @@ namespace GolfEngine
          * @param other Line to compare against.
          * @returns True if the lines intersect, false otherwise.
          */
-        bool Line::intersects(const Line& other) const;
+        bool Line::intersects(const Line* other) const;
     };
 }
 
