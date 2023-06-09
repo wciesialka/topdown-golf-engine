@@ -14,6 +14,7 @@
 #include "../Geometry/Vector2.hpp"
 #include "Entities/Entity.hpp"
 #include "../Rendering/Renderable.hpp"
+#include "../Rendering/RenderableVisitor.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -49,10 +50,18 @@ namespace GolfEngine
 
         /**
          * @brief Render the tile
-         * 
+         *
          * @param window Window to render onto.
-        */
-       virtual void render(sf::RenderWindow* window);
+         */
+        virtual void render(sf::RenderWindow *window);
+
+        virtual void visit(GolfEngine::RenderableVisitor *visitor)
+        {
+            this->render(visitor->getWindow()->getDisplay());
+            for(GolfEngine::Entity* entity : this->entities){
+                entity->visit(visitor);
+            }
+        }
 
     private:
         GolfEngine::Entity::EntityList entities;

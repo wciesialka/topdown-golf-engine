@@ -33,8 +33,8 @@ namespace GolfEngine
         }
 
         Window(GolfEngine::Scene *scene, int background_color) : scene(scene),
-                                           focus(GolfEngine::Vector2::zero),
-                                           bgcolor(sf::Color(background_color))
+                                                                 focus(GolfEngine::Vector2::zero),
+                                                                 bgcolor(sf::Color(background_color))
         {
             this->render_window = new sf::RenderWindow(sf::VideoMode(SCREEN_W, SCREEN_H), WINDOW_TITLE);
         }
@@ -82,6 +82,36 @@ namespace GolfEngine
             return this->focus;
         }
 
+        inline int getWidth() const
+        {
+            return SCREEN_W;
+        }
+
+        inline int getHeight() const
+        {
+            return SCREEN_H;
+        }
+
+        /**
+         * @brief Returns the render window of the window.
+         * 
+         * @returns Pointer to the render window.
+        */
+        inline sf::RenderWindow* getDisplay() const {
+            return this->render_window;
+        }
+
+        /**
+         * @brief Check whether a point is constrained by the screen.
+         *
+         * @param point Point to check.
+         * @returns True if the point is within screen bounds, false otherwise.
+         */
+        inline bool contains(GolfEngine::Vector2 point) const
+        {
+            return (point.x >= this->getFocusPoint().x && point.y >= this->getFocusPoint().y) && (point.x <= (this->getFocusPoint().x + this->getWidth()) && point.y <= (this->getFocusPoint().y + this->getHeight());
+        }
+
     private:
         sf::RenderWindow *render_window;
         GolfEngine::Scene *scene;
@@ -91,4 +121,6 @@ namespace GolfEngine
     };
 }
 
+#undef SCREEN_W
+#undef SCREEN_H
 #endif

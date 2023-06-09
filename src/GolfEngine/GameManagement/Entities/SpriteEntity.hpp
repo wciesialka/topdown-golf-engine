@@ -36,6 +36,8 @@ namespace GolfEngine
             this->sprite->setTexture(tex);
         }
 
+        void render(sf::RenderWindow* window);
+
     private:
         sf::Sprite *sprite;
     };

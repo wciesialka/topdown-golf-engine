@@ -58,7 +58,11 @@ namespace GolfEngine
          *
          * @param visitor A RenderableVisitor responsible for rendering all objects.
          */
-        void render(GolfEngine::RenderableVisitor visitor);
+        inline void visit(GolfEngine::RenderableVisitor* visitor){
+            for(auto it : this->tilemap){
+                it.second->visit(visitor);
+            }
+        };
 
     private:
         std::unordered_map<unsigned int, Tile *> tilemap;

@@ -19,6 +19,7 @@ void Window::handleEvent(sf::Event event){
 }
 
 void Window::beginDisplay(){
+    GolfEngine::RenderableVisitor visitor(this);
     while (this->render_window->isOpen())
     {
         sf::Event event;
@@ -28,10 +29,7 @@ void Window::beginDisplay(){
 
             this->render_window->clear(this->bgcolor);
 
-            GolfEngine::RenderableVisitor visitor(this->render_window, 
-                                                  this->getFocusPoint(), 
-                                                  this->getFocusPoint() + GolfEngine::Vector2(SCREEN_W, SCREEN_H));
-            this->scene->render(visitor);
+            this->scene->visit(&visitor);
 
             this->render_window->display();
         }

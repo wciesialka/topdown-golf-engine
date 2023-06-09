@@ -8,3 +8,7 @@
 
 #include "SpriteEntity.hpp"
 using GolfEngine::SpriteEntity;
+
+void SpriteEntity::render(sf::RenderWindow* window){
+    
+}
