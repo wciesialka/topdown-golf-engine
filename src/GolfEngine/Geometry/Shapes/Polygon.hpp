@@ -98,7 +98,7 @@ namespace GolfEngine
          * @param line Line to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        bool intersects(const GolfEngine::Line *line) const;
+        virtual bool intersects(const GolfEngine::Line *line) const;
 
         /**
          * @brief Check if the polygon is intersecting another polygon.

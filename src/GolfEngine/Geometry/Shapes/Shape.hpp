@@ -11,6 +11,7 @@
 
 #include "../../Rendering/Renderable.hpp"
 #include "../Vector2.hpp"
+#include "../Line.hpp"
 #include <stdexcept>
 
 namespace GolfEngine
@@ -27,7 +28,15 @@ namespace GolfEngine
          * the shape, make use of the inherited \ref GolfEngine::Renderable::worldToLocal(GolfEngine::Vector2)
          * function.
          */
-        virtual bool contains(Vector2 point) const = 0;
+        virtual bool contains(GolfEngine::Vector2 point) const = 0;
+
+        /**
+         * @brief Compare if the shape intersects a line.
+         * 
+         * @param line Line to compare against.
+         * @returns True if there is an intersection, false otherwise.
+        */
+        virtual bool intersects(const GolfEngine::Line* line) const = 0;
 
         /**
          * @brief Returns the perimeter of the shape.
