@@ -81,18 +81,28 @@ namespace GolfEngine
          * @param i Index of the vertex.
          * @returns Vertex on polygon.
          */
-        inline GolfEngine::Vector2 getPoint(uint i) const{
-            if(i > this->getVertexCount()){
+        inline GolfEngine::Vector2 getPoint(uint i) const
+        {
+            if (i > this->getVertexCount())
+            {
                 throw std::out_of_range("Cannot get a point outside of current polygon vertex count.");
             }
             return this->vertices[i];
         }
 
+        /**
+         * @brief Check whether the polygon is interesecting a different polygon.
+         *
+         * @param other Polygon to compare.
+         * @returns True if there is an intersection, fFalse otherwise.
+         */
+        bool intersects(Polygon* other) const;
+
         virtual float getPerimeter() const;
         virtual float getArea() const;
         virtual GolfEngine::Vector2 getCentroid() const;
         virtual bool contains(Vector2 point) const;
-        virtual void render(sf::RenderWindow* window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero);
+        virtual void render(sf::RenderWindow *window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero);
 
     private:
         uint max_vertices;

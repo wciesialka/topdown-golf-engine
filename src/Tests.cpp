@@ -9,6 +9,7 @@
 #include "Tests.hpp"
 #include "GolfEngine/Geometry/Vector2.hpp"
 #include "GolfEngine/Geometry/Shapes/Quadrilateral.hpp"
+#include "GolfEngine/Geometry/Line.hpp"
 #include <iostream>
 #include <cassert>
 
@@ -47,6 +48,8 @@ void quadTests(){
     GolfEngine::Quadrilateral quad(GolfEngine::Vector2(0, 0), GolfEngine::Vector2(1, 0), GolfEngine::Vector2(1, 1), GolfEngine::Vector2(0, 1));
     assert(IS_APPROXIMATELY(quad.getPerimeter(), 4.0));
     assert(IS_APPROXIMATELY(quad.getArea(), 1.0));
+    GolfEngine::Line line(GolfEngine::Vector2(0,0), GolfEngine::Vector2(1,0));
+    assert(IS_APPROXIMATELY(line.length(), 1.0));
 }
 
 void runTest(const char* test_name, Test test){
@@ -59,3 +62,7 @@ void runTests(){
     runTest("Vector2 Tests", vectorTests);
     runTest("Quad Tests", quadTests);
 }
+
+#undef IS_APPROXIMATELY
+#undef MAX_CLOSENESS
+#undef ABS
