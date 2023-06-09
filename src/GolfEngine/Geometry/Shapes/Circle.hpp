@@ -88,6 +88,8 @@ namespace GolfEngine
             return this->getPosition();
         }
 
+        virtual void render(sf::RenderWindow *window);
+
     private:
         float radius;
     };

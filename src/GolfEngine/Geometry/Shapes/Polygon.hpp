@@ -136,6 +136,7 @@ namespace GolfEngine
         /**
          * @brief Compare if the circle is intersecting a polygon.
          *
+         * @param circle Circle to compare with.
          * @param polygon Polygon to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
@@ -148,7 +149,7 @@ namespace GolfEngine
         virtual float getArea() const;
         virtual GolfEngine::Vector2 getCentroid() const;
         virtual bool contains(Vector2 point) const;
-        virtual void render(sf::RenderWindow *window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero);
+        virtual void render(sf::RenderWindow *window);
 
         bool operator==(const Polygon &other) const;
         inline bool operator!=(const Polygon &other) const { return !(*this == other); }

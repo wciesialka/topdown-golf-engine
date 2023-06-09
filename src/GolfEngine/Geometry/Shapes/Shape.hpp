@@ -12,6 +12,7 @@
 #include "../../Rendering/Renderable.hpp"
 #include "../Vector2.hpp"
 #include "../Line.hpp"
+#include <SFML/Graphics.hpp>
 #include <stdexcept>
 
 namespace GolfEngine
@@ -72,15 +73,15 @@ namespace GolfEngine
             if(rgb < 0 || rgb > 0xFFFFFF){
                 throw std::out_of_range("Color must be int containing three bytes (R, G, B) in form 0xRRGGBB.");
             }
-            this->color = (rgb << 8) | 0xFF; 
+            this->color = sf::Color((rgb << 8) | 0xFF); 
         }
 
-        inline int getColor() const {
+        inline sf::Color getColor() const {
             return this->color;
         }
 
     private:
-        int color;
+        sf::Color color;
     };
 }
 

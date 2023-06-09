@@ -32,4 +32,15 @@ bool Circle::intersects(const GolfEngine::Line *line) const
     return this->contains(closest);
 }
 
+void Circle::render(sf::RenderWindow *window){
+    sf::CircleShape shape(this->getRadius());
+    shape.setFillColor(this->getColor());
+
+    sf::Vector2f render_pos(this->getOrigin().x, this->getOrigin().y);
+
+    shape.setPosition(render_pos);
+
+    window->draw(shape);
+}
+
 #undef SQR
