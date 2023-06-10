@@ -20,9 +20,9 @@ namespace GolfEngine
     class Circle : public GolfEngine::Shape
     {
     public:
-        Circle() : GolfEngine::Shape()
+        Circle(float radius) : GolfEngine::Shape()
         {
-            this->setRadius(1.0);
+            this->setRadius(radius);
         }
         Circle(GolfEngine::Vector2 pos, float radius) : GolfEngine::Shape(pos)
         {

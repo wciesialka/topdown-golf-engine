@@ -9,8 +9,6 @@
 #ifndef TILE_H
 #define TILE_H
 
-#define TILE_SIZE 64
-
 #include "../Geometry/Vector2.hpp"
 #include "Entities/Entity.hpp"
 #include "../Rendering/Renderable.hpp"
@@ -23,6 +21,8 @@ namespace GolfEngine
     class Tile : public Renderable
     {
     public:
+        static const int TILE_SIZE = 64;
+
         Tile() : entities(GolfEngine::Entity::EntityList()){};
         /**
          * @brief This function adds an entity to the tile.

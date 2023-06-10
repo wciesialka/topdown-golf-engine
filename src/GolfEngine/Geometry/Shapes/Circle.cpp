@@ -7,6 +7,7 @@
  */
 
 #include "Circle.hpp"
+#include <iostream>
 using GolfEngine::Circle;
 
 #define SQR(n) (n*n)

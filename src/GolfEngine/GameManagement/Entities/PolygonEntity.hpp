@@ -24,6 +24,7 @@ namespace GolfEngine
 
         inline virtual void render(sf::RenderWindow *window)
         {
+            this->shape->setOrigin(this->getOrigin());
             this->shape->render(window);
         };
 

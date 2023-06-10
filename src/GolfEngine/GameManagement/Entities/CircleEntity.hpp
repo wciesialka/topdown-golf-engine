@@ -27,6 +27,7 @@ namespace GolfEngine
         CircleEntity(Circle *circle, GolfEngine::Vector2 pos, float rotation) : shape(circle), GolfEngine::Entity(pos, rotation){};
 
         inline virtual void render(sf::RenderWindow *window) {
+            this->shape->setOrigin(this->getOrigin());
             this->shape->render(window);
         };
 
