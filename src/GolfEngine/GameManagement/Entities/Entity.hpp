@@ -108,8 +108,8 @@ namespace GolfEngine
         }
 
         inline void visit(GolfEngine::RenderableVisitor* visitor){
-            if(visitor->getWindow()->contains(this->getOrigin())){
-                this->render(visitor->getWindow()->getDisplay());
+            if(visitor->canView(this->getOrigin())){
+                this->render(visitor->getWindow());
             }
         }
 

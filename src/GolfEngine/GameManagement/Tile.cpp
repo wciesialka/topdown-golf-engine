@@ -39,7 +39,10 @@ bool Tile::removeEntity(GolfEngine::Entity* entity){
 }
 
 void Tile::render(sf::RenderWindow* window){
-    for(GolfEngine::Entity* ent : this->entities){
-        ent->render(window);
-    }
+    sf::RectangleShape rectangle(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+    sf::Vector2f render_pos(this->getOrigin().x, this->getOrigin().y);
+    rectangle.setPosition(render_pos);
+    rectangle.setFillColor(sf::Color::Green);
+
+    window->draw(rectangle);
 }

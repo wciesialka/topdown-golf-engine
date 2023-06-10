@@ -25,14 +25,14 @@ namespace GolfEngine
     class Window
     {
     public:
-        Window(GolfEngine::Scene *scene) : scene(scene),
+        Window(GolfEngine::Scene* scene) : scene(scene),
                                            focus(GolfEngine::Vector2::zero),
                                            bgcolor(sf::Color::Black)
         {
             this->render_window = new sf::RenderWindow(sf::VideoMode(SCREEN_W, SCREEN_H), WINDOW_TITLE);
         }
 
-        Window(GolfEngine::Scene *scene, int background_color) : scene(scene),
+        Window(GolfEngine::Scene* scene, int background_color) : scene(scene),
                                                                  focus(GolfEngine::Vector2::zero),
                                                                  bgcolor(sf::Color(background_color))
         {
@@ -109,7 +109,7 @@ namespace GolfEngine
          */
         inline bool contains(GolfEngine::Vector2 point) const
         {
-            return (point.x >= this->getFocusPoint().x && point.y >= this->getFocusPoint().y) && (point.x <= (this->getFocusPoint().x + this->getWidth()) && point.y <= (this->getFocusPoint().y + this->getHeight());
+            return (point.x >= this->getFocusPoint().x && point.y >= this->getFocusPoint().y) && (point.x <= (this->getFocusPoint().x + this->getWidth()) && point.y <= (this->getFocusPoint().y + this->getHeight()));
         }
 
     private:

@@ -10,6 +10,7 @@
 #define SHAPE_H
 
 #include "../../Rendering/Renderable.hpp"
+#include "../../Rendering/RenderableVisitor.hpp"
 #include "../Vector2.hpp"
 #include "../Line.hpp"
 #include <SFML/Graphics.hpp>
@@ -37,11 +38,11 @@ namespace GolfEngine
 
         /**
          * @brief Compare if the shape intersects a line.
-         * 
+         *
          * @param line Line to compare against.
          * @returns True if there is an intersection, false otherwise.
-        */
-        virtual bool intersects(const GolfEngine::Line* line) const = 0;
+         */
+        virtual bool intersects(const GolfEngine::Line *line) const = 0;
 
         /**
          * @brief Returns the perimeter of the shape.
@@ -66,18 +67,25 @@ namespace GolfEngine
 
         /**
          * @brief Set the color of the shape.
-         * 
+         *
          * @param rgb Color as integer 0xRRGGBB.
-        */
-        inline void setColor(int rgb){
-            if(rgb < 0 || rgb > 0xFFFFFF){
+         */
+        inline void setColor(int rgb)
+        {
+            if (rgb < 0 || rgb > 0xFFFFFF)
+            {
                 throw std::out_of_range("Color must be int containing three bytes (R, G, B) in form 0xRRGGBB.");
             }
-            this->color = sf::Color((rgb << 8) | 0xFF); 
+            this->color = sf::Color((rgb << 8) | 0xFF);
         }
 
-        inline sf::Color getColor() const {
+        inline sf::Color getColor() const
+        {
             return this->color;
+        }
+
+        inline void visit(GolfEngine::RenderableVisitor* visitor){
+            this->render(visitor->getWindow());
         }
 
     private:

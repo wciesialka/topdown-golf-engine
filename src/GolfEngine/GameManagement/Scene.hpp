@@ -15,6 +15,7 @@
 #include <vector>
 #include <unordered_map>
 #include "../Rendering/RenderableVisitor.hpp"
+#include <SFML/Graphics.hpp>
 
 namespace GolfEngine
 {
@@ -45,6 +46,11 @@ namespace GolfEngine
         bool addTile(Tile *tile);
 
         /**
+         * @brief Handle event
+         */
+        void handleEvent(sf::Event event);
+
+        /**
          * @brief This function finds and returns a tile designated by a position.
          *
          * @param x x position of tile
@@ -58,8 +64,10 @@ namespace GolfEngine
          *
          * @param visitor A RenderableVisitor responsible for rendering all objects.
          */
-        inline void visit(GolfEngine::RenderableVisitor* visitor){
-            for(auto it : this->tilemap){
+        inline void visit(GolfEngine::RenderableVisitor *visitor)
+        {
+            for (auto it : this->tilemap)
+            {
                 it.second->visit(visitor);
             }
         };

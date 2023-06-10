@@ -10,6 +10,10 @@
 #define RUN_TESTS
 #include "GolfEngine/GameManagement/Scene.hpp"
 #include "GolfEngine/Rendering/Window.hpp"
+#include "GolfEngine/GameManagement/Entities/PolygonEntity.hpp"
+#include "GolfEngine/GameManagement/Entities/CircleEntity.hpp"
+#include "GolfEngine/Geometry/Shapes/Circle.hpp"
+
 
 int main(){
     #ifdef RUN_TESTS
@@ -17,6 +21,8 @@ int main(){
     #endif
 
     GolfEngine::Scene scene;
+    GolfEngine::Tile tile;
+    GolfEngine::Circle();
     GolfEngine::Window window(&scene, 0x8b8589ff);
     window.beginDisplay();
 

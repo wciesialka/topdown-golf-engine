@@ -57,7 +57,7 @@ namespace GolfEngine
 
         virtual void visit(GolfEngine::RenderableVisitor *visitor)
         {
-            this->render(visitor->getWindow()->getDisplay());
+            this->render(visitor->getWindow());
             for(GolfEngine::Entity* entity : this->entities){
                 entity->visit(visitor);
             }

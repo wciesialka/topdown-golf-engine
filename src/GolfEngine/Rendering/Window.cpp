@@ -12,26 +12,28 @@
 using GolfEngine::Window;
 
 void Window::handleEvent(sf::Event event){
-    if (event.type == sf::Event::Closed)
-    {
-        this->render_window->close();
-    }
+
 }
 
 void Window::beginDisplay(){
-    GolfEngine::RenderableVisitor visitor(this);
+    GolfEngine::Vector2 screen_size(this->getWidth(), this->getHeight());
+    GolfEngine::RenderableVisitor visitor(this->getDisplay(), screen_size);
     while (this->render_window->isOpen())
     {
         sf::Event event;
-        while (render_window->pollEvent(event))
+        while (this->render_window->pollEvent(event))
         {
-            this->handleEvent(event);
-
-            this->render_window->clear(this->bgcolor);
-
-            this->scene->visit(&visitor);
-
-            this->render_window->display();
+            if (event.type == sf::Event::Closed)
+            {
+                this->render_window->close();
+            } else {
+                this->scene->handleEvent(event);
+            }
         }
+        this->render_window->clear(this->bgcolor);
+
+        this->scene->visit(&visitor);
+
+        this->render_window->display();
     }
 }

@@ -38,8 +38,6 @@ bool Scene::addTile(GolfEngine::Tile* tile){
     return true;
 }
 
-void Scene::render(GolfEngine::RenderableVisitor visitor){
-    for(auto it : this->tilemap){
-        visitor.visit(it.second);
-    }
+void Scene::handleEvent(sf::Event event){
+    
 }
