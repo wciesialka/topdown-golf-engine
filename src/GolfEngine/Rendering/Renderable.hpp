@@ -13,13 +13,12 @@
 #define RENDERABLE_H
 
 #include "../Geometry/Vector2.hpp"
-#include <cmath>
+#include "RenderableVisitor.hpp"
 #include <SFML/Graphics.hpp>
+#include "../Geometry/Constants.hpp"
 
 namespace GolfEngine
 {
-    const float pi = (float)(std::acos(-1.0));
-    const float tau = pi * 2.0; /* My best friend ❤️ */
 
     class Renderable
     {
@@ -109,7 +108,14 @@ namespace GolfEngine
          *
          * @param window SFML Window to render the object onto.
          */
-        virtual void render(sf::RenderWindow *window, GolfEngine::Vector2 offset = GolfEngine::Vector2::zero) = 0;
+        virtual void render(sf::RenderWindow *window) = 0;
+
+        /**
+         * @brief Visit the object with a RenderableVisitor.
+         * 
+         * @param visitor Visitor to visit with.
+        */
+        virtual void visit(GolfEngine::RenderableVisitor* visitor) = 0;
 
         /**
          * @brief Convert a local-space coordinate to a world-space coordinate.

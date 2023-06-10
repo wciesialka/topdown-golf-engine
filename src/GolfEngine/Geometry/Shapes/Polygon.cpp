@@ -92,7 +92,7 @@ GolfEngine::Vector2 Polygon::getCentroid() const
     return scalar * GolfEngine::Vector2(x_summation, y_summation);
 }
 
-void Polygon::render(sf::RenderWindow *window, GolfEngine::Vector2 offset)
+void Polygon::render(sf::RenderWindow *window)
 {
     if (this->getVertexCount() < 3)
     {
@@ -104,7 +104,7 @@ void Polygon::render(sf::RenderWindow *window, GolfEngine::Vector2 offset)
 
     for (uint i = 0; i < this->getVertexCount(); i++)
     {
-        Vector2 render_pos = offset + this->getPoint(i);
+        Vector2 render_pos = this->localToWorld(this->getPoint(i));
         convex.setPoint(i, sf::Vector2f(render_pos.x, render_pos.y));
     }
 
@@ -120,8 +120,8 @@ bool Polygon::contains(GolfEngine::Vector2 point) const
     for (uint i = 0; i < this->getVertexCount(); i++)
     {
         uint j = (i + 1) % this->getVertexCount();
-        GolfEngine::Vector2 a = this->getPoint(i);
-        GolfEngine::Vector2 b = this->getPoint(j);
+        GolfEngine::Vector2 a = this->localToWorld(this->getPoint(i));
+        GolfEngine::Vector2 b = this->localToWorld(this->getPoint(j));
 
         // Check if the point is between the two points in the y axis.
         if ((a.y > point.y) != (b.y > point.y))
@@ -145,8 +145,8 @@ bool Polygon::intersects(const GolfEngine::Line *line) const
     uint j = this->getVertexCount() - 1;
     for (uint i = 0; i < this->getVertexCount(); i++)
     {
-        GolfEngine::Vector2 a = this->getPoint(i);
-        GolfEngine::Vector2 b = this->getPoint(j);
+        GolfEngine::Vector2 a = this->localToWorld(this->getPoint(i));
+        GolfEngine::Vector2 b = this->localToWorld(this->getPoint(j));
 
         GolfEngine::Line edge(a, b);
         if (edge.intersects(line))
@@ -169,12 +169,14 @@ bool Polygon::intersects(const Polygon *other) const
     // any of the lines formed by each consecutive vertex
     // on the polygon.
     uint j = this->getVertexCount() - 1;
-    for(uint i = 0; i < this->getVertexCount(); i++){
+    for (uint i = 0; i < this->getVertexCount(); i++)
+    {
         GolfEngine::Vector2 a = this->getPoint(i);
         GolfEngine::Vector2 b = this->getPoint(j);
 
         GolfEngine::Line edge(a, b);
-        if(other->intersects(&edge)){
+        if (other->intersects(&edge))
+        {
             return true;
         }
 
@@ -199,4 +201,24 @@ bool Polygon::operator==(const Polygon &other) const
         }
     }
     return true;
+}
+
+bool Polygon::intersects(const GolfEngine::Circle *circle) const
+{
+    // Check if any of the lines formed by consecutive vertices intersect the circle.
+    uint j = this->getVertexCount() - 1;
+    for (uint i = 0; i < this->getVertexCount(); i++)
+    {
+        GolfEngine::Vector2 a = this->localToWorld(this->getPoint(i));
+        GolfEngine::Vector2 b = this->localToWorld(this->getPoint(j));
+
+        GolfEngine::Line edge(a, b);
+        if (circle->intersects(&edge))
+        {
+            return true;
+        }
+
+        j = i;
+    }
+    return false;
 }

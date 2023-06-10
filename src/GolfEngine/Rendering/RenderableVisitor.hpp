@@ -18,32 +18,26 @@ namespace GolfEngine
     class RenderableVisitor
     {
     public:
-        RenderableVisitor(sf::RenderWindow *window, 
-                          GolfEngine::Vector2 top_left,
-                          GolfEngine::Vector2 bottom_right) : window(window),
-                                                              top_left(top_left),
-                                                              bottom_right(bottom_right) {};
+        RenderableVisitor(sf::RenderWindow *window, GolfEngine::Vector2 focus_size) : window(window), focus(GolfEngine::Vector2::zero), focus_size(focus_size) {};
+
+        inline sf::RenderWindow* getWindow() const {
+            return this->window;
+        }
 
         /**
-         * @brief "Visit" a Renderable, and render it on the screen.
+         * @brief Determine whether the visitor can view a point
          * 
-         * An object will only be rendered if it is within the bounds of the screen.
-         *
-         * @param object Renderable object to render.
-         */
-        inline void visit(GolfEngine::Renderable *object)
-        {
-            GolfEngine::Vector2 pos = object->getOrigin();
-            if(pos.x >= top_left.x && pos.x <= bottom_right.x && pos.y >= top_left.y && pos.y <= bottom_right.y ){
-                object->render(this->window);
-            }
-        };
+         * @returns True if the point is within screen bounds, false otherwise.
+        */
+        inline bool canView(GolfEngine::Vector2 point){
+            GolfEngine::Vector2 focus_max = this->focus + this->focus_size;
+            return (this->focus.x <= point.x && this->focus.y <= point.y && point.x <= focus_max.x && point.y <= focus_max.y);
+        }
 
     private:
         sf::RenderWindow *window;
-
-        GolfEngine::Vector2 top_left;
-        GolfEngine::Vector2 bottom_right;
+        GolfEngine::Vector2 focus;
+        GolfEngine::Vector2 focus_size;
     };
 }
 

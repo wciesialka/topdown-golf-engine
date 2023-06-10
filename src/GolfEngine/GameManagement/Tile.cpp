@@ -6,6 +6,7 @@
  * @date 2023-06-04
 */
 
+#include <iostream>
 #include "Tile.hpp"
 #include "Entities/Entity.hpp"
 #include "../Geometry/Vector2.hpp"
@@ -17,8 +18,9 @@ using GolfEngine::Tile;
 
 bool Tile::addEntity(GolfEngine::Entity* entity){
     GolfEngine::Vector2 pos = entity->getOrigin();
-    if(pos.x < this->getOrigin().x && pos.x > (this->getOrigin().x + TILE_SIZE) &&
-       pos.y < this->getOrigin().y && pos.y > (this->getOrigin().y + TILE_SIZE)){
+    std::cout << pos << std::endl;
+    if(pos.x <= this->getOrigin().x && pos.x >= (this->getOrigin().x + Tile::TILE_SIZE) &&
+       pos.y <= this->getOrigin().y && pos.y >= (this->getOrigin().y + Tile::TILE_SIZE)){
         return false;
     }
     this->entities.push_back(entity);
@@ -39,7 +41,10 @@ bool Tile::removeEntity(GolfEngine::Entity* entity){
 }
 
 void Tile::render(sf::RenderWindow* window){
-    for(GolfEngine::Entity* ent : this->entities){
-        ent->render(window);
-    }
+    sf::RectangleShape rectangle(sf::Vector2f(Tile::TILE_SIZE, Tile::TILE_SIZE));
+    sf::Vector2f render_pos(this->getOrigin().x, this->getOrigin().y);
+    rectangle.setPosition(render_pos);
+    rectangle.setFillColor(sf::Color::Green);
+
+    window->draw(rectangle);
 }

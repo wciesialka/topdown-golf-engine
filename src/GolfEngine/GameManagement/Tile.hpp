@@ -9,11 +9,10 @@
 #ifndef TILE_H
 #define TILE_H
 
-#define TILE_SIZE 64
-
 #include "../Geometry/Vector2.hpp"
 #include "Entities/Entity.hpp"
 #include "../Rendering/Renderable.hpp"
+#include "../Rendering/RenderableVisitor.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -22,6 +21,8 @@ namespace GolfEngine
     class Tile : public Renderable
     {
     public:
+        static const int TILE_SIZE = 64;
+
         Tile() : entities(GolfEngine::Entity::EntityList()){};
         /**
          * @brief This function adds an entity to the tile.
@@ -49,10 +50,18 @@ namespace GolfEngine
 
         /**
          * @brief Render the tile
-         * 
+         *
          * @param window Window to render onto.
-        */
-       virtual void render(sf::RenderWindow* window);
+         */
+        virtual void render(sf::RenderWindow *window);
+
+        virtual void visit(GolfEngine::RenderableVisitor *visitor)
+        {
+            this->render(visitor->getWindow());
+            for(GolfEngine::Entity* entity : this->entities){
+                entity->visit(visitor);
+            }
+        }
 
     private:
         GolfEngine::Entity::EntityList entities;

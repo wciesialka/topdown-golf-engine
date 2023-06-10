@@ -15,6 +15,8 @@
 #include <vector>
 #include <unordered_map>
 #include "../Rendering/RenderableVisitor.hpp"
+#include <SFML/Graphics.hpp>
+#include <cmath>
 
 namespace GolfEngine
 {
@@ -45,20 +47,43 @@ namespace GolfEngine
         bool addTile(Tile *tile);
 
         /**
+         * @brief Convert a vector to a tile index.
+         *
+         * @param vec Vector
+         * @returns Index
+         */
+        inline int getTileIndex(GolfEngine::Vector2 vec) const{
+            // floor int
+            int x = std::floor(vec.x / GolfEngine::Tile::TILE_SIZE);
+            int y = std::floor(vec.y / GolfEngine::Tile::TILE_SIZE);
+            return x + (y * this->max_side_length);
+        }
+
+        /**
+         * @brief Handle event
+         */
+        void handleEvent(sf::Event event);
+
+        /**
          * @brief This function finds and returns a tile designated by a position.
          *
-         * @param x x position of tile
-         * @param y y position of tile
+         * @param pos Position of tile.
          * @returns Tile found at given position. Returns nullptr if no such tile exists.
          */
-        Tile *findTile(unsigned int x, unsigned int y) const;
+        Tile *findTile(GolfEngine::Vector2 pos) const;
 
         /**
          * @brief Render the scene by visiting all renderables and rendering them.
          *
          * @param visitor A RenderableVisitor responsible for rendering all objects.
          */
-        void render(GolfEngine::RenderableVisitor visitor);
+        inline void visit(GolfEngine::RenderableVisitor *visitor)
+        {
+            for (auto it : this->tilemap)
+            {
+                it.second->visit(visitor);
+            }
+        };
 
     private:
         std::unordered_map<unsigned int, Tile *> tilemap;

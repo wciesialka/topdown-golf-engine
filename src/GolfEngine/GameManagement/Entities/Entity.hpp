@@ -107,6 +107,12 @@ namespace GolfEngine
             this->setAcceleration(this->getAcceleration() + accel);
         }
 
+        inline void visit(GolfEngine::RenderableVisitor* visitor){
+            if(visitor->canView(this->getOrigin())){
+                this->render(visitor->getWindow());
+            }
+        }
+
     private:
         // Entity properties.
         GolfEngine::Vector2 velocity;
