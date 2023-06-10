@@ -9,6 +9,7 @@
 #include "Scene.hpp"
 #include "Tile.hpp"
 #include "../Rendering/RenderableVisitor.hpp"
+#include <iostream>
 
 using GolfEngine::Scene;
 
@@ -25,6 +26,8 @@ GolfEngine::Tile* Scene::findTile(GolfEngine::Vector2 pos) const{
 }
 
 bool Scene::addTile(GolfEngine::Tile* tile){
+    std::cout << "Adding tile. Tile pos: ";
+    std::cout << tile->getOrigin() << std::endl;
     if(this->findTile(tile->getOrigin())){
         return false;
     }

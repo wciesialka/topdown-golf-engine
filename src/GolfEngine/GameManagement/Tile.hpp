@@ -23,7 +23,10 @@ namespace GolfEngine
     public:
         static const int TILE_SIZE = 64;
 
-        Tile() : entities(GolfEngine::Entity::EntityList()){};
+        Tile() : entities(GolfEngine::Entity::EntityList()),
+                 GolfEngine::Renderable(){};
+        Tile(GolfEngine::Vector2 pos) : entities(GolfEngine::Entity::EntityList()),
+                                        GolfEngine::Renderable(pos){};
         /**
          * @brief This function adds an entity to the tile.
          *
@@ -58,7 +61,8 @@ namespace GolfEngine
         virtual void visit(GolfEngine::RenderableVisitor *visitor)
         {
             this->render(visitor->getWindow());
-            for(GolfEngine::Entity* entity : this->entities){
+            for (GolfEngine::Entity *entity : this->entities)
+            {
                 entity->visit(visitor);
             }
         }

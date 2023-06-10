@@ -56,7 +56,8 @@ namespace GolfEngine
             // floor int
             int x = std::floor(vec.x / GolfEngine::Tile::TILE_SIZE);
             int y = std::floor(vec.y / GolfEngine::Tile::TILE_SIZE);
-            return x + (y * this->max_side_length);
+            int i = x + (y * this->max_side_length);
+            return i;
         }
 
         /**
