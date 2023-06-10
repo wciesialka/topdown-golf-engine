@@ -47,3 +47,7 @@ bool Scene::addEntity(GolfEngine::Entity* entity){
 void Scene::handleEvent(sf::Event event){
 
 }
+
+void Scene::frameUpdate(float dt){
+    
+}

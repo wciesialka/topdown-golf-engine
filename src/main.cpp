@@ -32,7 +32,7 @@ int main(){
     GolfEngine::Tile tile4(GolfEngine::Vector2(64, 64));
     success = scene.addTile(&tile4);
     std::cout << success << std::endl;
-    GolfEngine::Circle golfball_shape(8);
+    GolfEngine::Circle golfball_shape(4);
     golfball_shape.setColor(0xFFFFFF);
     GolfEngine::CircleEntity golfball(&golfball_shape, GolfEngine::Vector2(32, 32));
     if(scene.addEntity(&golfball)){
@@ -40,7 +40,8 @@ int main(){
     }
     GolfEngine::Circle hole_shape(10);
     hole_shape.setColor(0x0);
-    GolfEngine::CircleEntity hole(&hole_shape, GolfEngine::Vector2(110, 100));
+    GolfEngine::CircleEntity hole(&hole_shape, GolfEngine::Vector2(100, 80));
+    scene.addEntity(&hole);
 
     GolfEngine::Window window(&scene, 0x8b8589ff);
 

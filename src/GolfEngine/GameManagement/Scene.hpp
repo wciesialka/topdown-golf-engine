@@ -52,7 +52,8 @@ namespace GolfEngine
          * @param vec Vector
          * @returns Index
          */
-        inline int getTileIndex(GolfEngine::Vector2 vec) const{
+        inline int getTileIndex(GolfEngine::Vector2 vec) const
+        {
             // floor int
             int x = std::floor(vec.x / GolfEngine::Tile::TILE_SIZE);
             int y = std::floor(vec.y / GolfEngine::Tile::TILE_SIZE);
@@ -64,6 +65,13 @@ namespace GolfEngine
          * @brief Handle event
          */
         void handleEvent(sf::Event event);
+
+        /**
+         * @brief Frame update
+         *
+         * @param dt Time since last frame update (in ms)
+         */
+        void frameUpdate(float dt);
 
         /**
          * @brief This function finds and returns a tile designated by a position.
