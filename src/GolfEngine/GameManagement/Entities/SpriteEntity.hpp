@@ -36,7 +36,14 @@ namespace GolfEngine
             this->sprite->setTexture(tex);
         }
 
-        void render(sf::RenderWindow* window);
+        inline void render(sf::RenderWindow *window)
+        {
+            sf::Vector2f render_pos(this->getOrigin().x, this->getOrigin().y);
+            this->sprite->setPosition(render_pos);
+            this->sprite->setRotation(this->getRotation());
+
+            window->draw(*this->sprite);
+        };
 
     private:
         sf::Sprite *sprite;
