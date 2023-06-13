@@ -11,6 +11,7 @@
 
 #include "../../Rendering/Renderable.hpp"
 #include "../../Geometry/Vector2.hpp"
+#include "../Tag.hpp"
 #include <cmath>
 
 namespace GolfEngine
@@ -21,11 +22,11 @@ namespace GolfEngine
     public:
         typedef std::vector<GolfEngine::Entity *> EntityList;
 
-        typedef void (*EntityFunction)(GolfEngine::Entity*);
+        typedef void (*EntityFunction)(GolfEngine::Entity *);
 
-        Entity() : GolfEngine::Renderable() {};
-        Entity(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos) {};
-        Entity(GolfEngine::Vector2 pos, float rotation) : GolfEngine::Renderable(pos, rotation) {};
+        Entity() : GolfEngine::Renderable(){};
+        Entity(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos){};
+        Entity(GolfEngine::Vector2 pos, float rotation) : GolfEngine::Renderable(pos, rotation){};
 
         /**
          * @brief Apply acceleration to the entity.
@@ -107,16 +108,51 @@ namespace GolfEngine
             this->setAcceleration(this->getAcceleration() + accel);
         }
 
-        inline void visit(GolfEngine::RenderableVisitor* visitor){
-            if(visitor->canView(this->getOrigin())){
+        inline void visit(GolfEngine::RenderableVisitor *visitor)
+        {
+            if (visitor->canView(this->getOrigin()))
+            {
                 this->render(visitor->getWindow());
             }
         }
+
+        /**
+         * @brief Set the entity's tag.
+         *
+         * @param tag Tag to set.
+         */
+        inline void setTag(std::string tag)
+        {
+            this->tag = GolfEngine::Tag(tag);
+        }
+
+        inline void setTag(GolfEngine::Tag tag)
+        {
+            this->tag = tag;
+        }
+
+        /**
+         * @brief Get the entity's tag.
+         *
+         * @returns The tag of the Entity.
+         */
+        inline GolfEngine::Tag getTag()
+        {
+            return this->tag;
+        }
+
+        /**
+         * @brief Handle collisions between two entities.
+         *
+         * @param collider Entity that this entity has collided with.
+         */
+        virtual void onCollision(Entity *collider) = 0;
 
     private:
         // Entity properties.
         GolfEngine::Vector2 velocity;
         GolfEngine::Vector2 acceleration;
+        GolfEngine::Tag tag;
     };
 };
 
