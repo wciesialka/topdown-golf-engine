@@ -22,9 +22,13 @@ namespace GolfEngine
     class CircleEntity : public GolfEngine::Entity
     {
     public:
-        CircleEntity(Circle *circle) : shape(circle), GolfEngine::Entity(){};
-        CircleEntity(Circle *circle, GolfEngine::Vector2 pos) : shape(circle), GolfEngine::Entity(pos){};
-        CircleEntity(Circle *circle, GolfEngine::Vector2 pos, float rotation) : shape(circle), GolfEngine::Entity(pos, rotation){};
+        CircleEntity(float radius) : shape(new GolfEngine::Circle(radius)), GolfEngine::Entity(){};
+        CircleEntity(float radius, GolfEngine::Vector2 pos) : shape(new GolfEngine::Circle(radius)), GolfEngine::Entity(pos){};
+        CircleEntity(float radius, GolfEngine::Vector2 pos, float rotation) : shape(new GolfEngine::Circle(radius)), GolfEngine::Entity(pos, rotation){};
+
+        ~CircleEntity() {
+            delete this->shape;
+        }
 
         inline virtual void render(sf::RenderWindow *window) {
             this->shape->setOrigin(this->getOrigin());

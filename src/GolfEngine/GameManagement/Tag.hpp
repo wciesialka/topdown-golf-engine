@@ -17,6 +17,7 @@ namespace GolfEngine
     class Tag
     {
     public:
+        Tag() : name("Default"){};
         Tag(std::string tag_name) : name(tag_name){};
 
         /**
@@ -33,8 +34,16 @@ namespace GolfEngine
             return this->getTag().compare(rhs.getTag()) == 0;
         }
 
+        inline bool operator ==(const std::string& str){
+            return this->getTag().compare(str) == 0;
+        }
+
         inline bool operator !=(const Tag& rhs){
             return !(*this == rhs);
+        }
+
+        inline bool operator !=(const std::string& str){
+            return !(*this == str);
         }
 
         inline friend std::ostream &operator<<(std::ostream &os, const Tag &tag)

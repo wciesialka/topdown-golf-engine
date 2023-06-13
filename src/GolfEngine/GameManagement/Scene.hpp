@@ -16,6 +16,7 @@
 #include <unordered_map>
 #include "../Rendering/RenderableVisitor.hpp"
 #include <SFML/Graphics.hpp>
+#include "Collision.hpp"
 #include <cmath>
 
 namespace GolfEngine
@@ -93,6 +94,16 @@ namespace GolfEngine
                 it.second->visit(visitor);
             }
         };
+
+        /**
+         * @brief Handle the collision between two entities.
+         */
+        void handleCollision(GolfEngine::Collision collision);
+
+        /**
+         * @brief End the current scene.
+        */
+        void endScene();
 
     private:
         std::unordered_map<unsigned int, Tile *> tilemap;
