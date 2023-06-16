@@ -22,9 +22,14 @@ namespace GolfEngine
     class Polygon : public Shape
     {
     public:
+        /**
+         * @brief A polygon cannot have less than three sides.
+        */
+        static const unsigned int MIN_POSSIBLE_VERTICES = 3;
+
         Polygon() : GolfEngine::Shape()
         {
-            this->setMaxVertices(3);
+            this->setMaxVertices(Polygon::MIN_POSSIBLE_VERTICES);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
             this->setVertexCount(0);
         }
@@ -38,7 +43,7 @@ namespace GolfEngine
 
         Polygon(GolfEngine::Vector2 pos) : GolfEngine::Shape(pos)
         {
-            this->setMaxVertices(3);
+            this->setMaxVertices(Polygon::MIN_POSSIBLE_VERTICES);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
             this->setVertexCount(0);
         }
@@ -168,9 +173,12 @@ namespace GolfEngine
          */
         inline void setMaxVertices(uint new_max)
         {
-            if (new_max < 3)
+            if (new_max < Polygon::MIN_POSSIBLE_VERTICES)
             {
                 throw std::out_of_range("A polygon cannot have less than three sides.");
+            }
+            if (new_max < this->getMaxVertices()){
+                throw std::domain_error("Cannot set the max number of vertices to be less than what it was.");
             }
             this->max_vertices = new_max;
         };
