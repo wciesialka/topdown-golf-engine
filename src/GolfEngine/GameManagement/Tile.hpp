@@ -21,7 +21,7 @@ namespace GolfEngine
     class Tile : public Renderable
     {
     public:
-        static const int TILE_SIZE = 64;
+        static const unsigned int TILE_SIZE = 64;
 
         Tile() : entities(GolfEngine::Entity::EntityList()),
                  GolfEngine::Renderable(){};
