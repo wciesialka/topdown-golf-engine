@@ -70,7 +70,7 @@ namespace GolfEngine
             if(x < 0 || x >= this->getSideLength() || y < 0 || y >= this->getSideLength()){
                 throw std::out_of_range("Tried to find tile outside of Tilemap limits.");
             }
-            int i = x + (y * this->side_length);
+            int i = x + (y * this->getSideLength());
             return i;
         }
 

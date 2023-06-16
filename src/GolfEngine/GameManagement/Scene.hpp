@@ -51,14 +51,14 @@ namespace GolfEngine
         /**
          * @brief Handle event
          */
-        void handleEvent(sf::Event event);
+        virtual void handleEvent(sf::Event event) = 0;
 
         /**
          * @brief Frame update
          *
          * @param dt Time since last frame update (in ms)
          */
-        virtual void frameUpdate(float dt);
+        virtual void frameUpdate(float dt) = 0;
 
         /**
          * @brief This function finds and returns a tile designated by a position.
@@ -83,12 +83,12 @@ namespace GolfEngine
         /**
          * @brief Handle the collision between two entities.
          */
-        void handleCollision(GolfEngine::Collision collision);
+        virtual void handleCollision(GolfEngine::Collision collision) = 0;
 
         /**
          * @brief End the current scene.
         */
-        void endScene();
+        virtual void endScene() = 0;
 
     private:
         GolfEngine::Tilemap* tilemap;
