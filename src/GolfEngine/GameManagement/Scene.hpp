@@ -24,9 +24,16 @@ namespace GolfEngine
     class Scene
     {
     public:
-        Scene() : tilemap(new Tilemap()) {};
-        Scene(unsigned int side_length) : tilemap(new Tilemap(side_length)) {};
-        ~Scene() {
+        Scene() :
+        {
+            this->tilemap = new GolfEngine::Tilemap();
+        }
+        Scene(unsigned int side_length)
+        {
+            this->tilemap = new GolfEngine::Tilemap(side_length);
+        };
+        ~Scene()
+        {
             delete this->tilemap;
         }
 
@@ -44,7 +51,8 @@ namespace GolfEngine
          * @param tile The tile to add to the scene.
          * @returns True if the addition was a success, false otherwise.
          */
-        inline bool addTile(Tile *tile) {
+        inline bool addTile(Tile *tile)
+        {
             return this->tilemap->addTile(tile);
         };
 
@@ -66,7 +74,8 @@ namespace GolfEngine
          * @param pos Position of tile.
          * @returns Tile found at given position. Returns nullptr if no such tile exists.
          */
-        inline Tile *findTile(GolfEngine::Vector2 pos) const {
+        inline Tile *findTile(GolfEngine::Vector2 pos) const
+        {
             return this->tilemap->findTile(pos);
         }
 
@@ -87,11 +96,11 @@ namespace GolfEngine
 
         /**
          * @brief End the current scene.
-        */
+         */
         virtual void endScene() = 0;
 
     private:
-        GolfEngine::Tilemap* tilemap;
+        GolfEngine::Tilemap *tilemap;
         unsigned int max_side_length;
     };
 }

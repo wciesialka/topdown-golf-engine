@@ -48,13 +48,6 @@ namespace GolfEngine
         void beginDisplay();
 
         /**
-         * @brief Handle a window event.
-         *
-         * @param event Event to handle.
-         */
-        void handleEvent(sf::Event event);
-
-        /**
          * @brief Set the focus point.
          *
          * The focus point is defined as the top-left-most point that is

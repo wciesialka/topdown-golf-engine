@@ -25,6 +25,8 @@ namespace GolfEngine
         Shape(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos) { this->setColor(0); };
         Shape(GolfEngine::Vector2 pos, float rotation) : GolfEngine::Renderable(pos, rotation) { this->setColor(0); };
 
+        virtual ~Shape() {}
+
         /**
          * @brief Returns whether the shape contains a point.
          *

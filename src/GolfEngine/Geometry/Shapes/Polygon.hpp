@@ -22,32 +22,32 @@ namespace GolfEngine
     class Polygon : public Shape
     {
     public:
-        Polygon() : max_vertices(3),
-                    vertex_count(0),
-                    GolfEngine::Shape()
+        Polygon() : GolfEngine::Shape()
         {
+            this->setMaxVertices(3);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
-        Polygon(uint max_vertices) : vertex_count(0),
-                                     GolfEngine::Shape()
+        Polygon(uint max_vertices) : GolfEngine::Shape()
         {
             this->setMaxVertices(max_vertices);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
-        Polygon(GolfEngine::Vector2 pos) : max_vertices(3),
-                                           vertex_count(0),
-                                           GolfEngine::Shape(pos)
+        Polygon(GolfEngine::Vector2 pos) : GolfEngine::Shape(pos)
         {
+            this->setMaxVertices(3);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
-        Polygon(GolfEngine::Vector2 pos, uint max_vertices) : vertex_count(0),
-                                                              GolfEngine::Shape(pos)
+        Polygon(GolfEngine::Vector2 pos, uint max_vertices) : GolfEngine::Shape(pos)
         {
             this->setMaxVertices(max_vertices);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
         /**

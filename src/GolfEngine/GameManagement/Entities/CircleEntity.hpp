@@ -1,7 +1,7 @@
 /**
  * @file CircleEntity.hpp
  * @brief Declerations for the CircleEntity class.
- * 
+ *
  * TODO: Find some way to abstract this further? Due to the difference in
  * implementations of intersection detection in Polygons and Circles, we
  * can't just abstract it to a generic intersects(Shape), and that reflects
@@ -22,15 +22,26 @@ namespace GolfEngine
     class CircleEntity : public GolfEngine::Entity
     {
     public:
-        CircleEntity(float radius) : shape(new GolfEngine::Circle(radius)), GolfEngine::Entity(){};
-        CircleEntity(float radius, GolfEngine::Vector2 pos) : shape(new GolfEngine::Circle(radius)), GolfEngine::Entity(pos){};
-        CircleEntity(float radius, GolfEngine::Vector2 pos, float rotation) : shape(new GolfEngine::Circle(radius)), GolfEngine::Entity(pos, rotation){};
+        CircleEntity(float radius) : GolfEngine::Entity()
+        {
+            this->shape = new GolfEngine::Circle(radius);
+        }
+        CircleEntity(float radius, GolfEngine::Vector2 pos) : GolfEngine::Entity(pos)
+        {
+            this->shape = new GolfEngine::Circle(radius);
+        }
+        CircleEntity(float radius, GolfEngine::Vector2 pos, float rotation) : GolfEngine::Entity(pos, rotation)
+        {
+            this->shape = new GolfEngine::Circle(radius);
+        }
 
-        ~CircleEntity() {
+        ~CircleEntity()
+        {
             delete this->shape;
         }
 
-        inline virtual void render(sf::RenderWindow *window) {
+        inline virtual void render(sf::RenderWindow *window)
+        {
             this->shape->setOrigin(this->getOrigin());
             this->shape->render(window);
         };

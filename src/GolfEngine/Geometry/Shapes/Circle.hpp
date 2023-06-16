@@ -28,6 +28,7 @@ namespace GolfEngine
         {
             this->setRadius(radius);
         }
+        ~Circle() {}
 
         /**
          * @brief Sets the radius of the circle.
