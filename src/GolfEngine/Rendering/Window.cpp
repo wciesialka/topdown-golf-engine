@@ -13,10 +13,6 @@
 using GolfEngine::Window;
 using namespace std::chrono;
 
-void Window::handleEvent(sf::Event event){
-
-}
-
 void Window::beginDisplay(){
     GolfEngine::Vector2 screen_size(this->getWidth(), this->getHeight());
     GolfEngine::RenderableVisitor visitor(this->getDisplay(), screen_size);
@@ -34,7 +30,7 @@ void Window::beginDisplay(){
             {
                 this->render_window->close();
             } else {
-                this->scene->handleEvent(event);
+                this->active_level->handleEvent(event);
             }
         }
         this->render_window->clear(this->bgcolor);
@@ -43,10 +39,10 @@ void Window::beginDisplay(){
             system_clock::now().time_since_epoch()
         ).count() / 1000;
         
-        this->scene->frameUpdate(now - last_update);
+        this->active_level->frameUpdate(now - last_update);
         last_update = now;
 
-        this->scene->visit(&visitor);
+        this->active_level->visit(&visitor);
 
         this->render_window->display();
     }

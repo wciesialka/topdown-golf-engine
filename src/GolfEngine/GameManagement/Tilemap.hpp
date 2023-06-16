@@ -50,7 +50,7 @@ namespace GolfEngine
          * @param tile The tile to add to the tilemap.
          * @returns True if the addition was a success, false otherwise.
          */
-        bool Tilemap::addTile(GolfEngine::Tile *tile);
+        bool addTile(GolfEngine::Tile *tile);
 
         /**
          * @brief Convert a position vector to a tile index.
@@ -67,7 +67,7 @@ namespace GolfEngine
             // floor int
             int x = std::floor(vec.x / GolfEngine::Tile::TILE_SIZE);
             int y = std::floor(vec.y / GolfEngine::Tile::TILE_SIZE);
-            if(x < 0 || x >= this->getSideLength() || y < 0 || y >= this->getSideLength()){
+            if(x < 0 || x >= (int)(this->getSideLength()) || y < 0 || y >= (int)(this->getSideLength())){
                 throw std::out_of_range("Tried to find tile outside of Tilemap limits.");
             }
             int i = x + (y * this->getSideLength());

@@ -11,7 +11,7 @@ EXEC = golf_engine
 CC = g++
 
 # Compiler flags
-CFLAGS = -std=c++11
+CFLAGS = -std=c++11 -Wall -Wextra -Wpedantic -Werror
 
 # Linker flags
 LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system

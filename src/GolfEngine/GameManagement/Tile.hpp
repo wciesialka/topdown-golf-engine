@@ -23,10 +23,14 @@ namespace GolfEngine
     public:
         static const unsigned int TILE_SIZE = 64;
 
-        Tile() : entities(GolfEngine::Entity::EntityList()),
-                 GolfEngine::Renderable(){};
-        Tile(GolfEngine::Vector2 pos) : entities(GolfEngine::Entity::EntityList()),
-                                        GolfEngine::Renderable(pos){};
+        Tile() : GolfEngine::Renderable()
+        {
+            this->entities = new GolfEngine::Entity::EntityList();
+        };
+        Tile(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos)
+        {
+            this->entities = new GolfEngine::Entity::EntityList();
+        };
         /**
          * @brief This function adds an entity to the tile.
          *
@@ -49,7 +53,7 @@ namespace GolfEngine
          * @param[in] ent The entity to find.
          * @returns True if the entity is in the tile, false otherwise.
          */
-        inline bool containsEntity(GolfEngine::Entity *ent) { return this->findEntity(ent) != this->entities.end(); };
+        inline bool containsEntity(GolfEngine::Entity *ent) { return this->findEntity(ent) != this->entities->end(); };
 
         /**
          * @brief Render the tile
@@ -61,14 +65,14 @@ namespace GolfEngine
         virtual void visit(GolfEngine::RenderableVisitor *visitor)
         {
             this->render(visitor->getWindow());
-            for (GolfEngine::Entity *entity : this->entities)
+            for (GolfEngine::Entity *entity : *this->entities)
             {
                 entity->visit(visitor);
             }
         }
 
     private:
-        GolfEngine::Entity::EntityList entities;
+        GolfEngine::Entity::EntityList *entities;
 
         /**
          * @brief Find the entity in the Tile, if it exists.

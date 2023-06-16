@@ -23,20 +23,20 @@ bool Tile::addEntity(GolfEngine::Entity* entity){
        pos.y <= this->getOrigin().y && pos.y >= (this->getOrigin().y + Tile::TILE_SIZE)){
         return false;
     }
-    this->entities.push_back(entity);
+    this->entities->push_back(entity);
     return true;
 }
 
 inline GolfEngine::Entity::EntityList::iterator Tile::findEntity(GolfEngine::Entity* entity) {
-    return std::find(this->entities.begin(), this->entities.end(), entity);
+    return std::find(this->entities->begin(), this->entities->end(), entity);
 }
 
 bool Tile::removeEntity(GolfEngine::Entity* entity){
     GolfEngine::Entity::EntityList::iterator it = this->findEntity(entity);
-    if(it == this->entities.end()){
+    if(it == this->entities->end()){
         return false;
     }
-    this->entities.erase(it);
+    this->entities->erase(it);
     return true;
 }
 
