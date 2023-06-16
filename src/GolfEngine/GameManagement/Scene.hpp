@@ -9,27 +9,26 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "../Geometry/Vector2.hpp"
+#include "../Rendering/RenderableVisitor.hpp"
 #include "Entities/Entity.hpp"
 #include "Tile.hpp"
-#include "../Geometry/Vector2.hpp"
-#include <vector>
-#include <unordered_map>
-#include "../Rendering/RenderableVisitor.hpp"
-#include <SFML/Graphics.hpp>
+#include "Tilemap.hpp"
 #include "Collision.hpp"
 #include <cmath>
+#include <vector>
+#include <SFML/Graphics.hpp>
 
 namespace GolfEngine
 {
     class Scene
     {
     public:
-        const unsigned int DEFAULT_MAX_SIDE_LENGTH = 64;
-
-        Scene() : tilemap(std::unordered_map<unsigned int, Tile *>()),
-                  max_side_length(Scene::DEFAULT_MAX_SIDE_LENGTH){};
-        Scene(unsigned int side_length) : tilemap(std::unordered_map<unsigned int, Tile *>()),
-                                          max_side_length(side_length){};
+        Scene() : tilemap(new Tilemap()) {};
+        Scene(unsigned int side_length) : tilemap(new Tilemap(side_length)) {};
+        ~Scene() {
+            delete this->tilemap;
+        }
 
         /**
          * @brief This function adds an entity to the scene.
@@ -45,22 +44,9 @@ namespace GolfEngine
          * @param tile The tile to add to the scene.
          * @returns True if the addition was a success, false otherwise.
          */
-        bool addTile(Tile *tile);
-
-        /**
-         * @brief Convert a vector to a tile index.
-         *
-         * @param vec Vector
-         * @returns Index
-         */
-        inline int getTileIndex(GolfEngine::Vector2 vec) const
-        {
-            // floor int
-            int x = std::floor(vec.x / GolfEngine::Tile::TILE_SIZE);
-            int y = std::floor(vec.y / GolfEngine::Tile::TILE_SIZE);
-            int i = x + (y * this->max_side_length);
-            return i;
-        }
+        inline bool addTile(Tile *tile) {
+            return this->tilemap->addTile(tile);
+        };
 
         /**
          * @brief Handle event
@@ -72,7 +58,7 @@ namespace GolfEngine
          *
          * @param dt Time since last frame update (in ms)
          */
-        void frameUpdate(float dt);
+        virtual void frameUpdate(float dt);
 
         /**
          * @brief This function finds and returns a tile designated by a position.
@@ -80,7 +66,9 @@ namespace GolfEngine
          * @param pos Position of tile.
          * @returns Tile found at given position. Returns nullptr if no such tile exists.
          */
-        Tile *findTile(GolfEngine::Vector2 pos) const;
+        inline Tile *findTile(GolfEngine::Vector2 pos) const {
+            return this->tilemap->findTile(pos);
+        }
 
         /**
          * @brief Render the scene by visiting all renderables and rendering them.
@@ -89,10 +77,7 @@ namespace GolfEngine
          */
         inline void visit(GolfEngine::RenderableVisitor *visitor)
         {
-            for (auto it : this->tilemap)
-            {
-                it.second->visit(visitor);
-            }
+            this->tilemap->visit(visitor);
         };
 
         /**
@@ -106,7 +91,7 @@ namespace GolfEngine
         void endScene();
 
     private:
-        std::unordered_map<unsigned int, Tile *> tilemap;
+        GolfEngine::Tilemap* tilemap;
         unsigned int max_side_length;
     };
 }
