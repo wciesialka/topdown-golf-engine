@@ -24,9 +24,18 @@ namespace GolfEngine
 
         typedef void (*EntityFunction)(GolfEngine::Entity *);
 
-        Entity() : GolfEngine::Renderable(){};
-        Entity(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos){};
-        Entity(GolfEngine::Vector2 pos, float rotation) : GolfEngine::Renderable(pos, rotation){};
+        Entity() : GolfEngine::Renderable()
+        {
+            this->setRespawnPosition(this->getPosition());
+        };
+        Entity(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos)
+        {
+            this->setRespawnPosition(this->getPosition());
+        };
+        Entity(GolfEngine::Vector2 pos, float rotation) : GolfEngine::Renderable(pos, rotation)
+        {
+            this->setRespawnPosition(this->getPosition());
+        };
 
         /**
          * @brief Apply acceleration to the entity.
@@ -110,6 +119,9 @@ namespace GolfEngine
 
         inline void visit(GolfEngine::RenderableVisitor *visitor)
         {
+            if(!this->isActive()){
+                return;
+            }
             if (visitor->canView(this->getOrigin()))
             {
                 this->render(visitor->getWindow());
@@ -119,13 +131,18 @@ namespace GolfEngine
         /**
          * @brief Set the entity's tag.
          *
-         * @param tag Tag to set.
+         * @param tag String representing the entity's new tag.
          */
         inline void setTag(std::string tag)
         {
             this->tag = GolfEngine::Tag(tag);
         }
 
+        /**
+         * @brief Set the entity's tag.
+         * 
+         * @param tag Tag to set.
+        */
         inline void setTag(GolfEngine::Tag tag)
         {
             this->tag = tag;
@@ -136,23 +153,109 @@ namespace GolfEngine
          *
          * @returns The tag of the Entity.
          */
-        inline GolfEngine::Tag getTag()
+        inline GolfEngine::Tag getTag() const
         {
             return this->tag;
         }
 
         /**
-         * @brief Handle collisions between two entities.
+         * @brief Check if the entity has a matching tag.
+         * 
+         * @param tag Tag to check
+         * @returns True if the entity's tag is the same, false otherwise.
+        */
+        inline bool hasTag(GolfEngine::Tag tag) const{
+            return this->getTag() == tag;
+        }
+
+        /**
+         * @brief Check if the entity has a tag matching the given string.
+         * 
+         * @param tag Tag to check.
+         * @returns True if the entity's tag is the same, false otherwise.
+        */
+        inline bool hasTag(std::string tag) const{
+            return this->getTag() == tag;
+        }
+
+        /**
+         * @brief Respawn the entity.
+        */
+        virtual inline void respawn(){
+            this->setAcceleration(GolfEngine::Vector2::zero);
+            this->setVelocity(GolfEngine::Vector2::zero);
+            this->setPosition(this->getRespawnPosition());
+            this->setActiveStatus(true);
+        } 
+
+        /**
+         * @brief Get the entity's respawn position.
          *
-         * @param collider Entity that this entity has collided with.
+         * @returns The entity's respawn position.
          */
-        virtual void onCollision(Entity *collider) = 0;
+        inline GolfEngine::Vector2 getRespawnPosition() const
+        {
+            return this->respawn_pos;
+        }
+
+        /**
+         * @brief Set the entity's respawn position.
+         *
+         * @param pos New respawn position.
+         */
+        inline void setRespawnPosition(GolfEngine::Vector2 pos)
+        {
+            this->respawn_pos = pos;
+        }
+
+        /**
+         * @brief Set the entity's position.
+         *
+         * @param pos New position.
+         */
+        inline void setPosition(GolfEngine::Vector2 pos)
+        {
+            this->setOrigin(pos);
+        }
+
+        /**
+         * @brief Get the entity's position.
+         *
+         * @returns The entity's position.
+         */
+        inline GolfEngine::Vector2 getPosition() const
+        {
+            return this->getOrigin();
+        }
+
+        /**
+         * @brief Return the entity's active status.
+         *
+         * @returns True if the entity is active, false otherwise.
+         */
+        inline bool isActive() const
+        {
+            return this->active;
+        }
+
+        /**
+         * @brief Set the entity's active status.
+         *
+         * @param status True to enable the entity, false to disable it.
+         */
+        inline void setActiveStatus(bool status)
+        {
+            this->active = status;
+        }
 
     private:
         // Entity properties.
         GolfEngine::Vector2 velocity;
         GolfEngine::Vector2 acceleration;
         GolfEngine::Tag tag;
+        GolfEngine::Vector2 respawn_pos;
+
+        bool active;
     };
 };
 
