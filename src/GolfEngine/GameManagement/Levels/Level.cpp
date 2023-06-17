@@ -27,4 +27,5 @@ void Level::handleCollision(GolfEngine::Collision& collision){
             collision.getAttached()->respawn();
         }
     }
+    this->levelCollisions(collision);
 }

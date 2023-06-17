@@ -92,18 +92,91 @@ namespace GolfEngine
         /**
          * @brief Handle the collision between two entities.
          */
-        virtual void handleCollision(GolfEngine::Collision& collision) = 0;
+        virtual void handleCollision(GolfEngine::Collision &collision) = 0;
 
         /**
          * @brief End the current scene.
-         * 
+         *
          * @param winStatus True if the game ends in a win, false if the game ends in a loss.
          */
         virtual void endScene(bool winStatus) = 0;
 
+        /**
+         * @brief Key down event.
+         */
+        virtual void keyDown(sf::Keyboard::Key key) = 0;
+
+        /**
+         * @brief Key up event.
+         */
+        virtual void keyUp(sf::Keyboard::Key key) = 0;
+
+        /**
+         * @brief Check if the given is is being pressed.
+         *
+         * @returns True if the key is being pressed, false otherwise.
+         */
+        inline bool isKeyDown(sf::Keyboard::Key key)
+        {
+            return sf::Keyboard::isKeyPressed(key);
+        }
+
+        /**
+         * @brief Mouse down event. Fires when the player presses down on a mouse button.
+         *
+         * @param event Mouse Button event.
+         */
+        virtual void mouseDown(sf::Event::MouseButtonEvent event) = 0;
+
+        /**
+         * @brief Mouse up event. Fires when the player presses up on a mouse button.
+         *
+         * @param event Mouse Button event.
+         */
+        virtual void mouseUp(sf::Event::MouseButtonEvent event) = 0;
+
+        /**
+         * @brief Mouse Move event. Fires when the player moves the mouse in focus of the Scene.
+         *
+         * @param event Mouse Move event.
+         */
+        virtual void mouseMove(sf::Event::MouseMoveEvent event) = 0;
+
+        /**
+         * @brief Pause the game.
+         */
+        void pause();
+
+        /**
+         * @brief Resume the game.
+         */
+        void resume();
+
+        /**
+         * @brief Get the current mouse position.
+         *
+         * @returns The current mouse position represented as a Vector2(x, y)
+         */
+        inline GolfEngine::Vector2 getMousePos() const
+        {
+            return this->mousePos;
+        }
+
+        /**
+         * @brief Set the current mouse position.
+         *
+         * @param pos The new mouse position.
+         * @note This is to be used by the encapsulating \ref GolfEngine::Window. DO NOT USE unless you want to MESS THINGS UP!
+         */
+        inline void setMousePos(GolfEngine::Vector2 pos)
+        {
+            this->mousePos = pos;
+        }
+
     private:
         GolfEngine::Tilemap *tilemap;
         unsigned int max_side_length;
+        GolfEngine::Vector2 mousePos;
     };
 }
 
