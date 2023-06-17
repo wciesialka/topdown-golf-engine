@@ -32,26 +32,33 @@ namespace GolfEngine
             this->setMaxVertices(Polygon::MIN_POSSIBLE_VERTICES);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
             this->setVertexCount(0);
+            this->setVertexCount(0);
         }
 
+        Polygon(uint max_vertices) : GolfEngine::Shape()
         Polygon(uint max_vertices) : GolfEngine::Shape()
         {
             this->setMaxVertices(max_vertices);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
             this->setVertexCount(0);
+            this->setVertexCount(0);
         }
 
+        Polygon(GolfEngine::Vector2 pos) : GolfEngine::Shape(pos)
         Polygon(GolfEngine::Vector2 pos) : GolfEngine::Shape(pos)
         {
             this->setMaxVertices(Polygon::MIN_POSSIBLE_VERTICES);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
             this->setVertexCount(0);
+            this->setVertexCount(0);
         }
 
+        Polygon(GolfEngine::Vector2 pos, uint max_vertices) : GolfEngine::Shape(pos)
         Polygon(GolfEngine::Vector2 pos, uint max_vertices) : GolfEngine::Shape(pos)
         {
             this->setMaxVertices(max_vertices);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
             this->setVertexCount(0);
         }
 
