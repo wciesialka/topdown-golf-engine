@@ -92,12 +92,14 @@ namespace GolfEngine
         /**
          * @brief Handle the collision between two entities.
          */
-        virtual void handleCollision(GolfEngine::Collision collision) = 0;
+        virtual void handleCollision(GolfEngine::Collision& collision) = 0;
 
         /**
          * @brief End the current scene.
+         * 
+         * @param winStatus True if the game ends in a win, false if the game ends in a loss.
          */
-        virtual void endScene() = 0;
+        virtual void endScene(bool winStatus) = 0;
 
     private:
         GolfEngine::Tilemap *tilemap;

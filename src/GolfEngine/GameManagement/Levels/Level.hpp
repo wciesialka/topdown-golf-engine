@@ -10,6 +10,7 @@
 #define LEVEL_H
 
 #include "../Scene.hpp"
+#include "../Collision.hpp"
 
 namespace GolfEngine {
     class Level : public GolfEngine::Scene {
@@ -24,6 +25,10 @@ namespace GolfEngine {
              * this means loading the tilemap, adding to it, et cetera.
             */
             virtual void initialize() = 0;
+
+            virtual void levelCollisions(GolfEngine::Collision& collision) = 0;
+
+            void handleCollision(GolfEngine::Collision& collision);
         private:
     };
 }
