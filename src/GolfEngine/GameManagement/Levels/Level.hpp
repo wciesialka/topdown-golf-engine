@@ -28,7 +28,7 @@ namespace GolfEngine {
 
             virtual void levelCollisions(GolfEngine::Collision& collision) = 0;
 
-            void handleCollision(GolfEngine::Collision& collision);
+            void onCollision(GolfEngine::Collision& collision) override;
         private:
     };
 }

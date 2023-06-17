@@ -92,7 +92,7 @@ namespace GolfEngine
         /**
          * @brief Handle the collision between two entities.
          */
-        virtual void handleCollision(GolfEngine::Collision &collision) = 0;
+        virtual void onCollision(GolfEngine::Collision &collision) = 0;
 
         /**
          * @brief End the current scene.
@@ -104,12 +104,12 @@ namespace GolfEngine
         /**
          * @brief Key down event.
          */
-        virtual void keyDown(sf::Keyboard::Key key) = 0;
+        virtual void onKeyDown(sf::Keyboard::Key key) = 0;
 
         /**
          * @brief Key up event.
          */
-        virtual void keyUp(sf::Keyboard::Key key) = 0;
+        virtual void onKeyUp(sf::Keyboard::Key key) = 0;
 
         /**
          * @brief Check if the given is is being pressed.
@@ -126,21 +126,21 @@ namespace GolfEngine
          *
          * @param event Mouse Button event.
          */
-        virtual void mouseDown(sf::Event::MouseButtonEvent event) = 0;
+        virtual void onMouseDown(sf::Event::MouseButtonEvent event) = 0;
 
         /**
          * @brief Mouse up event. Fires when the player presses up on a mouse button.
          *
          * @param event Mouse Button event.
          */
-        virtual void mouseUp(sf::Event::MouseButtonEvent event) = 0;
+        virtual void onMouseUp(sf::Event::MouseButtonEvent event) = 0;
 
         /**
          * @brief Mouse Move event. Fires when the player moves the mouse in focus of the Scene.
          *
          * @param event Mouse Move event.
          */
-        virtual void mouseMove(sf::Event::MouseMoveEvent event) = 0;
+        virtual void onMouseMove(sf::Event::MouseMoveEvent event) = 0;
 
         /**
          * @brief Pause the game.

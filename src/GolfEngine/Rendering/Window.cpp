@@ -33,21 +33,21 @@ void Window::beginDisplay()
                     this->close();
                     break;
                 case sf::Event::KeyPressed:
-                    this->getActiveLevel()->keyDown(event.key.code);
+                    this->getActiveLevel()->onKeyDown(event.key.code);
                     break;
                 case sf::Event::KeyReleased:
-                    this->getActiveLevel()->keyUp(event.key.code);
+                    this->getActiveLevel()->onKeyUp(event.key.code);
                     break;
                 case sf::Event::MouseButtonPressed:
-                    this->getActiveLevel()->mouseDown(event.mouseButton);
+                    this->getActiveLevel()->onMouseDown(event.mouseButton);
                     break;
                 case sf::Event::MouseButtonReleased:
-                    this->getActiveLevel()->mouseUp(event.mouseButton);
+                    this->getActiveLevel()->onMouseUp(event.mouseButton);
                     break;
                 case sf::Event::MouseMoved:
                     GolfEngine::Vector2 mousePos(event.mouseMove.x, event.mouseMove.y);
                     this->getActiveLevel()->setMousePos(mousePos);
-                    this->getActiveLevel()->mouseMove(event.mouseMove);
+                    this->getActiveLevel()->onMouseMove(event.mouseMove);
                     break;
                 case sf::Event::LostFocus:
                     this->getActiveLevel()->pause();

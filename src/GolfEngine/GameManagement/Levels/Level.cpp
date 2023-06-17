@@ -10,7 +10,7 @@
 using GolfEngine::Level;
 
 // General, shared level collisions.
-void Level::handleCollision(GolfEngine::Collision& collision){
+void Level::onCollision(GolfEngine::Collision& collision){
     // Goal collisions.
     if(collision.getAttached()->getTag() == "Goal"){
         // Goal shouldn't have any collisions.
