@@ -94,9 +94,9 @@ GolfEngine::Vector2 Polygon::getCentroid() const
 
 void Polygon::render(sf::RenderWindow *window)
 {
-    if (this->getVertexCount() < 3)
+    if (this->getVertexCount() < Polygon::MIN_POSSIBLE_VERTICES)
     {
-        throw std::logic_error("Cannot render an open polygon.");
+        throw std::runtime_error("Cannot render a polygon with less than three sides.");
     }
 
     sf::ConvexShape convex;
