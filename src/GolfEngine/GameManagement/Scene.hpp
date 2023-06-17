@@ -24,7 +24,7 @@ namespace GolfEngine
     class Scene
     {
     public:
-        Scene() :
+        Scene()
         {
             this->tilemap = new GolfEngine::Tilemap();
         }
