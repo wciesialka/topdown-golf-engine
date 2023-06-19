@@ -12,6 +12,7 @@
 #include "Shape.hpp"
 #include <stdexcept>
 #include "../Constants.hpp"
+#include <vector>
 
 #define SQR(n) (n*n)
 
@@ -29,6 +30,8 @@ namespace GolfEngine
             this->setRadius(radius);
         }
         ~Circle() {}
+
+        typedef std::vector<Circle> CircleList;
 
         /**
          * @brief Sets the radius of the circle.

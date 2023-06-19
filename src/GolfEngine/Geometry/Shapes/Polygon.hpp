@@ -15,6 +15,7 @@
 #include "../Line.hpp"
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 namespace GolfEngine
 {
@@ -22,6 +23,7 @@ namespace GolfEngine
     class Polygon : public Shape
     {
     public:
+        typedef std::vector<Polygon> PolygonList;
         /**
          * @brief A polygon cannot have less than three sides.
         */

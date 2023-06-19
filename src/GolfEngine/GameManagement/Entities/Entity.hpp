@@ -248,6 +248,11 @@ namespace GolfEngine
             this->active = status;
         }
 
+        /**
+         * @brief Fires when the entity is left-clicked.
+        */
+        virtual void onClicked();
+
     private:
         // Entity properties.
         GolfEngine::Vector2 velocity;

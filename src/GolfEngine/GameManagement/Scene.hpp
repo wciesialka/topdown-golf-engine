@@ -27,10 +27,12 @@ namespace GolfEngine
         Scene()
         {
             this->tilemap = new GolfEngine::Tilemap();
+            this->paused = false;
         }
         Scene(unsigned int side_length)
         {
             this->tilemap = new GolfEngine::Tilemap(side_length);
+            this->paused = false;
         };
         ~Scene()
         {
@@ -104,19 +106,19 @@ namespace GolfEngine
         /**
          * @brief Key down event.
          */
-        virtual void onKeyDown(sf::Keyboard::Key key) = 0;
+        virtual void onKeyDown(sf::Keyboard::Key &key) = 0;
 
         /**
          * @brief Key up event.
          */
-        virtual void onKeyUp(sf::Keyboard::Key key) = 0;
+        virtual void onKeyUp(sf::Keyboard::Key &key) = 0;
 
         /**
          * @brief Check if the given is is being pressed.
          *
          * @returns True if the key is being pressed, false otherwise.
          */
-        inline bool isKeyDown(sf::Keyboard::Key key)
+        inline bool isKeyDown(sf::Keyboard::Key &key)
         {
             return sf::Keyboard::isKeyPressed(key);
         }
@@ -126,31 +128,31 @@ namespace GolfEngine
          *
          * @param event Mouse Button event.
          */
-        virtual void onMouseDown(sf::Event::MouseButtonEvent event) = 0;
+        virtual void onMouseDown(sf::Event::MouseButtonEvent &event) = 0;
 
         /**
          * @brief Mouse up event. Fires when the player presses up on a mouse button.
          *
          * @param event Mouse Button event.
          */
-        virtual void onMouseUp(sf::Event::MouseButtonEvent event) = 0;
+        virtual void onMouseUp(sf::Event::MouseButtonEvent &event) = 0;
 
         /**
          * @brief Mouse Move event. Fires when the player moves the mouse in focus of the Scene.
          *
          * @param event Mouse Move event.
          */
-        virtual void onMouseMove(sf::Event::MouseMoveEvent event) = 0;
+        virtual void onMouseMove(sf::Event::MouseMoveEvent &event) = 0;
 
         /**
          * @brief Pause the game.
          */
-        void pause();
+        inline void pause() { this->paused = true; };
 
         /**
          * @brief Resume the game.
          */
-        void resume();
+        inline void resume() { this->paused = false; };
 
         /**
          * @brief Get the current mouse position.
@@ -175,8 +177,8 @@ namespace GolfEngine
 
     private:
         GolfEngine::Tilemap *tilemap;
-        unsigned int max_side_length;
         GolfEngine::Vector2 mousePos;
+        bool paused;
     };
 }
 

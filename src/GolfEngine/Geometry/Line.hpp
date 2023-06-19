@@ -10,6 +10,7 @@
 #define LINE_H
 
 #include "Vector2.hpp"
+#include <vector>
 
 namespace GolfEngine
 {
@@ -40,7 +41,10 @@ namespace GolfEngine
          * @returns True if the lines intersect, false otherwise.
          */
         bool intersects(const Line* other) const;
+
+        typedef std::vector<Line> LineList;
     };
+
 }
 
 #endif

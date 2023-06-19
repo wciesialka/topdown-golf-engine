@@ -13,6 +13,7 @@
 #include "Entities/Entity.hpp"
 #include "../Rendering/Renderable.hpp"
 #include "../Rendering/RenderableVisitor.hpp"
+#include "TileGeometry.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -21,7 +22,6 @@ namespace GolfEngine
     class Tile : public Renderable
     {
     public:
-        static const unsigned int TILE_SIZE = 64;
 
         Tile() : GolfEngine::Renderable()
         {
@@ -56,6 +56,15 @@ namespace GolfEngine
         inline bool containsEntity(GolfEngine::Entity *ent) { return this->findEntity(ent) != this->entities->end(); };
 
         /**
+         * @brief Initialize the tile's collisions. Tile geometry should be defined here.
+         */
+        virtual void initialize();
+
+        /**
+         * @brief 
+        */
+
+        /**
          * @brief Render the tile
          *
          * @param window Window to render onto.
@@ -73,6 +82,8 @@ namespace GolfEngine
 
     private:
         GolfEngine::Entity::EntityList *entities;
+        GolfEngine::TileGeometry* geometry;
+
 
         /**
          * @brief Find the entity in the Tile, if it exists.
