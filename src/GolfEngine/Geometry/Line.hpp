@@ -32,7 +32,7 @@ namespace GolfEngine
          * @param point Point to compare against.
          * @returns True if the line intersects the point, false otherwise.
          */
-        bool intersects(GolfEngine::Vector2 point) const;
+        bool intersects(const GolfEngine::Vector2& point) const;
 
         /**
          * @brief Returns whether the line intersects a given line or not.
@@ -40,7 +40,7 @@ namespace GolfEngine
          * @param other Line to compare against.
          * @returns True if the lines intersect, false otherwise.
          */
-        bool intersects(const Line* other) const;
+        bool intersects(const Line& other) const;
 
         typedef std::vector<Line> LineList;
     };

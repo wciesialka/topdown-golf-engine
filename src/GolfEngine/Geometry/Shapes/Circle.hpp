@@ -62,12 +62,12 @@ namespace GolfEngine
             return this->getOrigin();
         }
 
-        inline virtual bool contains(GolfEngine::Vector2 point) const
+        inline virtual bool contains(const GolfEngine::Vector2& point) const
         {
             return (point.distance(this->getCentroid()) <= this->getRadius());
         }
 
-        virtual bool intersects(const GolfEngine::Line *line) const;
+        virtual bool intersects(const GolfEngine::Line& line) const;
 
         /**
          * @brief Compare if the circle is intersecting another circle.
@@ -75,8 +75,8 @@ namespace GolfEngine
          * @param other Circle to compare against.
          * @returns True if there is an intersection, false otherwise.
         */
-        inline bool intersects(const GolfEngine::Circle* other) const {
-            return this->getPosition().distance(other->getPosition()) <= (this->getRadius() + other->getRadius());
+        inline bool intersects(const GolfEngine::Circle& other) const {
+            return this->getPosition().distance(other.getPosition()) <= (this->getRadius() + other.getRadius());
         }
 
         inline virtual float getPerimeter() const {

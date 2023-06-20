@@ -120,7 +120,7 @@ namespace GolfEngine
          * @param line Line to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        virtual bool intersects(const GolfEngine::Line *line) const;
+        virtual bool intersects(const GolfEngine::Line& line) const;
 
         /**
          * @brief Check if the polygon is intersecting another polygon.
@@ -128,7 +128,7 @@ namespace GolfEngine
          * @param other Polygon to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        bool intersects(const GolfEngine::Polygon *other) const;
+        bool intersects(const GolfEngine::Polygon& other) const;
 
         /**
          * @brief Check if the polygon is intersecting a circle.
@@ -136,7 +136,7 @@ namespace GolfEngine
          * @param circle Circle to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        bool intersects(const GolfEngine::Circle *circle) const;
+        bool intersects(const GolfEngine::Circle& circle) const;
 
         /**
          * @brief Compare if the circle is intersecting a polygon.
@@ -145,15 +145,15 @@ namespace GolfEngine
          * @param polygon Polygon to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        inline friend bool intersects(const GolfEngine::Circle *circle, const GolfEngine::Polygon *polygon)
+        inline friend bool intersects(const GolfEngine::Circle& circle, const GolfEngine::Polygon& polygon)
         {
-            return polygon->intersects(circle);
+            return polygon.intersects(circle);
         }
 
         virtual float getPerimeter() const;
         virtual float getArea() const;
         virtual GolfEngine::Vector2 getCentroid() const;
-        virtual bool contains(Vector2 point) const;
+        virtual bool contains(const Vector2& point) const;
         virtual void render(sf::RenderWindow *window);
 
         bool operator==(const Polygon &other) const;
