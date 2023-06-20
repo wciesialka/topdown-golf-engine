@@ -100,7 +100,7 @@ namespace GolfEngine
          * @param line Line to add.
          * @throws std::out_of_range If the Line falls outside of tile bounds.
          */
-        inline void addLine(const GolfEngine::Line line)
+        inline void addLine(GolfEngine::Line& line)
         {
             if (!this->isLineValid(line))
             {
@@ -117,7 +117,7 @@ namespace GolfEngine
          * @param circle Circle to add.
          * @throws std::out_of_range If the Circle falls outside of tile bounds.
          */
-        inline void addCircle(const GolfEngine::Circle circle)
+        inline void addCircle(GolfEngine::Circle& circle)
         {
             if (!this->isCircleValid(circle))
             {
@@ -134,7 +134,7 @@ namespace GolfEngine
          * @param poly Polygon to add.
          * @throws std::out_of_range If the Polygon falls outside of tile bounds.
          */
-        inline void addPolygon(const GolfEngine::Polygon poly)
+        inline void addPolygon(GolfEngine::Polygon& poly)
         {
             if (!this->isPolygonValid(poly))
             {
@@ -144,18 +144,47 @@ namespace GolfEngine
         }
 
         /**
-         * @brief Check wall collisions on a Circle.
+         * @brief Check wall collisions on a shape.
          *
-         * @param circle Circle to check.
-         * @returns True if the circle is in a wall collision, false otherwise.
+         * @param shape Shape to check.
+         * @returns True if the shape is in a wall collision, false otherwise.
          */
-        inline bool checkWallCollisions(const GolfEngine::Circle& circle)
+        inline bool checkWallCollisions(const GolfEngine::Shape &shape)
         {
-            for(GolfEngine::Line& line : this->line_geometry){
-                if(circle.intersects(line)){
-
+            for (GolfEngine::Line &line : this->line_geometry)
+            {
+                if (shape.intersects(line))
+                {
+                    return true;
                 }
             }
+            return false;
+        }
+
+        /**
+         * @brief Check hole collisions on a shape.
+         * 
+         * @param shape Shape to check.
+         * @returns True if shape is in a hole collision, false otherwise.
+         * @note A hole collision is NOT the same as an intersection - the shape's centroid MUST be contained by a hole to count.
+        */
+        inline bool checkHoleCollisions(const GolfEngine::Shape &shape) {
+            GolfEngine::Vector2 point = shape.getCentroid();
+            // First, check circles.
+            for (GolfEngine::Circle &circle : this->circle_geometry)
+            {
+                if (circle.contains(point))
+                {
+                    return true;
+                }
+            }
+            // Then, check polygons.
+            for (GolfEngine::Polygon &poly : this->polygon_geometry){
+                if(poly.contains(point)){
+                    return true;
+                }
+            }
+            return false;
         }
 
     private:

@@ -17,6 +17,7 @@ namespace GolfEngine
     {
     public:
         LevelA() : GolfEngine::Level(8) {}
+        
     };
 }
 
