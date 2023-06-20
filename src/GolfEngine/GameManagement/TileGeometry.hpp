@@ -20,20 +20,26 @@
 #include "../Geometry/Shapes/Circle.hpp"
 #include <vector>
 #include <stdexcept>
+#include "../Rendering/Renderable.hpp"
 
 namespace GolfEngine
 {
-    class TileGeometry
+    class TileGeometry : public GolfEngine::Renderable
     {
     public:
         /**
          * @brief Tile size in pixel units.
          */
         static const unsigned int TILE_SIZE = 64;
+        static const int GRASS_COLOR = 0x009170ff;
+        static const int WALL_COLOR = 0xC0C2C9ff;
+        static const int HOLE_COLOR = 0x000000ff;
 
-        TileGeometry()
+        TileGeometry(GolfEngine::Vector2 origin) : GolfEngine::Renderable(origin)
         {
             this->line_geometry = GolfEngine::Line::LineList();
+            this->circle_geometry = GolfEngine::Circle::CircleList();
+            this->polygon_geometry = GolfEngine::Polygon::PolygonList();
         }
 
         inline bool isPointValid(const GolfEngine::Vector2 &point) const
@@ -186,6 +192,10 @@ namespace GolfEngine
             }
             return false;
         }
+
+        void render(sf::RenderWindow* window);
+
+        void visit(GolfEngine::RenderableVisitor* visitor);
 
     private:
         GolfEngine::Line::LineList line_geometry;

@@ -16,28 +16,54 @@
 #include "TileGeometry.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <math.h>
 
 namespace GolfEngine
 {
     class Tile : public Renderable
     {
     public:
-
         Tile() : GolfEngine::Renderable()
         {
             this->entities = new GolfEngine::Entity::EntityList();
+            this->geometry = new GolfEngine::TileGeometry(GolfEngine::Vector2::zero);
         };
-        Tile(GolfEngine::Vector2 pos) : GolfEngine::Renderable(pos)
+        Tile(const GolfEngine::Vector2 &pos) : GolfEngine::Renderable(pos)
         {
             this->entities = new GolfEngine::Entity::EntityList();
+            this->geometry = new GolfEngine::TileGeometry(pos);
         };
+
+        ~Tile()
+        {
+            delete this->entities;
+            delete this->geometry;
+        }
+
+        /**
+         * @brief Check whether an entity is within bounds of the tile.
+         *
+         * @param ent Entity to check
+         * @returns True if the entity is within bounds, False otherwise.
+         */
+        inline bool isEntityWithinBounds(const GolfEngine::Entity* ent) const {
+            GolfEngine::Vector2 entity_point = this->worldToLocal(ent->getOrigin());
+            return this->getTileGeometry()->isPointValid(entity_point);
+        }
+
         /**
          * @brief This function adds an entity to the tile.
          *
          * @param ent The entity to add to the tile.
          * @returns True if the addition was a success, false otherwise.
+         * @throws std::out_of_range If the entity is outside of Tile boundaries.
          */
-        bool addEntity(GolfEngine::Entity *ent);
+        inline void addEntity(GolfEngine::Entity *ent) {
+            if(!isEntityWithinBounds(ent)){
+                throw std::out_of_range("Cannot add entity with an origin that is outside of Tile's bounds.");
+            }
+            this->entities->push_back(ent);
+        };
 
         /**
          * @brief Remove an entity from the tile.
@@ -61,19 +87,23 @@ namespace GolfEngine
         virtual void initialize();
 
         /**
-         * @brief 
-        */
+         * @brief Get a pointer to the Tile's geometry.
+         */
+        inline GolfEngine::TileGeometry *getTileGeometry() const
+        {
+            return this->geometry;
+        }
 
         /**
          * @brief Render the tile
          *
          * @param window Window to render onto.
          */
-        virtual void render(sf::RenderWindow *window);
+        virtual void render(sf::RenderWindow *window){/* Do nothing. The visitor will handle it all... */};
 
         virtual void visit(GolfEngine::RenderableVisitor *visitor)
         {
-            this->render(visitor->getWindow());
+            this->getTileGeometry()->visit(visitor);
             for (GolfEngine::Entity *entity : *this->entities)
             {
                 entity->visit(visitor);
@@ -82,8 +112,7 @@ namespace GolfEngine
 
     private:
         GolfEngine::Entity::EntityList *entities;
-        GolfEngine::TileGeometry* geometry;
-
+        GolfEngine::TileGeometry *geometry;
 
         /**
          * @brief Find the entity in the Tile, if it exists.
