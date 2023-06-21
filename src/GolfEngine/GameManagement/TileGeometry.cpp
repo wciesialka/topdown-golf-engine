@@ -21,7 +21,7 @@ void TileGeometry::render(sf::RenderWindow *window)
     render_ground.setFillColor(sf::Color(TileGeometry::GRASS_COLOR));
     window->draw(render_ground);
     // Second, render walls
-    for (GolfEngine::Line &wall : this->line_geometry)
+    for (GolfEngine::Line wall : *this->line_geometry)
     {
         GolfEngine::Vector2 render_a = wall.a + tile_origin;
         GolfEngine::Vector2 render_b = wall.b + tile_origin;
@@ -42,10 +42,10 @@ void TileGeometry::visit(GolfEngine::RenderableVisitor* visitor){
     // First, render ourselves.
     this->render(visitor->getWindow());
     // Then, render the holes.
-    for (GolfEngine::Circle& circle_hole : this->circle_geometry){
+    for (GolfEngine::Circle& circle_hole : *this->circle_geometry){
         circle_hole.visit(visitor);
     }
-    for (GolfEngine::Polygon& polyhole : this->polygon_geometry){
+    for (GolfEngine::Polygon& polyhole : *this->polygon_geometry){
         polyhole.visit(visitor);
     }
 }

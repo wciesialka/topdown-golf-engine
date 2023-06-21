@@ -65,8 +65,8 @@ namespace GolfEngine
         inline int getTileIndex(GolfEngine::Vector2 vec) const
         {
             // floor int
-            int x = std::floor(vec.x / GolfEngine::Tile::TILE_SIZE);
-            int y = std::floor(vec.y / GolfEngine::Tile::TILE_SIZE);
+            int x = std::floor(vec.x / GolfEngine::TileGeometry::TILE_SIZE);
+            int y = std::floor(vec.y / GolfEngine::TileGeometry::TILE_SIZE);
             if(x < 0 || x >= (int)(this->getSideLength()) || y < 0 || y >= (int)(this->getSideLength())){
                 throw std::out_of_range("Tried to find tile outside of Tilemap limits.");
             }

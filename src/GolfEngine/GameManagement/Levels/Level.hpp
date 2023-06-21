@@ -16,10 +16,8 @@ namespace GolfEngine {
     class Level : public GolfEngine::Scene {
         public:
             Level() : GolfEngine::Scene() {
-                this->initialize();
             };
             Level(unsigned int side_length) : GolfEngine::Scene(side_length) {
-                this->initialize();
             };
 
             /**

@@ -28,39 +28,53 @@ void Window::beginDisplay()
         sf::Event event;
         while (this->render_window->pollEvent(event))
         {
-            switch(event.type){
-                case sf::Event::Closed:
-                    this->close();
-                    break;
-                case sf::Event::KeyPressed:
-                    this->getActiveLevel()->onKeyDown(event.key.code);
-                    break;
-                case sf::Event::KeyReleased:
-                    this->getActiveLevel()->onKeyUp(event.key.code);
-                    break;
-                case sf::Event::MouseButtonPressed:
-                    this->getActiveLevel()->onMouseDown(event.mouseButton);
-                    break;
-                case sf::Event::MouseButtonReleased:
-                    this->getActiveLevel()->onMouseUp(event.mouseButton);
-                    break;
-                case sf::Event::MouseMoved:
-                    GolfEngine::Vector2 mousePos(event.mouseMove.x, event.mouseMove.y);
-                    this->getActiveLevel()->setMousePos(mousePos);
-                    this->getActiveLevel()->onMouseMove(event.mouseMove);
-                    break;
-                case sf::Event::LostFocus:
-                    this->getActiveLevel()->pause();
-                    break;
-                case sf::Event::GainedFocus:
-                    this->getActiveLevel()->resume();
-                    break;
-                default:
-                    break;
+
+            if (event.type == sf::Event::Closed)
+            {
+                this->close();
+                continue;
+            }
+            if (event.type == sf::Event::KeyPressed)
+            {
+                this->getActiveLevel()->onKeyDown(event.key.code);
+                continue;
+            }
+            if (event.type == sf::Event::KeyReleased)
+            {
+                this->getActiveLevel()->onKeyUp(event.key.code);
+                continue;
+            }
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                this->getActiveLevel()->onMouseDown(event.mouseButton);
+                continue;
+            }
+            if (event.type == sf::Event::MouseButtonReleased)
+            {
+                this->getActiveLevel()->onMouseUp(event.mouseButton);
+                continue;
+            }
+            if (event.type == sf::Event::MouseMoved)
+            {
+                GolfEngine::Vector2 mousePos(event.mouseMove.x, event.mouseMove.y);
+                this->getActiveLevel()->setMousePos(mousePos);
+                this->getActiveLevel()->onMouseMove(event.mouseMove);
+                continue;
+            }
+            if (event.type == sf::Event::LostFocus)
+            {
+                this->getActiveLevel()->pause();
+                continue;
+            }
+            if (event.type == sf::Event::GainedFocus)
+            {
+                this->getActiveLevel()->resume();
+                continue;
             }
         }
         this->render_window->clear(this->bgcolor);
 
+        // My formatter turned this into poetry.
         float now = duration_cast<milliseconds>(
                         system_clock::now().time_since_epoch())
                         .count() /

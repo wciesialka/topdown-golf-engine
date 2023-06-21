@@ -99,7 +99,12 @@ namespace GolfEngine
          *
          * @param window Window to render onto.
          */
-        virtual void render(sf::RenderWindow *window){/* Do nothing. The visitor will handle it all... */};
+        virtual void render(sf::RenderWindow *window){ 
+            // Shut up the compiler.
+            sf::RenderWindow* shut_up = window;
+            window = shut_up;
+            return; /* Do nothing. The visitor will handle it all... */
+        };
 
         virtual void visit(GolfEngine::RenderableVisitor *visitor)
         {

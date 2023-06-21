@@ -18,5 +18,6 @@ bool Scene::addEntity(GolfEngine::Entity* entity){
     if(!tile){
         return false;
     }
-    return tile->addEntity(entity);
+    tile->addEntity(entity);
+    return true;
 }

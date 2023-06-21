@@ -37,15 +37,21 @@ namespace GolfEngine
 
         TileGeometry(GolfEngine::Vector2 origin) : GolfEngine::Renderable(origin)
         {
-            this->line_geometry = GolfEngine::Line::LineList();
-            this->circle_geometry = GolfEngine::Circle::CircleList();
-            this->polygon_geometry = GolfEngine::Polygon::PolygonList();
+            this->line_geometry = new GolfEngine::Line::LineList();
+            this->circle_geometry = new GolfEngine::Circle::CircleList();
+            this->polygon_geometry = new GolfEngine::Polygon::PolygonList();
         }
 
         inline bool isPointValid(const GolfEngine::Vector2 &point) const
         {
             float tile_length = (float)(TileGeometry::TILE_SIZE);
             return (point.x >= 0 && point.x < tile_length && point.y >= 0 && point.y < tile_length);
+        }
+
+        virtual ~TileGeometry() {
+            delete this->line_geometry;
+            delete this->circle_geometry;
+            delete this->polygon_geometry;
         }
 
         /**
@@ -87,7 +93,7 @@ namespace GolfEngine
          */
         inline bool isPolygonValid(const GolfEngine::Polygon &poly) const
         {
-            for (int i = 0; i < poly.getVertexCount(); i++)
+            for (uint i = 0; i < poly.getVertexCount(); i++)
             {
                 bool pointValidity = this->isPointValid(poly.getPoint(i));
                 if (!pointValidity)
@@ -112,7 +118,7 @@ namespace GolfEngine
             {
                 throw std::out_of_range("Line falls outside of map geometry.");
             }
-            this->line_geometry.push_back(line);
+            this->line_geometry->push_back(line);
         }
 
         /**
@@ -129,7 +135,7 @@ namespace GolfEngine
             {
                 throw std::out_of_range("Circle falls outside of map geometry.");
             }
-            this->circle_geometry.push_back(circle);
+            this->circle_geometry->push_back(circle);
         }
 
         /**
@@ -146,7 +152,7 @@ namespace GolfEngine
             {
                 throw std::out_of_range("Polygon falls outside of map geometry.");
             }
-            this->polygon_geometry.push_back(poly);
+            this->polygon_geometry->push_back(poly);
         }
 
         /**
@@ -157,7 +163,7 @@ namespace GolfEngine
          */
         inline bool checkWallCollisions(const GolfEngine::Shape &shape)
         {
-            for (GolfEngine::Line &line : this->line_geometry)
+            for (GolfEngine::Line &line : *this->line_geometry)
             {
                 if (shape.intersects(line))
                 {
@@ -177,7 +183,7 @@ namespace GolfEngine
         inline bool checkHoleCollisions(const GolfEngine::Shape &shape) {
             GolfEngine::Vector2 point = shape.getCentroid();
             // First, check circles.
-            for (GolfEngine::Circle &circle : this->circle_geometry)
+            for (GolfEngine::Circle &circle : *this->circle_geometry)
             {
                 if (circle.contains(point))
                 {
@@ -185,7 +191,7 @@ namespace GolfEngine
                 }
             }
             // Then, check polygons.
-            for (GolfEngine::Polygon &poly : this->polygon_geometry){
+            for (GolfEngine::Polygon &poly : *this->polygon_geometry){
                 if(poly.contains(point)){
                     return true;
                 }
@@ -198,9 +204,9 @@ namespace GolfEngine
         void visit(GolfEngine::RenderableVisitor* visitor);
 
     private:
-        GolfEngine::Line::LineList line_geometry;
-        GolfEngine::Circle::CircleList circle_geometry;
-        GolfEngine::Polygon::PolygonList polygon_geometry;
+        GolfEngine::Line::LineList* line_geometry;
+        GolfEngine::Circle::CircleList* circle_geometry;
+        GolfEngine::Polygon::PolygonList* polygon_geometry;
     };
 }
 

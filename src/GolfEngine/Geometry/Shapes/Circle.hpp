@@ -68,7 +68,7 @@ namespace GolfEngine
             return this->position;
         }
 
-        inline GolfEngine::Vector2 setPosition(const GolfEngine::Vector2 &pos)
+        inline void setPosition(const GolfEngine::Vector2 &pos)
         {
             this->position = pos;
         }

@@ -153,11 +153,11 @@ namespace GolfEngine
         unsigned int width;
         unsigned int height;
 
-        sf::Color bgcolor;
-
         sf::RenderWindow *render_window;
         GolfEngine::Level *active_level;
         GolfEngine::Vector2 focus;
+
+        sf::Color bgcolor;
     };
 }
 
