@@ -28,12 +28,12 @@ namespace GolfEngine
         {
         }
 
-        Renderable(Vector2 pos) : origin(pos),
+        Renderable(const Vector2& pos) : origin(pos),
                                   rotation(0)
         {
         }
 
-        Renderable(Vector2 pos, float rotation) : origin(pos),
+        Renderable(const Vector2& pos, float rotation) : origin(pos),
                                                   rotation(0)
         {
             this->setRotation(rotation);

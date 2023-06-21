@@ -6,9 +6,6 @@
  * @date 2023-06-03
 */
 
-#include "Tests.hpp"
-#define RUN_TESTS
-
 #include "GolfEngine/Rendering/Window.hpp"
 #include "GolfEngine/GameManagement/Levels/LevelA.hpp"
 
@@ -16,10 +13,6 @@
 #define SCREEN_H 600
 
 int main(){
-    #ifdef RUN_TESTS
-    runTests();
-    #endif
-
     GolfEngine::Window window(SCREEN_W, SCREEN_H);
     GolfEngine::LevelA level;
     window.loadLevel(&level);

@@ -11,6 +11,7 @@
 
 #include "../Scene.hpp"
 #include "../Collision.hpp"
+#include "../Tile.hpp"
 
 namespace GolfEngine {
     class Level : public GolfEngine::Scene {

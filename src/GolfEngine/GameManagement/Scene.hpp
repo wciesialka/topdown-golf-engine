@@ -154,6 +154,10 @@ namespace GolfEngine
             return this->tilemap->findEntitiesWithTag(tag);
         }
 
+        inline GolfEngine::Entity::EntityList getAllEntities() const {
+            return this->tilemap->getAllEntities();
+        }
+
     private:
         GolfEngine::Tilemap *tilemap;
         GolfEngine::Vector2 mousePos;

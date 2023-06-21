@@ -74,5 +74,10 @@ void Level::applyPlayerForce(const GolfEngine::Vector2& force) {
 void Level::frameUpdate(float dt){
     // Convert dt (which is in milliseconds) to seconds
     float dt_s = dt / 1000.0;
-    
+
+    // Apply acceleration + velocity
+    for(GolfEngine::Entity* ent : this->getAllEntities()){
+        ent->applyAcceleration(dt_s);
+        ent->applyVelocity(dt_s);
+    }
 }

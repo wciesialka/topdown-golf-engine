@@ -20,19 +20,20 @@
 
 namespace GolfEngine
 {
-    class Tile : public Renderable
+    class Tile : public GolfEngine::Renderable
     {
     public:
         Tile() : GolfEngine::Renderable()
         {
             this->entities = new GolfEngine::Entity::EntityList();
             this->geometry = new GolfEngine::TileGeometry(GolfEngine::Vector2::zero);
-        };
+        }
+
         Tile(const GolfEngine::Vector2 &pos) : GolfEngine::Renderable(pos)
         {
             this->entities = new GolfEngine::Entity::EntityList();
             this->geometry = new GolfEngine::TileGeometry(pos);
-        };
+        }
 
         ~Tile()
         {
@@ -84,7 +85,7 @@ namespace GolfEngine
         /**
          * @brief Initialize the tile's collisions. Tile geometry should be defined here.
          */
-        virtual void initialize();
+        virtual void initialize() = 0;
 
         /**
          * @brief Get a pointer to the Tile's geometry.
@@ -99,14 +100,13 @@ namespace GolfEngine
          *
          * @param window Window to render onto.
          */
-        virtual void render(sf::RenderWindow *window){ 
-            // Shut up the compiler.
-            sf::RenderWindow* shut_up = window;
-            window = shut_up;
+        void render(sf::RenderWindow *window){ 
+            // DO nothing
+            if(window == nullptr){ return; }
             return; /* Do nothing. The visitor will handle it all... */
         };
 
-        virtual void visit(GolfEngine::RenderableVisitor *visitor)
+        void visit(GolfEngine::RenderableVisitor *visitor)
         {
             this->getTileGeometry()->visit(visitor);
             for (GolfEngine::Entity *entity : *this->entities)

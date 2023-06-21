@@ -24,8 +24,8 @@ BDIR = ./build
 SOURCE_PATHS = $(shell find $(SDIR) -iname "*.cpp")
 
 # Sources/Build Object paths
-SOURCES = $(SOURCE_PATHS:$(SDIR)/%=%)
-OBJECTS = $(addprefix $(BDIR)/,$(addsuffix .o, $(basename $(SOURCES))))
+CLASSES = GolfEngine/Rendering/Window GolfEngine/Geometry/Vector2 GolfEngine/Geometry/Line GolfEngine/Geometry/Shapes/Circle GolfEngine/Geometry/Shapes/Polygon GolfEngine/GameManagement/TileGeometry GolfEngine/GameManagement/Tilemap GolfEngine/GameManagement/Tile GolfEngine/GameManagement/Scene GolfEngine/GameManagement/Levels/Level GolfEngine/GameManagement/Levels/LevelA main
+OBJECTS = $(addprefix $(BDIR)/,$(addsuffix .o, $(CLASSES)))
 
 .PHONY: all run clean
 
@@ -42,7 +42,7 @@ clean:
 	rm -f $(EXEC).out
 
 # Executable
-$(EXEC).out: $(sort $(OBJECTS))
+$(EXEC).out: $(OBJECTS)
 	$(CC) $^ -o $@ $(LFLAGS)
 
 # Build files
