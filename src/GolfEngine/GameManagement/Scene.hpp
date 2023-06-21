@@ -59,11 +59,6 @@ namespace GolfEngine
         };
 
         /**
-         * @brief Handle event
-         */
-        virtual void handleEvent(sf::Event event) = 0;
-
-        /**
          * @brief Frame update
          *
          * @param dt Time since last frame update (in ms)
@@ -102,26 +97,6 @@ namespace GolfEngine
          * @param winStatus True if the game ends in a win, false if the game ends in a loss.
          */
         virtual void endScene(bool winStatus) = 0;
-
-        /**
-         * @brief Key down event.
-         */
-        virtual void onKeyDown(sf::Keyboard::Key &key) = 0;
-
-        /**
-         * @brief Key up event.
-         */
-        virtual void onKeyUp(sf::Keyboard::Key &key) = 0;
-
-        /**
-         * @brief Check if the given is is being pressed.
-         *
-         * @returns True if the key is being pressed, false otherwise.
-         */
-        inline bool isKeyDown(sf::Keyboard::Key &key)
-        {
-            return sf::Keyboard::isKeyPressed(key);
-        }
 
         /**
          * @brief Mouse down event. Fires when the player presses down on a mouse button.
@@ -173,6 +148,10 @@ namespace GolfEngine
         inline void setMousePos(GolfEngine::Vector2 pos)
         {
             this->mousePos = pos;
+        }
+
+        inline GolfEngine::Entity::EntityList findEntitiesWithTag(const GolfEngine::Tag& tag) const{
+            return this->tilemap->findEntitiesWithTag(tag);
         }
 
     private:

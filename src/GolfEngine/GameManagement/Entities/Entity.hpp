@@ -13,6 +13,7 @@
 #include "../../Geometry/Vector2.hpp"
 #include "../Tag.hpp"
 #include <cmath>
+#include <stdexcept>
 
 namespace GolfEngine
 {
@@ -40,21 +41,33 @@ namespace GolfEngine
         /**
          * @brief Apply acceleration to the entity.
          *
-         * @note This resets the current accumulated acceleration.
+         * @param dt Time, in seconds, to factor in.
+         * @throws std::domain_error If dt is > 1 or < 0.
          */
-        inline void applyAcceleration()
+        inline void applyAcceleration(float dt = 1)
         {
-            this->velocity += this->acceleration;
-            this->acceleration = Vector2::zero;
+            if(dt > 1 || dt < 0){
+                throw std::domain_error("dt cannot be less than 0 or greater than 1.");
+            }
+            GolfEngine::Vector2 acceleration = this->getAcceleration() * dt;
+            this->addVelocity(acceleration);
+            this->setAcceleration(this->getAcceleration() - acceleration);
         }
 
         /**
          * @brief Apply velocity to the entity.
+         * 
+         * @param dt Time, in seconds, to factor in.
+         * @throws std::domain_error If dt is > 1 or < 0.
          */
-        inline void applyVelocity()
+        inline void applyVelocity(float dt)
         {
-            this->move(this->velocity);
-            this->velocity = Vector2::zero;
+            if(dt > 1 || dt < 0){
+                throw std::domain_error("dt cannot be less than 0 or greater than 1.");
+            }
+            GolfEngine::Vector2 velocity = this->getVelocity() * dt;
+            this->move(velocity);
+            this->setVelocity(this->getVelocity() - velocity);
         }
 
         /**

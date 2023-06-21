@@ -16,8 +16,9 @@ namespace GolfEngine
     class LevelA : public Level
     {
     public:
-        LevelA() : GolfEngine::Level(8) {}
+        LevelA() : GolfEngine::Level(2) {}
         
+        void initialize();
     };
 }
 

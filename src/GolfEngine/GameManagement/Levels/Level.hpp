@@ -31,7 +31,57 @@ namespace GolfEngine {
             virtual void levelCollisions(GolfEngine::Collision& collision) = 0;
 
             void onCollision(GolfEngine::Collision& collision) override;
+
+            /**
+             * @brief Set the target position.
+             * 
+             * @param pos Position
+            */
+            void setTarget(const GolfEngine::Vector2& pos) {
+                this->target = pos;
+            }
+
+            /**
+             * @brief Get the target position.
+             * 
+             * @returns Target pos.
+            */
+            GolfEngine::Vector2 getTarget() const {
+                return this->target;
+            }
+
+            /**
+             * @brief Mouse down event. Fires when the player presses down on a mouse button.
+             *
+             * @param event Mouse Button event.
+             */
+            void onMouseDown(sf::Event::MouseButtonEvent &event) override;
+
+            /**
+             * @brief Mouse up event. Fires when the player presses up on a mouse button.
+             *
+             * @param event Mouse Button event.
+             */
+            void onMouseUp(sf::Event::MouseButtonEvent &event) override;
+
+            /**
+             * @brief Mouse Move event. Fires when the player moves the mouse in focus of the Scene.
+             *
+             * @param event Mouse Move event.
+             */
+            void onMouseMove(sf::Event::MouseMoveEvent &event) override;            
+
+            void applyPlayerForce(const GolfEngine::Vector2& force);
+
+            /**
+             * @brief Frame update
+             *
+             * @param dt Time since last frame update (in ms)
+             */
+            void frameUpdate(float dt);
         private:
+            GolfEngine::Vector2 target;
+
     };
 }
 

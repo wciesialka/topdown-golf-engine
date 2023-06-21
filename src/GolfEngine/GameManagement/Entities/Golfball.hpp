@@ -17,7 +17,7 @@ namespace GolfEngine
     class Golfball : public GolfEngine::CircleEntity
     {
     public:
-        static const float RADIUS = 4.0;
+        static const int RADIUS = 4;
         static const int COLOR = 0xFFFFFF;
 
         Golfball() : GolfEngine::CircleEntity(Golfball::RADIUS)
@@ -25,7 +25,7 @@ namespace GolfEngine
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
         }
-        Golfball(GolfEngine::Vector2 pos) : GolfEngine::CircleEntity(Golfball::RADIUS){
+        Golfball(const GolfEngine::Vector2& pos) : GolfEngine::CircleEntity(Golfball::RADIUS, pos){
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
         }

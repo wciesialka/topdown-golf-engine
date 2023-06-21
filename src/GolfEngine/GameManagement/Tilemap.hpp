@@ -83,6 +83,25 @@ namespace GolfEngine
             return this->side_length;
         }
 
+        /**
+         * @brief Find all entities in the Tilemap that contains a certain tag.
+         * 
+         * @param tag Tag to search for
+         * @returns List of all entities with that tag.
+        */
+        GolfEngine::Entity::EntityList findEntitiesWithTag(const GolfEngine::Tag& tag) const;
+
+        inline GolfEngine::Entity::EntityList getAllEntities() const {
+            GolfEngine::Entity::EntityList list;
+            for(auto pair : this->tiles){
+                GolfEngine::Tile* tile = pair.second;
+                for(GolfEngine::Entity* ent : *(tile->getEntities())){
+                    list.push_back(ent);
+                }
+            }
+            return list;
+        }
+
     private:
         unsigned int side_length;
         std::unordered_map<unsigned int, Tile *> tiles;

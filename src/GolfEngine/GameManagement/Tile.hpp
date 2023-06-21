@@ -115,6 +115,10 @@ namespace GolfEngine
             }
         }
 
+        GolfEngine::Entity::EntityList* getEntities() const {
+            return this->entities;
+        }
+
     private:
         GolfEngine::Entity::EntityList *entities;
         GolfEngine::TileGeometry *geometry;

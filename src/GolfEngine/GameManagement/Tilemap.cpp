@@ -32,3 +32,13 @@ bool Tilemap::addTile(GolfEngine::Tile* tile){
     this->tiles[i] = tile;
     return true;
 }
+
+GolfEngine::Entity::EntityList Tilemap::findEntitiesWithTag(const GolfEngine::Tag& tag) const {
+    GolfEngine::Entity::EntityList tagged_entities;
+    for(GolfEngine::Entity* entity : this->getAllEntities()){
+        if(entity->hasTag(tag)){
+            tagged_entities.push_back(entity);
+        }
+    }
+    return tagged_entities;
+}

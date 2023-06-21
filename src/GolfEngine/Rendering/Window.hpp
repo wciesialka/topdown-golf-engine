@@ -24,6 +24,7 @@ namespace GolfEngine
     {
     public:
         Window(unsigned int width, unsigned int height) : width(width), height(height),
+                                                          active_level(nullptr),
                                                           focus(GolfEngine::Vector2::zero),
                                                           bgcolor(sf::Color::Black)
         {
@@ -31,6 +32,7 @@ namespace GolfEngine
         }
 
         Window(unsigned int width, unsigned int height, int background_color) : width(width), height(height),
+                                                                                active_level(nullptr),
                                                                                 focus(GolfEngine::Vector2::zero),
                                                                                 bgcolor(sf::Color(background_color))
         {
@@ -140,10 +142,11 @@ namespace GolfEngine
 
         /**
          * @brief Get a pointer to the active level.
-         * 
+         *
          * @return Pointer to the window's currently active level.
-        */
-        inline GolfEngine::Level* getActiveLevel(){
+         */
+        inline GolfEngine::Level *getActiveLevel()
+        {
             return this->active_level;
         }
 

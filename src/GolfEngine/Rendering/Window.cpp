@@ -9,12 +9,17 @@
 #include "Window.hpp"
 #include "../Geometry/Vector2.hpp"
 #include <chrono>
+#include <stdexcept>
 
 using GolfEngine::Window;
 using namespace std::chrono;
 
 void Window::beginDisplay()
 {
+    if (this->getActiveLevel() == nullptr)
+    {
+        throw std::runtime_error("Cannot render window with uninitialized level.");
+    }
     GolfEngine::Vector2 screen_size(this->getWidth(), this->getHeight());
     GolfEngine::RenderableVisitor visitor(this->getDisplay(), screen_size);
 
@@ -34,33 +39,6 @@ void Window::beginDisplay()
                 this->close();
                 continue;
             }
-            if (event.type == sf::Event::KeyPressed)
-            {
-                this->getActiveLevel()->onKeyDown(event.key.code);
-                continue;
-            }
-            if (event.type == sf::Event::KeyReleased)
-            {
-                this->getActiveLevel()->onKeyUp(event.key.code);
-                continue;
-            }
-            if (event.type == sf::Event::MouseButtonPressed)
-            {
-                this->getActiveLevel()->onMouseDown(event.mouseButton);
-                continue;
-            }
-            if (event.type == sf::Event::MouseButtonReleased)
-            {
-                this->getActiveLevel()->onMouseUp(event.mouseButton);
-                continue;
-            }
-            if (event.type == sf::Event::MouseMoved)
-            {
-                GolfEngine::Vector2 mousePos(event.mouseMove.x, event.mouseMove.y);
-                this->getActiveLevel()->setMousePos(mousePos);
-                this->getActiveLevel()->onMouseMove(event.mouseMove);
-                continue;
-            }
             if (event.type == sf::Event::LostFocus)
             {
                 this->getActiveLevel()->pause();
@@ -71,6 +49,23 @@ void Window::beginDisplay()
                 this->getActiveLevel()->resume();
                 continue;
             }
+            GolfEngine::Vector2 mousePos;
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                mousePos = GolfEngine::Vector2(event.mouseButton.x, event.mouseButton.y);
+                this->getActiveLevel()->onMouseDown(event.mouseButton);
+            }
+            if (event.type == sf::Event::MouseButtonReleased)
+            {
+                mousePos = GolfEngine::Vector2(event.mouseButton.x, event.mouseButton.y);
+                this->getActiveLevel()->onMouseUp(event.mouseButton);
+            }
+            if (event.type == sf::Event::MouseMoved)
+            {
+                mousePos = GolfEngine::Vector2(event.mouseMove.x, event.mouseMove.y);
+                this->getActiveLevel()->onMouseMove(event.mouseMove);
+            }
+            this->getActiveLevel()->setMousePos(mousePos);
         }
         this->render_window->clear(this->bgcolor);
 

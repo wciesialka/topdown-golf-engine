@@ -29,3 +29,50 @@ void Level::onCollision(GolfEngine::Collision& collision){
     }
     this->levelCollisions(collision);
 }
+
+/**
+ * @brief Mouse down event. Fires when the player presses down on a mouse button.
+ *
+ * @param event Mouse Button event.
+ */
+void Level::onMouseDown(sf::Event::MouseButtonEvent &event){
+    GolfEngine::Vector2 target(event.x, event.y);
+    this->setTarget(target);
+}
+
+/**
+ * @brief Mouse up event. Fires when the player presses up on a mouse button.
+ *
+ * @param event Mouse Button event.
+ */
+void Level::onMouseUp(sf::Event::MouseButtonEvent &event){
+    GolfEngine::Vector2 current(event.x, event.y);
+    GolfEngine::Vector2 force = this->getTarget() - current;
+    this->applyPlayerForce(force);
+}
+
+/**
+ * @brief Mouse Move event. Fires when the player moves the mouse in focus of the Scene.
+ *
+ * @param event Mouse Move event.
+ */
+void Level::onMouseMove(sf::Event::MouseMoveEvent &event){
+    // do nothing
+    if(event.x == 42){
+        return;
+    }
+}
+
+const GolfEngine::Tag PLAYER_TAG = GolfEngine::Tag("Golfball");
+
+void Level::applyPlayerForce(const GolfEngine::Vector2& force) {
+    for(GolfEngine::Entity* golfball : this->findEntitiesWithTag(PLAYER_TAG)){
+        golfball->addVelocity(force);
+    }
+}
+
+void Level::frameUpdate(float dt){
+    // Convert dt (which is in milliseconds) to seconds
+    float dt_s = dt / 1000.0;
+    
+}

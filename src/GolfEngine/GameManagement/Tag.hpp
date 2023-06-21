@@ -18,7 +18,7 @@ namespace GolfEngine
     {
     public:
         Tag() : name("Default"){};
-        Tag(std::string tag_name) : name(tag_name){};
+        Tag(const std::string& tag_name) : name(tag_name){};
 
         /**
          * @brief Get the Tag in string format.
