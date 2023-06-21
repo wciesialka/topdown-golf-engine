@@ -177,9 +177,7 @@ namespace GolfEngine
             {
                 throw std::out_of_range("A polygon cannot have less than three sides.");
             }
-            if (new_max < this->getMaxVertices()){
-                throw std::domain_error("Cannot set the max number of vertices to be less than what it was.");
-            }
+
             this->max_vertices = new_max;
         };
 
