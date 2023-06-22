@@ -23,8 +23,6 @@ GolfEngine::Tile* Tilemap::findTile(GolfEngine::Vector2 pos) const{
 }
 
 bool Tilemap::addTile(GolfEngine::Tile* tile){
-    std::cout << "Adding tile. Tile pos: ";
-    std::cout << tile->getOrigin() << std::endl;
     if(this->findTile(tile->getOrigin())){
         return false;
     }

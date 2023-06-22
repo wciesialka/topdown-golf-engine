@@ -13,6 +13,7 @@
 #include "Tile.hpp"
 #include <unordered_map>
 #include <stdexcept>
+#include <iostream>
 
 namespace GolfEngine
 {

@@ -16,7 +16,7 @@ namespace GolfEngine {
     class Goal : public GolfEngine::CircleEntity {
         public:
             static const int RADIUS = 6;
-            static const int COLOR = 0x000000;
+            static const int COLOR = 0x010101;
             Goal() : GolfEngine::CircleEntity(Goal::RADIUS) {
                 this->getShape()->setColor(Goal::COLOR);
                 this->setTag("Goal");

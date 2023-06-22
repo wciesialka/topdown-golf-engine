@@ -14,8 +14,9 @@
 using GolfEngine::Scene;
 
 bool Scene::addEntity(GolfEngine::Entity* entity){
-    GolfEngine::Tile* tile = this->findTile(entity->getOrigin());
-    if(!tile){
+    GolfEngine::Vector2 pos = entity->getOrigin();
+    GolfEngine::Tile* tile = this->findTile(pos);
+    if(tile == nullptr){
         return false;
     }
     tile->addEntity(entity);

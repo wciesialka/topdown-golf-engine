@@ -24,10 +24,12 @@ namespace GolfEngine
         {
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
+            this->setActiveStatus(true);
         }
         Golfball(const GolfEngine::Vector2& pos) : GolfEngine::CircleEntity(Golfball::RADIUS, pos){
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
+            this->setActiveStatus(true);
         }
     };
 }

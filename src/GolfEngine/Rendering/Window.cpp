@@ -10,6 +10,7 @@
 #include "../Geometry/Vector2.hpp"
 #include <chrono>
 #include <stdexcept>
+#include <iostream>
 
 using GolfEngine::Window;
 using namespace std::chrono;

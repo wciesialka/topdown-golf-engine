@@ -16,7 +16,6 @@ using GolfEngine::LevelA;
 
 void LevelA::initialize()
 {
-    std::cout << "At least we're initializing!" << std::endl;
     GolfEngine::Vector2 start_pos(0, 0);
     GolfEngine::FullTile* start = new GolfEngine::FullTile(start_pos);
     this->addTile(start);
@@ -27,6 +26,9 @@ void LevelA::initialize()
     this->addEntity(player);
     GolfEngine::Goal* goal = new GolfEngine::Goal(GolfEngine::Vector2(96, 32));
     this->addEntity(goal);
+    // We must (re)spawn entities after making them.
+    player->respawn();
+    goal->respawn();
 }
 
 void LevelA::levelCollisions(GolfEngine::Collision& collision){

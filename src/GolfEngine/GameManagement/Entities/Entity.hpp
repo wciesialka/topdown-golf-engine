@@ -14,6 +14,7 @@
 #include "../Tag.hpp"
 #include <cmath>
 #include <stdexcept>
+#include <iostream>
 
 namespace GolfEngine
 {
