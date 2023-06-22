@@ -29,24 +29,6 @@ namespace GolfEngine
         };
 
         /**
-         * @brief Check if the entity is colliding with another entity.
-         *
-         * @param other Entity to check collissions with.
-         * @returns True if the entities are colliding, false otherwise.
-         */
-        inline bool intersects(const PolygonEntity* other) const{
-            return this->getShape()->intersects(other->getShape());
-        }
-
-        inline bool intersects(const CircleEntity* other) const{
-            return this->getShape()->intersects(other->getShape());
-        }
-
-        inline friend bool intersects(const CircleEntity* circle, const PolygonEntity* poly) {
-            return poly->getShape()->intersects(circle->getShape());
-        }
-
-        /**
          * @brief Get the shape defining the entity.
          *
          * @returns The entity's defining shape.

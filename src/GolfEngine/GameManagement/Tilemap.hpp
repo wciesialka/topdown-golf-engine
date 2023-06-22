@@ -84,6 +84,8 @@ namespace GolfEngine
             return this->side_length;
         }
 
+        void reorderEntities();
+
         /**
          * @brief Find all entities in the Tilemap that contains a certain tag.
          * 
@@ -103,11 +105,17 @@ namespace GolfEngine
             return list;
         }
 
-        inline void frameUpdate(float dt_s){
+        // this, like tile, returns list of all collisions to be handled!
+        inline GolfEngine::Collision::CollisionList frameUpdate(float dt_s){
+            GolfEngine::Collision::CollisionList collisions;
             for(auto pair : this->tiles){
                 GolfEngine::Tile* tile = pair.second;
-                tile->frameUpdate(dt_s);
+                GolfEngine::Collision::CollisionList per_tile_collisions = tile->frameUpdate(dt_s);
+                for(GolfEngine::Collision& collision : per_tile_collisions){
+                    collisions.push_back(collision);
+                }
             }
+            return collisions;
         }
 
     private:

@@ -19,6 +19,7 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
+#include "Collision.hpp"
 
 namespace GolfEngine
 {
@@ -123,9 +124,8 @@ namespace GolfEngine
 
         virtual float getFriction() = 0;
 
-        void frameUpdate(double dt_s);
-
-        void collisionCheck();
+        // note this returns a list of collisions that happen in the frame :)
+        GolfEngine::Collision::CollisionList frameUpdate(double dt_s);
 
     private:
         GolfEngine::Entity::EntityList *entities;

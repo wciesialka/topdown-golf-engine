@@ -10,6 +10,7 @@
 #define COLLISION_H
 
 #include "Entities/Entity.hpp"
+#include <vector>
 
 namespace GolfEngine
 {
@@ -37,6 +38,8 @@ namespace GolfEngine
         inline GolfEngine::Entity* getCollider(){
             return this->collider;
         }
+
+        typedef std::vector<Collision> CollisionList;
 
     private:
         GolfEngine::Entity *attached;

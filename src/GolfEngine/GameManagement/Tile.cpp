@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "Collision.hpp"
 
 using GolfEngine::Tile;
 
@@ -29,7 +30,8 @@ bool Tile::removeEntity(GolfEngine::Entity* entity){
     return true;
 }
 
-void Tile::frameUpdate(double dt_s){
+GolfEngine::Collision::CollisionList Tile::frameUpdate(double dt_s){
+    GolfEngine::Collision::CollisionList collisions;
     for(GolfEngine::Entity* ent : *this->entities){
         //Apply acceleration + velocity
         ent->applyAcceleration(dt_s);
@@ -38,6 +40,21 @@ void Tile::frameUpdate(double dt_s){
         // Apply friciton
         float friction = this->getFriction() * dt_s;
         ent->setVelocity(ent->getVelocity() * friction);
+
+        // Check collisions
+        for(GolfEngine::Entity* ent_other : *this->entities){
+            if(ent == ent_other) continue;
+            if(ent->getEntityType() == GolfEngine::EntityType::CIRCLE){
+                GolfEngine::CircleEntity* ent_shape = (GolfEngine::CircleEntity*)(ent);
+                if(ent_other->getEntityType() == GolfEngine::EntityType::CIRCLE){
+                    GolfEngine::CircleEntity* other_shape = (GolfEngine::CircleEntity*)(ent_other);
+                    if(ent_shape->getShape()->intersects(*other_shape->getShape())){
+                        GolfEngine::Collision collision(ent, ent_other);
+                        collisions.push_back(collision);
+                    }
+                }
+            }
+        }
 
         // Checl if player movin
         if(ent->hasTag("Golfball")){
@@ -49,4 +66,5 @@ void Tile::frameUpdate(double dt_s){
             }
         }
     }
+    return collisions;
 }

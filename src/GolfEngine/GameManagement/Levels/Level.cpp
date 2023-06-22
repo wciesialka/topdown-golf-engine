@@ -100,10 +100,14 @@ void Level::applyPlayerForce(const GolfEngine::Vector2 &force)
 void Level::frameUpdate(uint dt)
 {
     if(this->isPaused()) return;
+    this->getTilemap()->reorderEntities();
     // Convert dt (which is in milliseconds) to seconds
     double dt_s = dt / 1000.0;
 
     // Apply acceleration + velocity
     GolfEngine::Tilemap *map = this->getTilemap();
-    map->frameUpdate(dt_s);
+    GolfEngine::Collision::CollisionList collisions = map->frameUpdate(dt_s);
+    for(GolfEngine::Collision& collision : collisions){
+        this->onCollision(collision);
+    }
 }
