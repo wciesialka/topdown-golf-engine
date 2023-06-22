@@ -15,6 +15,7 @@
 #include "../Line.hpp"
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 namespace GolfEngine
 {
@@ -22,32 +23,36 @@ namespace GolfEngine
     class Polygon : public Shape
     {
     public:
-        Polygon() : max_vertices(3),
-                    vertex_count(0),
-                    GolfEngine::Shape()
+        typedef std::vector<Polygon> PolygonList;
+        /**
+         * @brief A polygon cannot have less than three sides.
+        */
+        static const unsigned int MIN_POSSIBLE_VERTICES = 3;
+
+        Polygon() : GolfEngine::Shape()
         {
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
-        Polygon(uint max_vertices) : vertex_count(0),
-                                     GolfEngine::Shape()
+        Polygon(uint max_vertices) : GolfEngine::Shape()
         {
             this->setMaxVertices(max_vertices);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
-        Polygon(GolfEngine::Vector2 pos) : max_vertices(3),
-                                           vertex_count(0),
-                                           GolfEngine::Shape(pos)
+        Polygon(GolfEngine::Vector2 pos) : GolfEngine::Shape(pos)
         {
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
-        Polygon(GolfEngine::Vector2 pos, uint max_vertices) : vertex_count(0),
-                                                              GolfEngine::Shape(pos)
+        Polygon(GolfEngine::Vector2 pos, uint max_vertices) : GolfEngine::Shape(pos)
         {
             this->setMaxVertices(max_vertices);
             this->vertices = new GolfEngine::Vector2[this->getMaxVertices()];
+            this->setVertexCount(0);
         }
 
         /**
@@ -115,7 +120,7 @@ namespace GolfEngine
          * @param line Line to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        virtual bool intersects(const GolfEngine::Line *line) const;
+        virtual bool intersects(const GolfEngine::Line& line) const;
 
         /**
          * @brief Check if the polygon is intersecting another polygon.
@@ -123,7 +128,7 @@ namespace GolfEngine
          * @param other Polygon to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        bool intersects(const GolfEngine::Polygon *other) const;
+        bool intersects(const GolfEngine::Polygon& other) const;
 
         /**
          * @brief Check if the polygon is intersecting a circle.
@@ -131,7 +136,7 @@ namespace GolfEngine
          * @param circle Circle to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        bool intersects(const GolfEngine::Circle *circle) const;
+        bool intersects(const GolfEngine::Circle& circle) const;
 
         /**
          * @brief Compare if the circle is intersecting a polygon.
@@ -140,15 +145,15 @@ namespace GolfEngine
          * @param polygon Polygon to compare against.
          * @returns True if there is an intersection, false otherwise.
          */
-        inline friend bool intersects(const GolfEngine::Circle *circle, const GolfEngine::Polygon *polygon)
+        inline friend bool intersects(const GolfEngine::Circle& circle, const GolfEngine::Polygon& polygon)
         {
-            return polygon->intersects(circle);
+            return polygon.intersects(circle);
         }
 
         virtual float getPerimeter() const;
         virtual float getArea() const;
         virtual GolfEngine::Vector2 getCentroid() const;
-        virtual bool contains(Vector2 point) const;
+        virtual bool contains(const Vector2& point) const;
         virtual void render(sf::RenderWindow *window);
 
         bool operator==(const Polygon &other) const;
@@ -168,10 +173,11 @@ namespace GolfEngine
          */
         inline void setMaxVertices(uint new_max)
         {
-            if (new_max < 3)
+            if (new_max < Polygon::MIN_POSSIBLE_VERTICES)
             {
                 throw std::out_of_range("A polygon cannot have less than three sides.");
             }
+
             this->max_vertices = new_max;
         };
 

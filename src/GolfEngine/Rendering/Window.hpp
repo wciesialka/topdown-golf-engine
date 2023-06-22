@@ -11,12 +11,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#define SCREEN_W 800
-#define SCREEN_H 600
 #define WINDOW_TITLE "Golf Game"
 
 #include <SFML/Graphics.hpp>
-#include "../GameManagement/Scene.hpp"
+#include "../GameManagement/Levels/Level.hpp"
 #include "../Geometry/Vector2.hpp"
 #include "RenderableVisitor.hpp"
 
@@ -25,18 +23,20 @@ namespace GolfEngine
     class Window
     {
     public:
-        Window(GolfEngine::Scene* scene) : scene(scene),
-                                           focus(GolfEngine::Vector2::zero),
-                                           bgcolor(sf::Color::Black)
+        Window(unsigned int width, unsigned int height) : width(width), height(height),
+                                                          active_level(nullptr),
+                                                          focus(GolfEngine::Vector2::zero),
+                                                          bgcolor(sf::Color::Black)
         {
-            this->render_window = new sf::RenderWindow(sf::VideoMode(SCREEN_W, SCREEN_H), WINDOW_TITLE);
+            this->render_window = new sf::RenderWindow(sf::VideoMode(width, height), WINDOW_TITLE, Window::WINDOW_FLAGS);
         }
 
-        Window(GolfEngine::Scene* scene, int background_color) : scene(scene),
-                                                                 focus(GolfEngine::Vector2::zero),
-                                                                 bgcolor(sf::Color(background_color))
+        Window(unsigned int width, unsigned int height, int background_color) : width(width), height(height),
+                                                                                active_level(nullptr),
+                                                                                focus(GolfEngine::Vector2::zero),
+                                                                                bgcolor(sf::Color(background_color))
         {
-            this->render_window = new sf::RenderWindow(sf::VideoMode(SCREEN_W, SCREEN_H), WINDOW_TITLE);
+            this->render_window = new sf::RenderWindow(sf::VideoMode(width, height), WINDOW_TITLE, Window::WINDOW_FLAGS);
         }
 
         ~Window()
@@ -48,13 +48,6 @@ namespace GolfEngine
          * @brief Open the window and display the game.
          */
         void beginDisplay();
-
-        /**
-         * @brief Handle a window event.
-         *
-         * @param event Event to handle.
-         */
-        void handleEvent(sf::Event event);
 
         /**
          * @brief Set the focus point.
@@ -82,22 +75,38 @@ namespace GolfEngine
             return this->focus;
         }
 
-        inline int getWidth() const
+        /**
+         * @brief Returns the width of the window.
+         *
+         * @returns The width of the window in pixels.
+         */
+        inline unsigned int getWidth() const
         {
-            return SCREEN_W;
+            return this->width;
         }
 
-        inline int getHeight() const
+        /**
+         * @brief Returns the height of the window.
+         *
+         * @returns The height of the window in pixels.
+         */
+        inline unsigned int getHeight() const
         {
-            return SCREEN_H;
+            return this->height;
+        }
+
+        inline GolfEngine::Vector2 getSize() const
+        {
+            return GolfEngine::Vector2((float)(this->getWidth()), (float)(this->getHeight()));
         }
 
         /**
          * @brief Returns the render window of the window.
-         * 
+         *
          * @returns Pointer to the render window.
-        */
-        inline sf::RenderWindow* getDisplay() const {
+         */
+        inline sf::RenderWindow *getDisplay() const
+        {
             return this->render_window;
         }
 
@@ -112,9 +121,43 @@ namespace GolfEngine
             return (point.x >= this->getFocusPoint().x && point.y >= this->getFocusPoint().y) && (point.x <= (this->getFocusPoint().x + this->getWidth()) && point.y <= (this->getFocusPoint().y + this->getHeight()));
         }
 
+        /**
+         * @brief Load a level.
+         *
+         * @param level Level to load.
+         */
+        inline void loadLevel(GolfEngine::Level *level)
+        {
+            this->active_level = level;
+            this->active_level->initialize();
+        }
+
+        /**
+         * @brief Close the window and handle any cleanup.
+         */
+        inline void close()
+        {
+            this->render_window->close();
+        }
+
+        /**
+         * @brief Get a pointer to the active level.
+         *
+         * @return Pointer to the window's currently active level.
+         */
+        inline GolfEngine::Level *getActiveLevel()
+        {
+            return this->active_level;
+        }
+
     private:
+        static const sf::Uint32 WINDOW_FLAGS = sf::Style::Titlebar | sf::Style::Close;
+
+        unsigned int width;
+        unsigned int height;
+
         sf::RenderWindow *render_window;
-        GolfEngine::Scene *scene;
+        GolfEngine::Level *active_level;
         GolfEngine::Vector2 focus;
 
         sf::Color bgcolor;

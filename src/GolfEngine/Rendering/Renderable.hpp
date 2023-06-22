@@ -28,12 +28,12 @@ namespace GolfEngine
         {
         }
 
-        Renderable(Vector2 pos) : origin(pos),
+        Renderable(const Vector2& pos) : origin(pos),
                                   rotation(0)
         {
         }
 
-        Renderable(Vector2 pos, float rotation) : origin(pos),
+        Renderable(const Vector2& pos, float rotation) : origin(pos),
                                                   rotation(0)
         {
             this->setRotation(rotation);
@@ -81,16 +81,6 @@ namespace GolfEngine
         inline float getRotation() const
         {
             return this->rotation;
-        }
-
-        /**
-         * @brief Move the object's origin.
-         *
-         * @param by Vector to move the origin by.
-         */
-        inline void move(const GolfEngine::Vector2 by)
-        {
-            this->setOrigin(this->getOrigin() + by);
         }
 
         /**

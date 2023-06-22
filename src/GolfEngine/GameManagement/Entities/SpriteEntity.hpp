@@ -45,6 +45,10 @@ namespace GolfEngine
             window->draw(*this->sprite);
         };
 
+        inline GolfEngine::EntityType getEntityType() const {
+            return GolfEngine::EntityType::SPRITE;
+        }
+
     private:
         sf::Sprite *sprite;
     };

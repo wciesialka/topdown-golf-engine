@@ -94,9 +94,9 @@ GolfEngine::Vector2 Polygon::getCentroid() const
 
 void Polygon::render(sf::RenderWindow *window)
 {
-    if (this->getVertexCount() < 3)
+    if (this->getVertexCount() < Polygon::MIN_POSSIBLE_VERTICES)
     {
-        throw std::logic_error("Cannot render an open polygon.");
+        throw std::runtime_error("Cannot render a polygon with less than three sides.");
     }
 
     sf::ConvexShape convex;
@@ -113,7 +113,7 @@ void Polygon::render(sf::RenderWindow *window)
     window->draw(convex);
 }
 
-bool Polygon::contains(GolfEngine::Vector2 point) const
+bool Polygon::contains(const GolfEngine::Vector2& point) const
 {
     bool collision = false;
 
@@ -138,7 +138,7 @@ bool Polygon::contains(GolfEngine::Vector2 point) const
     return collision;
 }
 
-bool Polygon::intersects(const GolfEngine::Line *line) const
+bool Polygon::intersects(const GolfEngine::Line& line) const
 {
     // Check if the given line intersects any of the
     // lines formed by each consecutive vertex on the polygon.
@@ -159,9 +159,9 @@ bool Polygon::intersects(const GolfEngine::Line *line) const
     return false;
 }
 
-bool Polygon::intersects(const Polygon *other) const
+bool Polygon::intersects(const Polygon& other) const
 {
-    if (*this == *other)
+    if (*this == other)
     {
         return true;
     }
@@ -175,7 +175,7 @@ bool Polygon::intersects(const Polygon *other) const
         GolfEngine::Vector2 b = this->getPoint(j);
 
         GolfEngine::Line edge(a, b);
-        if (other->intersects(&edge))
+        if (other.intersects(edge))
         {
             return true;
         }
@@ -203,7 +203,7 @@ bool Polygon::operator==(const Polygon &other) const
     return true;
 }
 
-bool Polygon::intersects(const GolfEngine::Circle *circle) const
+bool Polygon::intersects(const GolfEngine::Circle& circle) const
 {
     // Check if any of the lines formed by consecutive vertices intersect the circle.
     uint j = this->getVertexCount() - 1;
@@ -213,7 +213,7 @@ bool Polygon::intersects(const GolfEngine::Circle *circle) const
         GolfEngine::Vector2 b = this->localToWorld(this->getPoint(j));
 
         GolfEngine::Line edge(a, b);
-        if (circle->intersects(&edge))
+        if (circle.intersects(edge))
         {
             return true;
         }

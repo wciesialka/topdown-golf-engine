@@ -12,8 +12,9 @@
 #include "Shape.hpp"
 #include <stdexcept>
 #include "../Constants.hpp"
+#include <vector>
 
-#define SQR(n) (n*n)
+#define SQR(n) (n * n)
 
 namespace GolfEngine
 {
@@ -24,10 +25,19 @@ namespace GolfEngine
         {
             this->setRadius(radius);
         }
-        Circle(GolfEngine::Vector2 pos, float radius) : GolfEngine::Shape(pos)
+        Circle(float radius, GolfEngine::Vector2 pos) : GolfEngine::Shape(pos)
         {
             this->setRadius(radius);
+            this->setPosition(pos);
         }
+        Circle(float radius, GolfEngine::Vector2 pos, GolfEngine::Vector2 origin) : GolfEngine::Shape(origin)
+        {
+            this->setRadius(radius);
+            this->setPosition(pos);
+        }
+        ~Circle() {}
+
+        typedef std::vector<Circle> CircleList;
 
         /**
          * @brief Sets the radius of the circle.
@@ -55,31 +65,39 @@ namespace GolfEngine
 
         inline GolfEngine::Vector2 getPosition() const
         {
-            return this->getOrigin();
+            return this->position;
         }
 
-        inline virtual bool contains(GolfEngine::Vector2 point) const
+        inline void setPosition(const GolfEngine::Vector2 &pos)
+        {
+            this->position = pos;
+        }
+
+        inline virtual bool contains(const GolfEngine::Vector2 &point) const
         {
             return (point.distance(this->getCentroid()) <= this->getRadius());
         }
 
-        virtual bool intersects(const GolfEngine::Line *line) const;
+        virtual bool intersects(const GolfEngine::Line &line) const;
 
         /**
          * @brief Compare if the circle is intersecting another circle.
-         * 
+         *
          * @param other Circle to compare against.
          * @returns True if there is an intersection, false otherwise.
-        */
-        inline bool intersects(const GolfEngine::Circle* other) const {
-            return this->getPosition().distance(other->getPosition()) <= (this->getRadius() + other->getRadius());
+         */
+        inline bool intersects(const GolfEngine::Circle &other) const
+        {
+            return this->getPosition().distance(other.getPosition()) <= (this->getRadius() + other.getRadius());
         }
 
-        inline virtual float getPerimeter() const {
+        inline virtual float getPerimeter() const
+        {
             return 2.0 * GolfEngine::pi * this->getRadius();
         }
 
-        virtual float getArea() const {
+        virtual float getArea() const
+        {
             return GolfEngine::pi * SQR(this->getRadius());
         }
 
@@ -91,6 +109,7 @@ namespace GolfEngine
         virtual void render(sf::RenderWindow *window);
 
     private:
+        GolfEngine::Vector2 position;
         float radius;
     };
 }

@@ -21,11 +21,11 @@ namespace GolfEngine
     public:
         // Vector properties
 
-        float x;
-        float y;
+        double x;
+        double y;
 
         Vector2() : x(0), y(0){};
-        Vector2(float x_, float y_) : x(x_), y(y_){};
+        Vector2(double x_, double y_) : x(x_), y(y_){};
 
         /**
          * @brief The zero vector is a vector with zero length and undefined direction.
@@ -38,7 +38,7 @@ namespace GolfEngine
          * @return The square of the vector's magnitude.
          * @note Magnitude is returned by \ref magnitude "magnitude()" function.
          */
-        inline float magnitudeSqr() const { return SQR(this->x) + SQR(this->y); }
+        inline double magnitudeSqr() const { return SQR(this->x) + SQR(this->y); }
 
         /**
          * @brief Returns the vector's magnitude (length).
@@ -46,7 +46,7 @@ namespace GolfEngine
          * @return The vector's magnitude.
          * @note This function uses \ref magnitudeSqr "mangitudeSqr()" internally.
          */
-        inline float magnitude() const { return sqrt(this->magnitudeSqr()); };
+        inline double magnitude() const { return sqrt(this->magnitudeSqr()); };
 
         /**
          * @brief Returns the normalized form of the vector.
@@ -68,7 +68,7 @@ namespace GolfEngine
          * @return The square of the distance between two vectors.
          * @note The distance between two vectors is returned by \ref distance "distance(Vector2)"
          */
-        inline float distanceSqr(const Vector2 &other) const
+        inline double distanceSqr(const Vector2 &other) const
         {
             return SQR((this->x - other.x)) + SQR((this->y - other.y));
         }
@@ -82,7 +82,7 @@ namespace GolfEngine
          * @return The distance between two vectors.
          * @note This function uses \ref distanceSqr "distanceSqr(Vector2)" internally.
          */
-        inline float distance(const Vector2 &other) const
+        inline double distance(const Vector2 &other) const
         {
             return sqrt(this->distanceSqr(other));
         }
@@ -111,25 +111,25 @@ namespace GolfEngine
             this->y -= rhs.y;
             return *this;
         }
-        inline float operator*(const Vector2 &rhs) const
+        inline double operator*(const Vector2 &rhs) const
         {
             return (this->x * rhs.x) + (this->y * rhs.y);
         }
 
         // Vector-Scalar Arithmetic
-        inline Vector2 operator*(float scalar) const
+        inline Vector2 operator*(double scalar) const
         {
             return Vector2(
                 this->x * scalar,
                 this->y * scalar);
         }
-        inline Vector2 operator/(float scalar) const
+        inline Vector2 operator/(double scalar) const
         {
             return Vector2(
                 this->x / scalar,
                 this->y / scalar);
         }
-        inline friend Vector2 operator*(float scalar, const Vector2 &vec)
+        inline friend Vector2 operator*(double scalar, const Vector2 &vec)
         {
             return vec * scalar;
         }
