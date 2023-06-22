@@ -8,13 +8,13 @@ There are many things that I learned while working on this project. One of the t
 
 Additionally, I learned a lot about Game Development in general, as well as inner workings of a Game Engine. It seems that things works mostly like you'd expect them to, but that a lot more work goes into that than you may think. Having built an entire topdown 2d golf engine from the ground up, I feel that the #1 thing I learned is to maybe not do that again. I had a very enjoyable time, but I also wanted to pull my hair out some times.
 
+### Game Design Document
+
+There is one screen, which is the game screen. Future plans include UI, but as of now, there is just the game screen. The game screen consists of a Scene, which has a Tilemap. A Tilemap is made out of Tiles, each with their own geometry, as well as having Entities. Entities have defining Shapes.
+
 ### State Map
 
 There are not many states to keep track of. The Golfball Entity has two states, STILL and MOVING. A STILL Golfball can be struck, a MOVING one can not. When a MOVING Golfball no longer has acceleration, it becomes STILL, and one point is gained. If a STILL Golfball is struck, it will be given acceleration, and will become MOVING. I imagine if I added support for other obstacles, they, too, could have states of their own.
-
-### UML
-
-I did not make a UML.
 
 ### Video
 
