@@ -1,10 +1,10 @@
 /**
  * @file Level.cpp
  * @brief This file contains definitions for the Level abstract class.
- * 
+ *
  * @date 2023-06-16
  * @author Willow Ciesialka
-*/
+ */
 
 #include "Level.hpp"
 #include "../Entities/Golfball.hpp"
@@ -12,20 +12,25 @@
 using GolfEngine::Level;
 
 // General, shared level collisions.
-void Level::onCollision(GolfEngine::Collision& collision){
+void Level::onCollision(GolfEngine::Collision &collision)
+{
     // Goal collisions.
-    if(collision.getAttached()->getTag() == "Goal"){
+    if (collision.getAttached()->getTag() == "Goal")
+    {
         // Goal shouldn't have any collisions.
         return;
     }
     // Golfball collisions.
-    if(collision.getAttached()->getTag() == "Golfball"){
+    if (collision.getAttached()->getTag() == "Golfball")
+    {
         // If golfball hits goal, we win!
-        if(collision.getCollider()->getTag() == "Goal"){
+        if (collision.getCollider()->getTag() == "Goal")
+        {
             this->endScene(true);
         }
         // If golball hits obstacle, respawn!
-        if(collision.getCollider()->getTag() == "Obstacle"){
+        if (collision.getCollider()->getTag() == "Obstacle")
+        {
             collision.getAttached()->respawn();
         }
     }
@@ -37,7 +42,8 @@ void Level::onCollision(GolfEngine::Collision& collision){
  *
  * @param event Mouse Button event.
  */
-void Level::onMouseDown(sf::Event::MouseButtonEvent &event){
+void Level::onMouseDown(sf::Event::MouseButtonEvent &event)
+{
     std::cout << "Mouse Down" << std::endl;
     GolfEngine::Vector2 target(event.x, event.y);
     this->setTarget(target);
@@ -48,9 +54,17 @@ void Level::onMouseDown(sf::Event::MouseButtonEvent &event){
  *
  * @param event Mouse Button event.
  */
-void Level::onMouseUp(sf::Event::MouseButtonEvent &event){
+
+const float MAX_SWING_FORCE = 10000;
+
+void Level::onMouseUp(sf::Event::MouseButtonEvent &event)
+{
     GolfEngine::Vector2 current(event.x, event.y);
-    GolfEngine::Vector2 force = this->getTarget() - current;
+    GolfEngine::Vector2 force = (this->getTarget() - current) * 10;
+    if (force.magnitudeSqr() > (MAX_SWING_FORCE * MAX_SWING_FORCE))
+    {
+        force = force.normalized() * MAX_SWING_FORCE;
+    }
     std::cout << "Mouse lifted - diff: " << force << std::endl;
     this->applyPlayerForce(force);
 }
@@ -60,38 +74,38 @@ void Level::onMouseUp(sf::Event::MouseButtonEvent &event){
  *
  * @param event Mouse Move event.
  */
-void Level::onMouseMove(sf::Event::MouseMoveEvent &event){
+void Level::onMouseMove(sf::Event::MouseMoveEvent &event)
+{
     // do nothing
-    if(event.x == 42){
+    if (event.x == 42)
+    {
         return;
     }
 }
 
 const GolfEngine::Tag PLAYER_TAG = GolfEngine::Tag("Golfball");
 
-void Level::applyPlayerForce(const GolfEngine::Vector2& force) {
-    for(GolfEngine::Entity* golfball : this->findEntitiesWithTag(PLAYER_TAG)){
-        GolfEngine::Golfball* player = (GolfEngine::Golfball*)(golfball);
-        if(player->getState() == GolfEngine::GolfballStates::STILL){
+void Level::applyPlayerForce(const GolfEngine::Vector2 &force)
+{
+    for (GolfEngine::Entity *golfball : this->findEntitiesWithTag(PLAYER_TAG))
+    {
+        GolfEngine::Golfball *player = (GolfEngine::Golfball *)(golfball);
+        if (player->getState() == GolfEngine::GolfballStates::STILL)
+        {
             player->setState(GolfEngine::GolfballStates::MOVING);
-
-            // Max force
-            if(force.magnitudeSqr() > 100){
-                golfball->addAcceleration(force.normalized() * 10);
-            } else {
-                golfball->addAcceleration(force);
-            }
+            golfball->addAcceleration(force);
             std::cout << golfball->getAcceleration() << std::endl;
         }
     }
 }
 
-void Level::frameUpdate(float dt){
+void Level::frameUpdate(uint dt)
+{
+    if(this->isPaused()) return;
     // Convert dt (which is in milliseconds) to seconds
     double dt_s = dt / 1000.0;
-    std::cout << dt << "," << dt_s << std::endl;
 
     // Apply acceleration + velocity
-    GolfEngine::Tilemap* map = this->getTilemap();
+    GolfEngine::Tilemap *map = this->getTilemap();
     map->frameUpdate(dt_s);
 }

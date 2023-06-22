@@ -52,6 +52,7 @@ namespace GolfEngine
             }
             GolfEngine::Vector2 current_acceleration = this->getAcceleration();
             GolfEngine::Vector2 acceleration = current_acceleration * dt;
+            std::cout << "Want to add " << acceleration << " accel... " << std::endl;
             this->addVelocity(acceleration);
             GolfEngine::Vector2 new_acceleration = current_acceleration - acceleration; 
             this->setAcceleration(new_acceleration);
@@ -68,9 +69,11 @@ namespace GolfEngine
             if(dt > 1 || dt < 0){
                 throw std::domain_error("dt cannot be less than 0 or greater than 1.");
             }
-            GolfEngine::Vector2 velocity = this->getVelocity() * dt;
+            GolfEngine::Vector2 current = this->getVelocity();
+            GolfEngine::Vector2 velocity = current * dt;
             this->move(velocity);
-            this->setVelocity(this->getVelocity() - velocity);
+            GolfEngine::Vector2 new_velocity = current - velocity;
+            this->setVelocity(new_velocity);
         }
 
         /**
@@ -100,11 +103,11 @@ namespace GolfEngine
          */
         inline void setVelocity(const GolfEngine::Vector2& vel)
         {
-            if(vel.magnitudeSqr() < 0.001){
+            std::cout << "Setting velocity to " << vel << std::endl;
+            if(vel.magnitudeSqr() < 1){
                 this->velocity = GolfEngine::Vector2::zero;
                 return;
             }
-            std::cout << "Setting velocity to  " << vel << std::endl;
             this->velocity = vel;
         }
 
@@ -115,11 +118,11 @@ namespace GolfEngine
          */
         inline void setAcceleration(const GolfEngine::Vector2& accel)
         {
-            if(accel.magnitudeSqr() < 0.001){
+            std::cout << "Setting accel to " << accel << std::endl;
+            if(accel.magnitudeSqr() < 1){
                 this->acceleration = GolfEngine::Vector2::zero;
                 return;
             }
-            std::cout << "Setting accel to  " << accel << std::endl;
             this->acceleration = accel;
         }
 
@@ -143,9 +146,11 @@ namespace GolfEngine
          *
          * @param vel Velocity to add.
          */
-        inline void addVelocity(GolfEngine::Vector2 vel)
+        inline void addVelocity(const GolfEngine::Vector2& vel)
         {
-            this->setVelocity(this->getVelocity() + vel);
+            std::cout << "Adding " << vel << " velocity.." << std::endl;
+            GolfEngine::Vector2 current = this->getVelocity();
+            this->setVelocity(current + vel);
         }
 
         /**

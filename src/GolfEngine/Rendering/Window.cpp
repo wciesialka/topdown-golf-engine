@@ -11,9 +11,17 @@
 #include <chrono>
 #include <stdexcept>
 #include <iostream>
+#include<unistd.h>
 
 using GolfEngine::Window;
 using namespace std::chrono;
+
+unsigned long long getTimestamp()
+{
+    return duration_cast<milliseconds>(
+               system_clock::now().time_since_epoch())
+        .count();
+}
 
 void Window::beginDisplay()
 {
@@ -24,11 +32,8 @@ void Window::beginDisplay()
     GolfEngine::Vector2 screen_size(this->getWidth(), this->getHeight());
     GolfEngine::RenderableVisitor visitor(this->getDisplay(), screen_size);
 
-    long unsigned int last_update = duration_cast<milliseconds>(
-                            system_clock::now().time_since_epoch())
-                            .count();
-
-    std::cout << last_update << std::endl;
+    unsigned long long now;
+    unsigned long long last_update = getTimestamp();
 
     while (this->render_window->isOpen())
     {
@@ -72,18 +77,18 @@ void Window::beginDisplay()
         this->render_window->clear(this->bgcolor);
 
         // My formatter turned this into poetry.
-        long unsigned int now = duration_cast<milliseconds>(
-                        system_clock::now().time_since_epoch())
-                        .count();
+        now = getTimestamp();
 
-        float time_diff = (float)(now - last_update);
+        unsigned long long time_diff = now - last_update;
+        std::cout << "Last update was " << time_diff << "ms ago..." << std::endl;
 
         this->active_level->frameUpdate(time_diff);
+
+        last_update = now;
 
         this->active_level->visit(&visitor);
 
         this->render_window->display();
-
-        last_update = now;
+        usleep(33333);
     }
 }

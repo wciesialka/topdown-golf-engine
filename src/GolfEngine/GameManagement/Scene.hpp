@@ -63,7 +63,7 @@ namespace GolfEngine
          *
          * @param dt Time since last frame update (in ms)
          */
-        virtual void frameUpdate(float dt_ms) = 0;
+        virtual void frameUpdate(uint dt_ms) = 0;
 
         /**
          * @brief This function finds and returns a tile designated by a position.
@@ -128,6 +128,8 @@ namespace GolfEngine
          * @brief Resume the game.
          */
         inline void resume() { this->paused = false; };
+
+        inline bool isPaused() const { return this->paused; }
 
         /**
          * @brief Get the current mouse position.
