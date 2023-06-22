@@ -80,7 +80,6 @@ void Window::beginDisplay()
         now = getTimestamp();
 
         unsigned long long time_diff = now - last_update;
-        std::cout << "Last update was " << time_diff << "ms ago..." << std::endl;
 
         this->active_level->frameUpdate(time_diff);
 

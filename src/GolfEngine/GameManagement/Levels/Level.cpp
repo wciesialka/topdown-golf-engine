@@ -27,6 +27,7 @@ void Level::onCollision(GolfEngine::Collision &collision)
         if (collision.getCollider()->getTag() == "Goal")
         {
             this->endScene(true);
+            return;
         }
         // If golball hits obstacle, respawn!
         if (collision.getCollider()->getTag() == "Obstacle")
@@ -44,7 +45,6 @@ void Level::onCollision(GolfEngine::Collision &collision)
  */
 void Level::onMouseDown(sf::Event::MouseButtonEvent &event)
 {
-    std::cout << "Mouse Down" << std::endl;
     GolfEngine::Vector2 target(event.x, event.y);
     this->setTarget(target);
 }
@@ -65,7 +65,6 @@ void Level::onMouseUp(sf::Event::MouseButtonEvent &event)
     {
         force = force.normalized() * MAX_SWING_FORCE;
     }
-    std::cout << "Mouse lifted - diff: " << force << std::endl;
     this->applyPlayerForce(force);
 }
 
@@ -94,7 +93,6 @@ void Level::applyPlayerForce(const GolfEngine::Vector2 &force)
         {
             player->setState(GolfEngine::GolfballStates::MOVING);
             golfball->addAcceleration(force);
-            std::cout << golfball->getAcceleration() << std::endl;
         }
     }
 }

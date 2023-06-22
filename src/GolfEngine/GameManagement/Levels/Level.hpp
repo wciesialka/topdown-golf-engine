@@ -80,6 +80,7 @@ namespace GolfEngine {
              * @param dt Time since last frame update (in ms)
              */
             void frameUpdate(uint dt);
+
         private:
             GolfEngine::Vector2 target;
 

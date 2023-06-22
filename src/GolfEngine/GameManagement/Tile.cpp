@@ -28,3 +28,25 @@ bool Tile::removeEntity(GolfEngine::Entity* entity){
     this->entities->erase(it);
     return true;
 }
+
+void Tile::frameUpdate(double dt_s){
+    for(GolfEngine::Entity* ent : *this->entities){
+        //Apply acceleration + velocity
+        ent->applyAcceleration(dt_s);
+        ent->applyVelocity(dt_s);
+
+        // Apply friciton
+        float friction = this->getFriction() * dt_s;
+        ent->setVelocity(ent->getVelocity() * friction);
+
+        // Checl if player movin
+        if(ent->hasTag("Golfball")){
+            GolfEngine::Golfball* player = (GolfEngine::Golfball*)(ent);
+            if(player->getState() == GolfballStates::MOVING && player->getAcceleration() == GolfEngine::Vector2::zero){
+                player->setState(GolfballStates::STILL);
+                player->setRespawnPosition(player->getPosition());
+                player->addScore();
+            }
+        }
+    }
+}

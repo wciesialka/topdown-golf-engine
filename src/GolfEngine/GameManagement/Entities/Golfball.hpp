@@ -11,6 +11,7 @@
 
 #include "../../Geometry/Vector2.hpp"
 #include "CircleEntity.hpp"
+#include <iostream>
 
 namespace GolfEngine
 {
@@ -26,14 +27,14 @@ namespace GolfEngine
         static const int RADIUS = 4;
         static const int COLOR = 0xFFFFFF;
 
-        Golfball() : GolfEngine::CircleEntity(Golfball::RADIUS)
+        Golfball() : GolfEngine::CircleEntity(Golfball::RADIUS), score(0)
         {
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
             this->setActiveStatus(true);
             this->setState(GolfballStates::STILL);
         }
-        Golfball(const GolfEngine::Vector2& pos) : GolfEngine::CircleEntity(Golfball::RADIUS, pos){
+        Golfball(const GolfEngine::Vector2& pos) : GolfEngine::CircleEntity(Golfball::RADIUS, pos), score(0) {
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
             this->setActiveStatus(true);
@@ -47,8 +48,18 @@ namespace GolfEngine
         void setState(const GolfballStates& state) {
             this->currentState = state;
         }
+
+        void addScore(){
+            this->score++;
+            std::cout << "New Score: " << this->score << std::endl;
+        }
+
+        int getScore(){
+            return this->score;
+        }
     private:
         GolfballStates currentState;
+        int score;
     };
 }
 
