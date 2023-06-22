@@ -8,6 +8,7 @@
 
 #include "Level.hpp"
 #include "../Entities/Golfball.hpp"
+#include <iostream>
 using GolfEngine::Level;
 
 // General, shared level collisions.
@@ -37,6 +38,7 @@ void Level::onCollision(GolfEngine::Collision& collision){
  * @param event Mouse Button event.
  */
 void Level::onMouseDown(sf::Event::MouseButtonEvent &event){
+    std::cout << "Mouse Down" << std::endl;
     GolfEngine::Vector2 target(event.x, event.y);
     this->setTarget(target);
 }
@@ -49,6 +51,7 @@ void Level::onMouseDown(sf::Event::MouseButtonEvent &event){
 void Level::onMouseUp(sf::Event::MouseButtonEvent &event){
     GolfEngine::Vector2 current(event.x, event.y);
     GolfEngine::Vector2 force = this->getTarget() - current;
+    std::cout << "Mouse lifted - diff: " << force << std::endl;
     this->applyPlayerForce(force);
 }
 
@@ -71,14 +74,22 @@ void Level::applyPlayerForce(const GolfEngine::Vector2& force) {
         GolfEngine::Golfball* player = (GolfEngine::Golfball*)(golfball);
         if(player->getState() == GolfEngine::GolfballStates::STILL){
             player->setState(GolfEngine::GolfballStates::MOVING);
-            golfball->addAcceleration(force);
+
+            // Max force
+            if(force.magnitudeSqr() > 100){
+                golfball->addAcceleration(force.normalized() * 10);
+            } else {
+                golfball->addAcceleration(force);
+            }
+            std::cout << golfball->getAcceleration() << std::endl;
         }
     }
 }
 
 void Level::frameUpdate(float dt){
     // Convert dt (which is in milliseconds) to seconds
-    float dt_s = dt / 1000.0;
+    double dt_s = dt / 1000.0;
+    std::cout << dt << "," << dt_s << std::endl;
 
     // Apply acceleration + velocity
     GolfEngine::Tilemap* map = this->getTilemap();

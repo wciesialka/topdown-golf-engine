@@ -24,9 +24,11 @@ void Window::beginDisplay()
     GolfEngine::Vector2 screen_size(this->getWidth(), this->getHeight());
     GolfEngine::RenderableVisitor visitor(this->getDisplay(), screen_size);
 
-    float last_update = duration_cast<milliseconds>(
+    long unsigned int last_update = duration_cast<milliseconds>(
                             system_clock::now().time_since_epoch())
                             .count();
+
+    std::cout << last_update << std::endl;
 
     while (this->render_window->isOpen())
     {
@@ -70,15 +72,18 @@ void Window::beginDisplay()
         this->render_window->clear(this->bgcolor);
 
         // My formatter turned this into poetry.
-        float now = duration_cast<milliseconds>(
+        long unsigned int now = duration_cast<milliseconds>(
                         system_clock::now().time_since_epoch())
                         .count();
 
-        this->active_level->frameUpdate(now - last_update);
-        last_update = now;
+        float time_diff = (float)(now - last_update);
+
+        this->active_level->frameUpdate(time_diff);
 
         this->active_level->visit(&visitor);
 
         this->render_window->display();
+
+        last_update = now;
     }
 }

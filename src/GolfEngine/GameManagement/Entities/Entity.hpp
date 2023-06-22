@@ -50,9 +50,11 @@ namespace GolfEngine
             if(dt > 1 || dt < 0){
                 throw std::domain_error("dt cannot be less than 0 or greater than 1.");
             }
-            GolfEngine::Vector2 acceleration = this->getAcceleration() * dt;
+            GolfEngine::Vector2 current_acceleration = this->getAcceleration();
+            GolfEngine::Vector2 acceleration = current_acceleration * dt;
             this->addVelocity(acceleration);
-            this->setAcceleration(this->getAcceleration() - acceleration);
+            GolfEngine::Vector2 new_acceleration = current_acceleration - acceleration; 
+            this->setAcceleration(new_acceleration);
         }
 
         /**
@@ -61,7 +63,7 @@ namespace GolfEngine
          * @param dt Time, in seconds, to factor in.
          * @throws std::domain_error If dt is > 1 or < 0.
          */
-        inline void applyVelocity(float dt)
+        inline void applyVelocity(float dt = 1)
         {
             if(dt > 1 || dt < 0){
                 throw std::domain_error("dt cannot be less than 0 or greater than 1.");
@@ -96,11 +98,13 @@ namespace GolfEngine
          *
          * @param vel The entity's new velocity.
          */
-        inline void setVelocity(GolfEngine::Vector2 vel)
+        inline void setVelocity(const GolfEngine::Vector2& vel)
         {
-            if(vel.magnitudeSqr() < 0.1){
-                vel = GolfEngine::Vector2::zero;
+            if(vel.magnitudeSqr() < 0.001){
+                this->velocity = GolfEngine::Vector2::zero;
+                return;
             }
+            std::cout << "Setting velocity to  " << vel << std::endl;
             this->velocity = vel;
         }
 
@@ -109,12 +113,29 @@ namespace GolfEngine
          *
          * @param accel The entity's new acceleration.
          */
-        inline void setAcceleration(GolfEngine::Vector2 accel)
+        inline void setAcceleration(const GolfEngine::Vector2& accel)
         {
-            if(accel.magnitudeSqr() < 0.1){
-                accel = GolfEngine::Vector2::zero;
+            if(accel.magnitudeSqr() < 0.001){
+                this->acceleration = GolfEngine::Vector2::zero;
+                return;
             }
+            std::cout << "Setting accel to  " << accel << std::endl;
             this->acceleration = accel;
+        }
+
+
+        /**
+         * @brief Move the object's origin.
+         *
+         * @param by Vector to move the origin by.
+         */
+        inline void move(const GolfEngine::Vector2& by)
+        {
+            if(by == GolfEngine::Vector2::zero) return;
+            std::cout << "Moving by " << by << std::endl;
+            GolfEngine::Vector2 pos = this->getPosition();
+            GolfEngine::Vector2 new_pos = pos + by;
+            this->setPosition(new_pos);
         }
 
         /**

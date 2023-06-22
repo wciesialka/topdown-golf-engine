@@ -84,16 +84,6 @@ namespace GolfEngine
         }
 
         /**
-         * @brief Move the object's origin.
-         *
-         * @param by Vector to move the origin by.
-         */
-        inline void move(const GolfEngine::Vector2 by)
-        {
-            this->setOrigin(this->getOrigin() + by);
-        }
-
-        /**
          * @brief Rotate the object by a set amount.
          *
          * @param radians Amount to rotate, clockwise, in radians.

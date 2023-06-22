@@ -123,7 +123,7 @@ namespace GolfEngine
 
         virtual float getFriction() = 0;
 
-        inline void frameUpdate(float dt_s){
+        inline void frameUpdate(double dt_s){
             for(GolfEngine::Entity* ent : *this->entities){
                 //Apply acceleration + velocity
                 ent->applyAcceleration(dt_s);
