@@ -19,6 +19,12 @@
 namespace GolfEngine
 {
 
+    enum EntityType {
+        SPRITE,
+        CIRCLE,
+        POLY
+    };
+
     class Entity : public Renderable
     {
     public:
@@ -268,6 +274,8 @@ namespace GolfEngine
         {
             return this->getOrigin();
         }
+
+        virtual EntityType getEntityType() const = 0;
 
         /**
          * @brief Return the entity's active status.

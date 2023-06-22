@@ -56,6 +56,10 @@ namespace GolfEngine
             return this->shape;
         }
 
+        inline GolfEngine::EntityType getEntityType() const {
+            return GolfEngine::EntityType::CIRCLE;
+        }
+
     private:
         GolfEngine::Circle *shape;
     };
