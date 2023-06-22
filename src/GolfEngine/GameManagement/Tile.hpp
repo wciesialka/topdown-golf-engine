@@ -11,6 +11,7 @@
 
 #include "../Geometry/Vector2.hpp"
 #include "Entities/Entity.hpp"
+#include "Entities/Golfball.hpp"
 #include "../Rendering/Renderable.hpp"
 #include "../Rendering/RenderableVisitor.hpp"
 #include "TileGeometry.hpp"
@@ -118,6 +119,28 @@ namespace GolfEngine
 
         GolfEngine::Entity::EntityList* getEntities() const {
             return this->entities;
+        }
+
+        virtual float getFriction() = 0;
+
+        inline void frameUpdate(float dt_s){
+            for(GolfEngine::Entity* ent : *this->entities){
+                //Apply acceleration + velocity
+                ent->applyAcceleration(dt_s);
+                ent->applyVelocity(dt_s);
+
+                // Apply friciton
+                float friction = this->getFriction() * dt_s;
+                ent->setVelocity(ent->getVelocity() * friction);
+
+                // Checl if player movin
+                if(ent->hasTag("Golfball")){
+                    GolfEngine::Golfball* player = (GolfEngine::Golfball*)(ent);
+                    if(player->getState() == GolfballStates::MOVING && player->getAcceleration() == GolfEngine::Vector2::zero){
+                        player->setState(GolfballStates::STILL);
+                    }
+                }
+            }
         }
 
     private:

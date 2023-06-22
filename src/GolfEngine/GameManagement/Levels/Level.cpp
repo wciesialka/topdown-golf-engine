@@ -7,6 +7,7 @@
 */
 
 #include "Level.hpp"
+#include "../Entities/Golfball.hpp"
 using GolfEngine::Level;
 
 // General, shared level collisions.
@@ -67,7 +68,11 @@ const GolfEngine::Tag PLAYER_TAG = GolfEngine::Tag("Golfball");
 
 void Level::applyPlayerForce(const GolfEngine::Vector2& force) {
     for(GolfEngine::Entity* golfball : this->findEntitiesWithTag(PLAYER_TAG)){
-        golfball->addVelocity(force);
+        GolfEngine::Golfball* player = (GolfEngine::Golfball*)(golfball);
+        if(player->getState() == GolfEngine::GolfballStates::STILL){
+            player->setState(GolfEngine::GolfballStates::MOVING);
+            golfball->addAcceleration(force);
+        }
     }
 }
 
@@ -76,8 +81,6 @@ void Level::frameUpdate(float dt){
     float dt_s = dt / 1000.0;
 
     // Apply acceleration + velocity
-    for(GolfEngine::Entity* ent : this->getAllEntities()){
-        ent->applyAcceleration(dt_s);
-        ent->applyVelocity(dt_s);
-    }
+    GolfEngine::Tilemap* map = this->getTilemap();
+    map->frameUpdate(dt_s);
 }

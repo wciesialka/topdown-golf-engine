@@ -20,6 +20,8 @@ namespace GolfEngine {
                 /* This tile is a full tile - all open grass. No geometry to report, boss! */
                 return;
             }
+
+            inline float getFriction() override { return 0.8; }
     };
 }
 

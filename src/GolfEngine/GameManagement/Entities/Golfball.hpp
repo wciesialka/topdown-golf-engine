@@ -14,6 +14,12 @@
 
 namespace GolfEngine
 {
+
+    enum GolfballStates {
+        STILL,
+        MOVING
+    };
+
     class Golfball : public GolfEngine::CircleEntity
     {
     public:
@@ -25,12 +31,24 @@ namespace GolfEngine
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
             this->setActiveStatus(true);
+            this->setState(GolfballStates::STILL);
         }
         Golfball(const GolfEngine::Vector2& pos) : GolfEngine::CircleEntity(Golfball::RADIUS, pos){
             this->getShape()->setColor(Golfball::COLOR);
             this->setTag("Golfball");
             this->setActiveStatus(true);
+            this->setState(GolfballStates::STILL);
         }
+
+        GolfballStates getState() const {
+            return this->currentState;
+        }
+
+        void setState(const GolfballStates& state) {
+            this->currentState = state;
+        }
+    private:
+        GolfballStates currentState;
     };
 }
 

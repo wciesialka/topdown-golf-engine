@@ -98,6 +98,9 @@ namespace GolfEngine
          */
         inline void setVelocity(GolfEngine::Vector2 vel)
         {
+            if(vel.magnitudeSqr() < 0.1){
+                vel = GolfEngine::Vector2::zero;
+            }
             this->velocity = vel;
         }
 
@@ -108,6 +111,9 @@ namespace GolfEngine
          */
         inline void setAcceleration(GolfEngine::Vector2 accel)
         {
+            if(accel.magnitudeSqr() < 0.1){
+                accel = GolfEngine::Vector2::zero;
+            }
             this->acceleration = accel;
         }
 

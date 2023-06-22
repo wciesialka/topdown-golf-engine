@@ -26,8 +26,7 @@ void Window::beginDisplay()
 
     float last_update = duration_cast<milliseconds>(
                             system_clock::now().time_since_epoch())
-                            .count() /
-                        1000;
+                            .count();
 
     while (this->render_window->isOpen())
     {
@@ -73,8 +72,7 @@ void Window::beginDisplay()
         // My formatter turned this into poetry.
         float now = duration_cast<milliseconds>(
                         system_clock::now().time_since_epoch())
-                        .count() /
-                    1000;
+                        .count();
 
         this->active_level->frameUpdate(now - last_update);
         last_update = now;

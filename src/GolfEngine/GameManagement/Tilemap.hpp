@@ -103,6 +103,13 @@ namespace GolfEngine
             return list;
         }
 
+        inline void frameUpdate(float dt_s){
+            for(auto pair : this->tiles){
+                GolfEngine::Tile* tile = pair.second;
+                tile->frameUpdate(dt_s);
+            }
+        }
+
     private:
         unsigned int side_length;
         std::unordered_map<unsigned int, Tile *> tiles;

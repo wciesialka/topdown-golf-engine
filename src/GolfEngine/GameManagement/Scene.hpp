@@ -63,7 +63,7 @@ namespace GolfEngine
          *
          * @param dt Time since last frame update (in ms)
          */
-        virtual void frameUpdate(float dt) = 0;
+        virtual void frameUpdate(float dt_ms) = 0;
 
         /**
          * @brief This function finds and returns a tile designated by a position.
@@ -156,6 +156,10 @@ namespace GolfEngine
 
         inline GolfEngine::Entity::EntityList getAllEntities() const {
             return this->tilemap->getAllEntities();
+        }
+
+        inline GolfEngine::Tilemap* getTilemap() const {
+            return this->tilemap;
         }
 
     private:
